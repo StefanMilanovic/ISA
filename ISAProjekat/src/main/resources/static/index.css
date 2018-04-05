@@ -1,0 +1,83 @@
+@CHARSET "ISO-8859-1";
+@font-face{font-family:'Rouge Script';src:url('fonts/ROUGESCRIPT-REGULAR.TTF')}
+.header_div {
+	height: 45px;
+	width: 100%;
+	background-color: black;
+}
+
+#prijava_button {
+	position:absolute;
+	float:right;
+	right:10px;
+	top: 5px
+}
+
+.glavni_prozor_div{
+	overflow:hidden;
+	width:100%;
+	height:100%;
+}
+
+.pozorista_div{
+	background-image: url('images/pozoriste.jpg');
+	background-position:center;
+	float:left;
+	height:100%;
+	width:50%;
+	overflow:hidden;
+}
+
+.pozorista_button_div{
+	margin: 0 auto;
+	margin-top: 300px;
+	width:100%;
+
+	
+	transition: transform .2s /*Animacija*/
+}
+
+.pozorista_button_div:hover{
+	transform: scale(1.3);
+}
+
+
+
+.bioskopi_div{
+	background-image: url('images/bioskop.jpg');
+	background-position:top;
+	height:100%;
+	width:50%;
+	overflow:hidden;
+}
+
+.bioskopi_button_div{
+	margin: 0 auto;
+	margin-top: 300px;
+	width:100%;
+	
+	transition: transform .2s /*Animacija*/
+}
+
+.bioskopi_button_div:hover{
+	transform: scale(1.3);
+}
+
+.poz_bio_dugme{
+	padding:0;
+	margin:0;
+	
+	font-size:100px;
+	background-color:d86c70;
+	
+	border-style: solid;
+	border-color: d86c70;
+	
+	border-left-color:black;
+	border-right-color:black;
+	
+	border-width:1px;
+	color:white;
+	font-family: 'Rouge Script';
+	width:100%;
+}
