@@ -1,14 +1,16 @@
 
 package serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import model.User;
 import repository.UserRepository;
 import service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService {
 
 	
@@ -23,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<User> findAllUsers() {
-		return this.userRepository.findAll(null);
+	public List<User> findAllUsers() {
+		return this.userRepository.findAll();
 		
 	}
 

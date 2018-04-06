@@ -1,0 +1,1 @@
+INSERT INTO korisnik (user_id, email, password) VALUES ('1','admin@admin', 'admin');
