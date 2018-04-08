@@ -1,4 +1,4 @@
-package model;
+package com.ISAProjekat.model;
 
 
 import java.io.Serializable;

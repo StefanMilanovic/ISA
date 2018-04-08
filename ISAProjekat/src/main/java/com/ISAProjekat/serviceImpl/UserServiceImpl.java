@@ -1,5 +1,5 @@
 
-package serviceImpl;
+package com.ISAProjekat.serviceImpl;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import model.User;
-import repository.UserRepository;
-import service.UserService;
+import com.ISAProjekat.model.User;
+import com.ISAProjekat.repository.UserRepository;
+import com.ISAProjekat.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 

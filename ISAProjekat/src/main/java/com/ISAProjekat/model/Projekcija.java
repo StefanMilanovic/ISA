@@ -1,12 +1,15 @@
-package model;
+package com.ISAProjekat.model;
 
 import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.persistence.Id;
 
 public class Projekcija {
 	
 	public Projekcija(){}
 	
+	@Id
 	private Long id;
 	private String naziv;
 	private String zarn;

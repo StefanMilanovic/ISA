@@ -1,4 +1,4 @@
-package repository;
+package com.ISAProjekat.repository;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
-import model.User;
+import com.ISAProjekat.model.User;
 
 public interface UserRepository extends Repository<User, Long> {
 //broj rezultata long Npr. ako se prosledi objekat: new PageRequest(0, 10)

@@ -1,8 +1,8 @@
-package service;
+package com.ISAProjekat.service;
 
 import java.util.List;
 
-import model.User;
+import com.ISAProjekat.model.User;
 
 public interface UserService {
 
