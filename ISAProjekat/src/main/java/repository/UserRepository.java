@@ -11,7 +11,7 @@ import model.User;
 public interface UserRepository extends Repository<User, Long> {
 //broj rezultata long Npr. ako se prosledi objekat: new PageRequest(0, 10)
 	
-	Page<User> findAll(Pageable pageable);
+	List<User> findAll();
 	
 	
 	//select c from User c where c.email = ?1
