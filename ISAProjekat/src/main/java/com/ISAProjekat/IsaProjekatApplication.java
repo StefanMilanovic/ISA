@@ -19,13 +19,13 @@ public class IsaProjekatApplication {
 		u.setPassword("asd");
 		System.out.println(u.getEmail());
 		
-		Bioskop b1 = new Bioskop(111L,"Bioskop1","Stefana Milanovica BB, Novi Sad","Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.",
+		Bioskop b1 = new Bioskop("Bioskop1","Stefana Milanovica BB, Novi Sad","Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.",
 				null,null, 4.7);
-		Bioskop b2 = new Bioskop(111L,"Bioskop2","Nadje Loncar BB, Novi Sad","Novi bioskop u gradu, 1500 sala, besplatni prikazi prvih 35 godina.",
+		Bioskop b2 = new Bioskop("Bioskop2","Nadje Loncar BB, Novi Sad","Novi bioskop u gradu, 1500 sala, besplatni prikazi prvih 35 godina.",
 				null,null, 4.5);
-		Pozoriste p1 = new Pozoriste(222L,"Pozoriste1","Neznanog junaka 22","Novo pozoriste otvoreno u Novom Sadu. Sirok repertoar drama, pocevsi od Sekspira do Nusica i Sterije.",
+		Pozoriste p1 = new Pozoriste("Pozoriste1","Neznanog junaka 22","Novo pozoriste otvoreno u Novom Sadu. Sirok repertoar drama, pocevsi od Sekspira do Nusica i Sterije.",
 				null,null, 5.0);
-		Pozoriste p2 = new Pozoriste(222L,"Pozoriste2","Ivana Lukovica BP2","Novo pozoriste otvoreno u Novom Sadu. Sirok repertoar drama, pocevsi od Sekspira do Nusica i Sterije.",
+		Pozoriste p2 = new Pozoriste("Pozoriste2","Ivana Lukovica BP2","Novo pozoriste otvoreno u Novom Sadu. Sirok repertoar drama, pocevsi od Sekspira do Nusica i Sterije.",
 				null,null, 2.0);
 	}
 }
