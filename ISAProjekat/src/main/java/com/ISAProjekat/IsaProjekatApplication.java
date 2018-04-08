@@ -12,7 +12,7 @@ public class IsaProjekatApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(IsaProjekatApplication.class, args);
-		
+		//test
 		User u   = new User();
 		
 		u.setEmail("asd");
