@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 
 @Entity 
-public class User implements Serializable {
+public class Korisnik implements Serializable {
 
 	
     /**
@@ -20,13 +20,13 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public User() {
+	public Korisnik() {
 		
 	}
 	
 
 
-	public User(Long id, String email, String password) {
+	public Korisnik(Long id, String email, String password) {
 		super();
 		this.id = id;
 		this.email = email;

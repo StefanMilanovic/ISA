@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ISAProjekat.model.Bioskop;
+import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Pozoriste;
-import com.ISAProjekat.model.User;
 
 @SpringBootApplication
 public class IsaProjekatApplication {
@@ -13,7 +13,7 @@ public class IsaProjekatApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(IsaProjekatApplication.class, args);
 		//test
-		User u   = new User();
+		Korisnik u   = new Korisnik();
 		
 		u.setEmail("asd");
 		u.setPassword("asd");

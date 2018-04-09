@@ -15,6 +15,6 @@ public class Karta {
 	private Long id;
 	
 	@Column(name = "rezervisana_od", nullable = true)
-	private User rezervisana_od;
+	private Korisnik rezervisana_od;
 	
 }

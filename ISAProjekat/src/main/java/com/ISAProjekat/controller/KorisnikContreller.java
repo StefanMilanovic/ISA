@@ -8,20 +8,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ISAProjekat.model.User;
-import com.ISAProjekat.service.UserService;
+import com.ISAProjekat.model.Korisnik;
+
+import com.ISAProjekat.service.KorisnikService;
 
 @RestController
 @RequestMapping("/userController")
-public class UserContreller {
+public class KorisnikContreller {
 	
 	@Autowired
-	private UserService userService ;
+	private KorisnikService userService ;
 
 	@RequestMapping(value = "/getUsers/user", method = RequestMethod.GET) 
 	@ResponseBody
-	public List<User> getUsers(){
-		return userService.findAllUsers();
+	public List<Korisnik> getUsers(){
+		return userService.findAllKorisnik();
 		
 	}
 
