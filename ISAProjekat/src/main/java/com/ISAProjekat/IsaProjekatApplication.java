@@ -16,7 +16,7 @@ public class IsaProjekatApplication {
 		Korisnik u   = new Korisnik();
 		
 		u.setEmail("asd");
-		u.setPassword("asd");
+		u.setSifra("asd");
 		System.out.println(u.getEmail());
 		
 		Bioskop b1 = new Bioskop("Bioskop1","Stefana Milanovica BB, Novi Sad","Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.",
