@@ -1,10 +1,84 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Login</title>
-</head>
-<body>
-	<h1>OVO JE LOGIN STRANICA</h1>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		
+		<title>Uloguj se </title>
+		<script src="../jquery-3.2.1.min.js"></script>
+	</head>
+	
+	<body>
+		
+	       
+				    <a href= "../index.html"> Nazad na pocetnu </a>
+				    <hr>
+			      		
+                	<div class="panel-title text-center">Prijava</div>
+			
+                		<form id="formaPrijaviSe" class="form-horizontal" enctype="multipart/form-data" method="POST">
+            		
+                        		<input type="email" class="form-control" name="email" value="" placeholder="E-mail">
+             		
+                        		<input type="password" class="form-control" name="lozinka" placeholder="Sifra">
+                  		        
+                    			<div id="divValidacija"></div>  
+                		
+                            		<input id="dugmePrijaviSe" type="button" class="btn btn-info" style="float:right" value="Prijavi se"> 	
+                 		</form>
+            		        
+            		    <br><hr> 
+            		    
+			        <form action="registracija.html" class="form-horizontal">
+				        
+				            <input class="btn btn-link" type="submit" value="Registruj se">				        
+				  	</form>            
+        	
+		<script type="text/javascript">
+		
+			$("#dugmePrijaviSe").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="formaPrijaviSe"]');
+				var email = forma.find('[name=email]').val();
+				var lozinka = forma.find('[name=lozinka]').val();
+				
+				if(!email) {
+					alert("Unesite email!");
+					provera = false;
+				}	
+				if(!lozinka) {
+					alert("Unesite sifru!");
+					provera = false;
+				}				
+				
+				if(provera) {
+					$('#divValidacija').empty();
+						
+					formData = JSON.stringify({
+						email:$("#formaPrijaviSe [name='email']").val(),
+						sifra:$("#formaPrijaviSe [name='lozinka']").val()
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/prijava",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Logovanje uspesno.");
+								location.href = "http://localhost:8099/index.html" 
+							}else
+								alert("Greska logovanje!");
+						},
+						error: function(data){
+							alert('Greska !')
+							alert(data)
+						}
+					});
+				}
+			});		
+		</script>		
+	</body>
 </html>

@@ -18,15 +18,15 @@ public class KorisnikServiceImpl implements KorisnikService {
 	private KorisnikRepository korisnikRepository;
 
 	@Override
-	public Korisnik getKorisnik(String email) {
+	public Korisnik findeKorisnikByEmail(String email) {
 		Assert.notNull(email, "Email ne sme biti null");
 		// TODO Auto-generated method stub
-		return this.korisnikRepository.findByEmail(email);
+		return this.korisnikRepository.findByEmailIgnoreCaseContaining(email);
 		
 	}
 
 	@Override
-	public List<Korisnik> findAllKorisnik() {
+	public List<Korisnik> findAll() {
 		return this.korisnikRepository.findAll();
 		
 	}

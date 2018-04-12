@@ -6,7 +6,7 @@ import com.ISAProjekat.model.Korisnik;
 
 public interface KorisnikService {
 
-	Korisnik getKorisnik(String email);
-	List<Korisnik> findAllKorisnik();
+	Korisnik findeKorisnikByEmail(String email);
+	List<Korisnik> findAll();
 }
 

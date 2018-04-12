@@ -2,18 +2,17 @@ package com.ISAProjekat.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ISAProjekat.model.Korisnik;
 
-public interface KorisnikRepository extends Repository<Korisnik, Long> {
-//broj rezultata long Npr. ako se prosledi objekat: new PageRequest(0, 10)
-	
+public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
+
 	List<Korisnik> findAll();
 	
 	
 	//select c from User c where c.email = ?1
-	Korisnik findByEmail(String email);
+	Korisnik findByEmailIgnoreCaseContaining(String email);
 
 
 	

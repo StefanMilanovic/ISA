@@ -29,13 +29,13 @@ public class Korisnik implements Serializable {
 
 
 
-	public Korisnik(Long id, String email, String sifra, String korisnickoIme, String ime, String prezime, String grad,
+	public Korisnik(Long id, String email, String sifra,  String ime, String prezime, String grad,
 			String telefon, String tipKorisnika) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.sifra = sifra;
-		this.korisnickoIme = korisnickoIme;
+
 		this.ime = ime;
 		this.prezime = prezime;
 		this.grad = grad;
@@ -58,9 +58,6 @@ public class Korisnik implements Serializable {
 
     @Column(name = "sifra", nullable = false)
     private String sifra;
-
-    @Column(name = "korisnickoIme", nullable = false, unique = true)
-    private String korisnickoIme;
 
     @Column(name = "ime", nullable = false)
     private String ime;
@@ -135,18 +132,7 @@ public class Korisnik implements Serializable {
 
 
 
-	public String getKorisnickoIme() {
-		return korisnickoIme;
-	}
 
-
-
-
-
-
-	public void setKorisnickoIme(String korisnickoIme) {
-		this.korisnickoIme = korisnickoIme;
-	}
 
 
 
