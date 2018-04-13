@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,7 @@ public class KorisnikContreller {
 		
 	
 	
-	@RequestMapping(value = "/prijava", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/prijava", method = RequestMethod.POST)
 	public ResponseEntity<Korisnik> prijava(@RequestBody Korisnik requestKorisnik, HttpServletRequest request){
 		
 		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
@@ -44,7 +43,7 @@ public class KorisnikContreller {
 		if(korisnik!= null) {
 			if(korisnik.getSifra().equals(requestKorisnik.getSifra())) {
 				
-				request.getSession().setAttribute("aktivanKorisnik", korisnik);
+				request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
 				return new ResponseEntity<Korisnik>(korisnik, HttpStatus.OK);
 			}
 		} else {
@@ -52,6 +51,57 @@ public class KorisnikContreller {
 		}
 			
 		return new ResponseEntity<Korisnik>(korisnik, HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value = "/registracija", method = RequestMethod.POST)
+	public ResponseEntity<Korisnik> registracija(@RequestBody Korisnik requestKorisnik){
+		
+		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN");
+		
+		List<Korisnik> lk = korisnikService.findAll() ;
+		
+		System.out.println("\n registracija Korisnika\n"+ preuzetKorisnik.getEmail()+"\n"+preuzetKorisnik.getIme() +"\n"+preuzetKorisnik.getPrezime()+"\n"+preuzetKorisnik.getSifra()
+		+"\n"+preuzetKorisnik.getGrad()+"\n"+preuzetKorisnik.getTelefon()+"\n");
+		
+		
+		//ako je baza prazna samo ga dodaj bez provere 
+		if(lk.isEmpty()){
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsap2");
+				preuzetKorisnik.setTipKorisnika("REGISTROVAN");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}else{
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		}
+		for(Korisnik k : lk){
+			if(!(k.getEmail().equals(preuzetKorisnik.getEmail()))){
+				if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+					
+					{
+						System.out.println("\nProsap2");
+						preuzetKorisnik.setTipKorisnika("REGISTROVAN");
+						
+						
+						korisnikService.save(preuzetKorisnik);
+						return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+					}
+			}else{
+				System.out.println("Email zauzet!");
+				
+			}
+			
+		}
+		return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+		
 	}
 	
 }

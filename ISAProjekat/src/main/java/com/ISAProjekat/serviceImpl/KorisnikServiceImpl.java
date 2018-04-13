@@ -31,5 +31,11 @@ public class KorisnikServiceImpl implements KorisnikService {
 		
 	}
 
+	@Override
+	public Korisnik save(Korisnik k) {
+		// TODO Auto-generated method stub
+		return korisnikRepository.save(k);
+	}
+
 }
 

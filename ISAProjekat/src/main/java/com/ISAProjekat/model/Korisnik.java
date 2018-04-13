@@ -29,7 +29,7 @@ public class Korisnik implements Serializable {
 
 
 
-	public Korisnik(Long id, String email, String sifra,  String ime, String prezime, String grad,
+	public Korisnik( String email, String sifra,  String ime, String prezime, String grad,
 			String telefon, String tipKorisnika) {
 		super();
 		this.id = id;
