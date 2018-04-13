@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+
+<title>Home</title>
+</head>
+<body>
+	
+	<label id = "ime" > </label>
+	
+	
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$.ajax({
+					url : "http://localhost:8099/korisnik/getAktivan"
+				}).then(function(data){
+					var imeKor =  data.ime ;
+						
+					$("#ime").append(imeKor);
+					
+				});
+			});
+	</script>
+			
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+@CHARSET "ISO-8859-1";
+
+html{
+	height:100%;	
+}
+
+body{
+	height:100%;
+}
+
+/* Ovo mora da se stavi jer u suprotom div "propadne"*/
+p,h4,h5 {margin: 0;}
+.titleheader {overflow: hidden;}
+
+.pozadina_div{	
+	width:100%;
+	height:100%;
+	background-color:blue;	
+}
+
+.container_div{
+	width:80%;
+	height:100%;
+	margin:0 auto;
+	background-color:red;
+}
+
+.razmak_div{
+	height:40px;
+	width:100%;
+	background-color:black;
+}
+
+.bioskop_div{
+	height:400px;
+	width:95%;
+	margin:0 auto;
+	background-color:yellow;
+}
+
+.thumbnail_div{
+	width:400px;
+	height:100%;
+	float:left;
+	background-color:green;
+}
+
+.podaci_div{
+	height:100%;
+	width:1015px;
+	float:right;
+	background-color:orange;
+	margin-right:10px;
+}
+
+.naziv_div{
+	width:100%;
+	height:80px;
+	background-color:lime;
+}
+
+.ime_div{
+	width:100%;
+	height:50px;
+	background-color:pink;
+	font-family: 'Rouge Script';
+	font-size:45px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 50px; 
+	
+}
+
+.adresa_div{
+	width:100%;
+	height:30px;
+	background-color:#7fbeeb;
+	font-size:30px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 30px; 
+}
+
+.opis_div{
+	height:290px;
+	width:100%;
+	font-size:20px;
+	background-color:#dbd8f0
+}
+
+.ocena_div {
+	height:30px;
+	width:100%;
+	font-size:25px;
+	line-height:30px;
+	background-color:#7fbeeb;
+	float:bottom;
+}

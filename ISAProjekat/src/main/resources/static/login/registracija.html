@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<title>Registracija</title>
+		<script src="../jquery-3.2.1.min.js"></script>
+	</head>
+	
+	<body>
+
+
+		
+		<h1>Registracija</h1>
+		
+		<div class="center">
+		<form id = "registrationForm" name = "registrationForm" method="POST">
+			
+			<label>Ime</label><br/>
+			<input name = "ime" type="text" class="form-control"   placeholder= "Ime"><br/>
+			
+			<label>Prezime</label><br/>
+			<input type="text" class="form-control" name = "prezime" placeholder= "Prezime"><br/> 
+			
+			<label>Email</label><br/>
+			<input type="email" class="form-control" name ="email" placeholder="Email"><br/> 
+			
+			<label>Sifra</label><br/>
+			<input type="password" class="form-control" name="lozinka" placeholder="Sifra"><br/>
+			 
+			<label>Ponovljena sifra</label><br/>
+			<input id="passRepeat" type="password" name="ponovljenaLoz" class="form-control"  placeholder="Sifra"><br/>
+			
+			
+			<label>Telefon</label><br/>
+			<input type="text" class="form-control" name="telefon" placeholder="Broj telefona"><br/> 
+			
+			<label>Grad</label><br/>
+			<input type="text" class="form-control" name="grad" placeholder="Grad" ><br/><br/>
+			
+			
+			
+			<input id="zavrseno" type="button" class="btn btn-info"  value="Registruj me"> 	 	
+			
+				
+		</form>
+		<form id ="nazadForma" action="../index.html" class="form-horizontal">
+					        
+					  <input class="btn btn-link" type="submit" value="Odustani">				        
+		</form> 
+		</div>
+		
+		
+		
+		
+			<script type="text/javascript">
+		
+			$("#zavrseno").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+				var prezime = forma.find('[name=prezime]').val();
+				var ime = forma.find('[name=ime]').val();
+				var email = forma.find('[name=email]').val();
+				var lozinka = forma.find('[name=lozinka]').val();
+				var ponovljenaLoz = forma.find('[name=ponovljenaLoz]').val();
+				var telefon = forma.find('[name=telefon]').val();
+				var grad = forma.find('[name=grad]').val();
+				
+				
+				if(!email) {
+					
+					alert("Unesite email!");
+					provera = false;
+				}else if(!lozinka) {
+					alert("Unesite sifru!");
+					provera = false;
+				}
+				else if(!ime) {
+					alert("Unesite ime!");
+					provera = false;
+				}	
+				
+				else if(!ponovljenaLoz) {
+					alert("Unesite sifru!");
+					provera = false;
+				}
+				else if(!prezime) {
+					alert("Unesite prezime!");
+					provera = false;
+				}
+				else if(!telefon) {
+					alert("Unesite telefon!");
+					provera = false;
+				}else if(!grad) {
+					alert("Unesite grad!");
+					provera = false;
+				
+					
+				}else if(lozinka!=ponovljenaLoz) {
+					
+					
+					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
+					provera = false;
+				}
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						email:$("#registrationForm [name='email']").val(),
+						sifra:$("#registrationForm [name='lozinka']").val(),
+						ime:$("#registrationForm [name='ime']").val(),
+						prezime:$("#registrationForm [name='prezime']").val(),
+						grad:$("#registrationForm [name='grad']").val(),
+						telefon:$("#registrationForm [name='telefon']").val()
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/registracija",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Registracija uspesna");
+								
+								<!--PREBACI GA NA NEKI HOMEPAGE! -->
+								
+								location.href = "http://localhost:8099/index.html" 			
+							}else
+								alert("Registracija neuspesna!");
+						},
+						error: function(data){
+							alert('Greska podaci registracija!')
+							alert(data)
+						}
+					});
+				}
+			});		
+		</script>		
+		
+		
+	</body>
+
+</html>

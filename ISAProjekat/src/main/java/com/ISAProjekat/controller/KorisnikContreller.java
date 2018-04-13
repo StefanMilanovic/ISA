@@ -53,6 +53,7 @@ public class KorisnikContreller {
 		return new ResponseEntity<Korisnik>(korisnik, HttpStatus.BAD_REQUEST);
 	}
 	
+	//registracija
 	@RequestMapping(value = "/registracija", method = RequestMethod.POST)
 	public ResponseEntity<Korisnik> registracija(@RequestBody Korisnik requestKorisnik){
 		
@@ -102,8 +103,14 @@ public class KorisnikContreller {
 		}
 		return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
 		
-	}
+	}//kraj registracije
 	
+	//podaci o aktivnom korisniku 
+	@RequestMapping(value = "/getTrenutnoAktivan", method = RequestMethod.GET)
+	public Korisnik getKorisnik(HttpServletRequest request){
+		System.out.println("\n\t\ttrenutno aktivan korisnik: " + (Korisnik)request.getSession().getAttribute("aktivanKorisnik"));
+		return (Korisnik)request.getSession().getAttribute("aktivanKorisnik");	
+	}
 }
 
 
