@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="dodaj_projekciju.css">
+<script src='jquery.min.js'></script>
+<script src="dodaj_projekciju.js"></script>
+
+<title>Dodaj Projekciju</title>
+</head>
+<body>
+	
+	<form class="cd-form floating-labels" id="dodajprojekciju_froma">
+		<fieldset>
+			<legend>Nova projekcija</legend>
+			<div class="icon">
+				<label class="cd-label" for="cd-name">Naziv</label>
+				<input class="user" type="text" name="naziv" id="naziv">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Zanr</label>
+				<input class="company" type="text" name="zanr" id="zanr">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Reditelj</label>
+				<input class="company" type="text" name="reditelj" id="reditelj">
+		    </div> 
+			
+			<div class="icon">
+		    	<label class="cd-label" for="cd-company">Trajanje</label>
+				<input class="company" type="text" name="trajanje" id="trajanje">
+		    </div> 
+			
+			<div>
+				<h4>Sala</h4>
+				<p class="cd-select icon">
+					<select class="budget">					
+					</select>
+				</p>
+			</div> 
+			
+			<div class="icon">
+		    	<label class="cd-label" id="cd-stagod">Termin: od</label>
+				<input class="company" type="text" name="termin_od" id="termin_od">
+		    </div> 
+			
+			<div class="icon">
+		    	<label class="cd-label" id="cd-stagod">Termin: do</label>
+				<input class="company" type="text" name="termin_dod" id="termin_dod">
+		    </div>
+			
+			<div class="icon">
+				<label class="cd-label" id="cd-opis">Opis</label>
+      			<textarea class="message" name="opis" id="opis"></textarea>
+			</div>
+			
+			<div class="icon">
+				<label class="cd-label" id="cd-opis">Spisak glumaca</label>
+      			<textarea class="message" name="glumci" id="glumci"></textarea>
+			</div>
+
+			<div>
+		      	<input onclick="dodajProjekciju()" type="submit" value="Kreiraj">
+		    </div>
+		</fieldset>
+	</form>
+</body>
+</html>

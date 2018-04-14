@@ -1,5 +1,8 @@
 package com.ISAProjekat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,7 +12,7 @@ import com.ISAProjekat.model.Pozoriste;
 
 @SpringBootApplication
 public class IsaProjekatApplication {
-
+		
 	public static void main(String[] args) {
 		SpringApplication.run(IsaProjekatApplication.class, args);
 		//test
@@ -27,5 +30,8 @@ public class IsaProjekatApplication {
 				null,null, 5.0);
 		Pozoriste p2 = new Pozoriste("Pozoriste2","Ivana Lukovica BP2","Novo pozoriste otvoreno u Novom Sadu. Sirok repertoar drama, pocevsi od Sekspira do Nusica i Sterije.",
 				null,null, 2.0);
+		
 	}
+	
+	
 }
