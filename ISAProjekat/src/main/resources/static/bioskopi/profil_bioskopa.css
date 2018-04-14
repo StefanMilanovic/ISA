@@ -1,0 +1,94 @@
+@CHARSET "ISO-8859-1";
+
+p,h4,h5,h1,h2,h3 {margin: 0;}
+.titleheader {overflow: hidden;}
+
+.header_div{
+	height:600px;
+	width:100%;
+	background-color:red;
+}
+
+.image_div{
+	height:600px;
+	width:800px;
+	background-color:blue;
+	float:left;
+}
+
+.content_div{
+	float:right;
+	height:600px;
+	width: 1077px;
+	background-color:yellow;
+	margin-right:10px;
+}
+
+.name_and_address_div{
+	height:30%;
+	width:100%;
+	background-color:lime;
+}
+
+.name_div{
+	height:110px;
+	width:100%;
+	background-color:brown;
+	text-align:center;
+	vertical-align:middle;
+	line-height:110px;
+	font-family: 'Rouge Script';
+	font-size:50px;
+}
+
+.address_div{
+	height:70px;	
+	background-color:#dbd8f0;
+	font-family: 'Rouge Script';
+	font-size:30px;
+	text-align:center;
+	vertical-align:middle;
+	line-height:70px;
+	
+}
+
+.desc_div{
+	background-color:gray;
+	height:420px;
+	width:100%;
+	font-size:30px;
+}
+
+.central_div{
+	width:100%;
+	height:800px;
+	background-color:brown;
+	overflow:hidden;
+}
+
+.tickets_div{
+	width:500px;
+	height:100%;
+	background-color:yellow;
+	float:left;
+}
+
+.repertoar_div{
+	width:1385px;
+	height:100%;
+	background-color:#dbd8f0;
+	float:right;
+}
+
+.sale_div{
+	height:800px;
+	width:100%;
+	background-color:blue;
+}
+
+.stats_div{
+	height:800px;
+	width:100%;
+	background-color:yellow;
+}
+
