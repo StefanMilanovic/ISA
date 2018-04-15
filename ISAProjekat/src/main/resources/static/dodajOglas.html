@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+
+<title>Napravi oglas</title>
+</head>
+<body>
+
+
+	<h1>Napravi oglas:</h1>
+		
+		
+		<form id = "dodajOglasForma" name = "dodajOglasForma" method="POST">
+			
+			<label>Naziv</label><br/>
+			<input name = "naziv" type="text" class="form-control"   placeholder= "Naziv"><br/>
+			
+			<label>Opis</label><br/>
+			<input type="text" class="form-control" name = "opis" placeholder= "Opis"><br/> 
+			
+			<label>Datum</label><br/>
+			<input type="date" class="form-control" name ="datum" placeholder="Datum"><br/> 
+			
+			<label>Slika</label><br/>
+			<input type="file" class="form-control" name="slika" placeholder="Slika"><br/>
+			 
+			<label>Cena</label><br/>
+			<input id="cena" type="text" name="cena" class="form-control"  placeholder="Cena"><br/>
+			<hr><br>
+			
+			<input id="zavrseno" type="button"  value="Zavrsi"> 	 	
+			
+			<br><br>
+			</form>
+			<form id ="nazadForma" action="fanZona.html" >
+					        
+					  <input type="submit" value="Odustani">				        
+			</form> 
+			
+			
+			<script type="text/javascript">
+		
+			$("#zavrseno").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="dodajOglasForma"]');
+				
+				var naziv = forma.find('[name=naziv]').val();
+				var opis = forma.find('[name=opis]').val();
+				var datum = forma.find('[name=datum]').val();
+				var slika = forma.find('[name=slika]').val();
+				var cena = forma.find('[name=cena]').val();
+				
+				
+				if(!naziv) {
+					
+					alert("Unesite naziv!");
+					provera = false;
+				}else if(!opis) {
+					alert("Unesite opis!");
+					provera = false;
+				}
+				else if(!datum) {
+					alert("Unesite datum!");
+					provera = false;
+				}	
+				
+				else if(!slika) {
+					alert("Unesite slika!");
+					provera = false;
+				}
+				else if(!cena) {
+					alert("Unesite cenu!");
+					provera = false;
+				}
+				
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						naziv:$("#dodajOglasForma [name='naziv']").val(),
+						opis:$("#dodajOglasForma [name='opis']").val(),
+						datum:$("#dodajOglasForma [name='datum']").val(),
+						slika:$("#dodajOglasForma [name='slika']").val(),
+						cena:$("#dodajOglasForma [name='cena']").val(),
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/oglasController",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Uspesno!");
+								
+								
+								
+								location.href ="http://localhost:8099/fanZona.html"	
+							}else
+								alert("Neuspesno!");
+						},
+						error: function(data){
+							alert('Greska podaci !')
+							
+						}
+					});
+				}
+			});		
+		</script>	
+	
+</body>
+</html>

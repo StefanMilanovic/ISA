@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,16 @@ public class OglasController {
 	*/
 	@RequestMapping(value="getOglasi", method = RequestMethod.GET)
 	public ResponseEntity<List<OglasDTO>> getOglasi() {
+		System.out.println("\nUzimam oglas");
 		List<Oglas> oglasi = oglasService.findAll();
 		return new ResponseEntity<>(oglasAdap.convert(oglasi), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
+	public ResponseEntity<OglasDTO> addOglas(@RequestBody OglasDTO oglasDTO){
+		Oglas noviOglas = oglasService.save(oglasDTOAdap.convert(oglasDTO));
+		System.out.println("\nDodajem oglas");
+		
+		return new ResponseEntity<>(oglasAdap.convert(noviOglas), HttpStatus.OK);
 	}
 }

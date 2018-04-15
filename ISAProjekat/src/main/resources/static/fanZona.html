@@ -6,6 +6,20 @@
 <title>Fan Zona</title>
 
 
+</head>
+<body>
+
+	<table id="oglasi">
+   					<tr >
+    					<th>Nazivv</th>
+    					<th>Opis</th>
+    					<th>Datum</th>
+    					<th>Slika</th>
+    					<th>Cena</th>
+    				</tr>
+				</table>
+
+	
 <script type="text/javascript">
 		$(document).ready(function() {
 			$.ajax({
@@ -25,22 +39,19 @@
 		});	
 	
 	</script>
-</head>
-<body>
-
-	<table id="oglasi">
-   					<tr >
-    					<th>Nazivv</th>
-    					<th>Opis</th>
-    					<th>Datum</th>
-    					<th>Slika</th>
-    					<th>Cena</th>
-    				</tr>
-				</table>
-
-
-
 	
-
+	
+	<hr><br>
+	<form action="dodajOglas.html">
+				        
+		<input  type="submit" value="Napravi oglas">
+				        
+	 </form>
+	 
+	 <br><br>
+	 <form id ="nazadForma" action="home.html" >
+					        
+					  <input type="submit" value="Nazad">				        
+	 </form> 
 </body>
 </html>
