@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+<title>Fan Zona</title>
+
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			$.ajax({
+				url: "http://localhost:8099/oglasController/getOglasi"
+			}).then(function(data) {
+				for(i=0; i<data.length; i++) {
+					popuni = "<tr>"
+						+ "<td >" + data[i].naziv + "</td>"
+						+ "<td >" + data[i].opis + "</td>"
+						+ "<td >" + data[i].datum + "</td>"
+						+ "<td >" + data[i].slika + "</td>"
+						+ "<td >" + data[i].cena + "</td>"
+						+ "</tr>"
+					$("#oglasi").append(popuni)
+				}
+			});
+		});	
+	
+	</script>
+</head>
+<body>
+
+	<table id="oglasi">
+   					<tr >
+    					<th>Nazivv</th>
+    					<th>Opis</th>
+    					<th>Datum</th>
+    					<th>Slika</th>
+    					<th>Cena</th>
+    				</tr>
+				</table>
+
+
+
+	
+
+</body>
+</html>

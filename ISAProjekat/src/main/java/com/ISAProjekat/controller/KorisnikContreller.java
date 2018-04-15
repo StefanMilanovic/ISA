@@ -34,7 +34,7 @@ public class KorisnikContreller {
 	public ResponseEntity<Korisnik> prijava(@RequestBody Korisnik requestKorisnik, HttpServletRequest request){
 		
 		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-		Korisnik korisnik = korisnikService.findeKorisnikByEmail(requestKorisnik.getEmail());
+		Korisnik korisnik = korisnikService.findKorisnikByEmail(requestKorisnik.getEmail());
 		List<Korisnik> lk = korisnikService.findAll() ;
 		for(Korisnik k : lk){
 			System.out.println("\n Iz BAZE podaci :"+ k.getEmail()+"->" + k.getSifra());
@@ -106,7 +106,7 @@ public class KorisnikContreller {
 	}//kraj registracije
 	
 	//podaci o aktivnom korisniku 
-	@RequestMapping(value = "/getTrenutnoAktivan", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAktivan", method = RequestMethod.GET)
 	public Korisnik getKorisnik(HttpServletRequest request){
 		System.out.println("\n\t\ttrenutno aktivan korisnik: " + (Korisnik)request.getSession().getAttribute("aktivanKorisnik"));
 		return (Korisnik)request.getSession().getAttribute("aktivanKorisnik");	

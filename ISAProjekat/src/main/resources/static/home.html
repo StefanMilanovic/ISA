@@ -2,23 +2,29 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="jquery-3.2.1.min.js"></script>
 
 <title>Home</title>
 </head>
 <body>
 	
-	<label id = "ime" > </label>
+	<a href = "fanZona.html">FANZONA</a>
+	<table id="podaci" ></table>
 	
 	
 	<script type="text/javascript">
 			$(document).ready(function(){
 				$.ajax({
-					url : "http://localhost:8099/korisnik/getAktivan"
+					url : "http://localhost:8099/korisnikController/getAktivan"
 				}).then(function(data){
-					var imeKor =  data.ime ;
-						
-					$("#ime").append(imeKor);
+					var imePrikaz = "<tr><th scope=\"col\">" + data.ime + "</th></tr>";
+					var prezimePrikaz = "<tr><th scope=\"col\">" + data.prezime + "</th></tr>";
+					var emailPrikaz = "<tr><th scope=\"col\">" + data.email + "</th></tr>";
+					var telefonPrikaz = "<tr><th scope=\"col\">" + data.telefon + "</th></tr>";
+					$("#podaci").append(imePrikaz);
+					$("#podaci").append(prezimePrikaz);
+					$("#podaci").append(emailPrikaz);
+					$("#podaci").append(telefonPrikaz);
 					
 				});
 			});

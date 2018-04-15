@@ -18,7 +18,7 @@ public class KorisnikServiceImpl implements KorisnikService {
 	private KorisnikRepository korisnikRepository;
 
 	@Override
-	public Korisnik findeKorisnikByEmail(String email) {
+	public Korisnik findKorisnikByEmail(String email) {
 		Assert.notNull(email, "Email ne sme biti null");
 		// TODO Auto-generated method stub
 		return this.korisnikRepository.findByEmailIgnoreCaseContaining(email);
