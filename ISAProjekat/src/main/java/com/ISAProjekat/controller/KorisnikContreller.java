@@ -42,8 +42,13 @@ public class KorisnikContreller {
 		System.out.println("\nbyEmail:" +korisnik.getEmail()+ "->" + korisnik.getSifra());
 		if(korisnik!= null) {
 			if(korisnik.getSifra().equals(requestKorisnik.getSifra())) {
+				if(!korisnik.isBioUlogovan()){
+					korisnik.setBioUlogovan(true);// prvo logovanje
+					System.out.println("\n Prvi put se ulogovao ! ");
 				
-				request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
+				}
+					request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
+				
 				return new ResponseEntity<Korisnik>(korisnik, HttpStatus.OK);
 			}
 		} else {
@@ -58,7 +63,7 @@ public class KorisnikContreller {
 	public ResponseEntity<Korisnik> registracija(@RequestBody Korisnik requestKorisnik){
 		
 		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN");
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false);
 		
 		List<Korisnik> lk = korisnikService.findAll() ;
 		
@@ -135,6 +140,12 @@ public class KorisnikContreller {
 		return korAzuriraj;
 	}//kraj admin fan zona azuriranje
 	
+	
+	@RequestMapping(value = "/odjava", method = RequestMethod.GET)
+	public boolean odjava(HttpServletRequest request) {
+		request.getSession().invalidate();
+		return true;
+	}
 	
 }
 

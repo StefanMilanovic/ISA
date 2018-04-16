@@ -30,9 +30,9 @@ public class Korisnik implements Serializable {
 
 
 	public Korisnik( String email, String sifra,  String ime, String prezime, String grad,
-			String telefon, String tipKorisnika) {
+			String telefon, String tipKorisnika, boolean bioUlogovan) {
 		super();
-		this.id = id;
+		
 		this.email = email;
 		this.sifra = sifra;
 
@@ -41,6 +41,7 @@ public class Korisnik implements Serializable {
 		this.grad = grad;
 		this.telefon = telefon;
 		this.tipKorisnika = tipKorisnika;
+		this.bioUlogovan = bioUlogovan;
 	}
 
 
@@ -73,6 +74,10 @@ public class Korisnik implements Serializable {
     
     @Column(name =  "tipKorisnika", nullable= false)
     private String tipKorisnika; 
+    
+    @Column(name =  "bioUlogovan", nullable= false)
+    private boolean bioUlogovan; 
+    
     
     
     
@@ -222,6 +227,29 @@ public class Korisnik implements Serializable {
 
 	public void setTipKorisnika(String tipKorisnika) {
 		this.tipKorisnika = tipKorisnika;
+	}
+
+
+
+
+
+
+	
+
+
+
+
+	public boolean isBioUlogovan() {
+		return bioUlogovan;
+	}
+
+
+
+
+
+
+	public void setBioUlogovan(boolean bioUlogovan) {
+		this.bioUlogovan = bioUlogovan;
 	}
 
 

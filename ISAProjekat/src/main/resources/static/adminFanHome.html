@@ -19,5 +19,38 @@
 	   <input type="submit" value="Azuriraj podatke">				        
 	</form>
 	<hr><br>
+	
+	
+	<form id ="odjavaForma" method="GET" >
+		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
+	</form>
+	<hr><br>
+	
+	<script type="text/javascript">
+	$("#odjavaDugme").click(function(){
+
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/odjava",
+						type: "GET",
+						data: null,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								location.href = "http://localhost:8099/index.html"	
+								
+							}else
+								alert("Greska odjava!");
+					
+						},
+						error: function(data){
+							alert('Greskaaaa !')
+							
+						}
+					});
+				
+			});	
+	
+	</script>
 </body>
 </html>

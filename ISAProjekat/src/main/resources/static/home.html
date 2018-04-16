@@ -12,6 +12,9 @@
 	<table id="podaci" >
 	</table>
 	
+	<form id ="odjavaForma" method="GET" >
+		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
+	</form>
 	
 	<hr><br>
 	<form id ="proveraOglasa" action="proveraOglasa.html" >
@@ -52,6 +55,34 @@
 			});
 			
 		  
+			
+			
+		
+			
+			$("#odjavaDugme").click(function(){
+
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/odjava",
+						type: "GET",
+						data: null,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								location.href = "http://localhost:8099/index.html"	
+								
+							}else
+								alert("Greska odjava!");
+					
+						},
+						error: function(data){
+							alert('Greskaaaa !')
+							
+						}
+					});
+				
+			});		
+		
 			
 	</script>
 			
