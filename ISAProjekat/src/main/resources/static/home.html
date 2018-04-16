@@ -9,27 +9,53 @@
 <body>
 	
 	<a href = "fanZona.html">FANZONA</a>
-	<table id="podaci" ></table>
+	<table id="podaci" >
+	</table>
 	
 	
+	<hr><br>
+	<form id ="proveraOglasa" action="proveraOglasa.html" >
+		<input type="submit" id="togglee" value="Provera Oglasa" />
+	</form>
 	<script type="text/javascript">
 			$(document).ready(function(){
 				$.ajax({
 					url : "http://localhost:8099/korisnikController/getAktivan"
 				}).then(function(data){
+					var hidden = true;
 					var imePrikaz = "<tr><th scope=\"col\">" + data.ime + "</th></tr>";
 					var prezimePrikaz = "<tr><th scope=\"col\">" + data.prezime + "</th></tr>";
 					var emailPrikaz = "<tr><th scope=\"col\">" + data.email + "</th></tr>";
 					var telefonPrikaz = "<tr><th scope=\"col\">" + data.telefon + "</th></tr>";
+					var tipKorisnika = "<tr><th scope=\"col\">" + data.tipKorisnika + "</th></tr>";
 					$("#podaci").append(imePrikaz);
 					$("#podaci").append(prezimePrikaz);
 					$("#podaci").append(emailPrikaz);
 					$("#podaci").append(telefonPrikaz);
+					$("#podaci").append(tipKorisnika);
+					
+					if(data.tipKorisnika=="ADMIN_FAN"){
+						hidden = false;
+						
+					}else{
+						hidden = true;
+						
+					}
+					
+					if(hidden) {
+				            document.getElementById('togglee').style.visibility = 'hidden';
+				        } else {
+				            document.getElementById('togglee').style.visibility = 'visible';
+				        }
 					
 				});
 			});
+			
+		  
+			
 	</script>
 			
+
 
 </body>
 </html>

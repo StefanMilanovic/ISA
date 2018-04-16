@@ -67,11 +67,21 @@
 						datatype: 'json',
 						success: function(data){
 							if(data){
-								alert("Logovanje uspesnooo.");
+								alert(data.tipKorisnika)
 								
-								<!--PREBACI GA NA NEKI HOMEPAGE! -->
+								if(data.tipKorisnika=="ADMIN_FAN"){
+
+									alert("Logovanje uspesno Admin fan zone! " );
+									localStorage.setItem("adminfan", "fanzona");
+									location.href = "http://localhost:8099/adminFanHome.html"				
+								}else if(data.tipKorisnika=="REGISTROVAN"){
+									localStorage.setItem("registrovan korisnik", data.id);
+									location.href = "http://localhost:8099/home.html"
 								
-								location.href = "http://localhost:8099/home.html" 
+								}else{
+									alert("Korisnik nije registrovan!");
+									//location.href = "http://localhost:8099/index.html" 
+								}
 							}else
 								alert("Greska logovanjeee!");
 						},

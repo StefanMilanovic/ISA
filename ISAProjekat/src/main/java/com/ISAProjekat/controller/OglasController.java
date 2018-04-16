@@ -1,5 +1,6 @@
 package com.ISAProjekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,23 @@ public class OglasController {
 		return new ResponseEntity<>(oglasAdap.convert(oglasi), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
+	
+	@RequestMapping(value="getOdobreniOglasi", method = RequestMethod.GET)
+	public ResponseEntity<List<OglasDTO>> getOdobreniOglasi() {
+		System.out.println("\nUzimam  odobreni oglas");
+		List<Oglas> oglasi = oglasService.findAll();
+		List<Oglas> odobreniOglasi  = new ArrayList<Oglas>();
+		for(Oglas o : oglasi ){
+			if(o.isOdobren()){
+				odobreniOglasi.add(o);				
+				
+			}
+			
+		}
+		return new ResponseEntity<>(oglasAdap.convert(odobreniOglasi), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="dodajOglas",method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<OglasDTO> addOglas(@RequestBody OglasDTO oglasDTO){
 		Oglas noviOglas = oglasService.save(oglasDTOAdap.convert(oglasDTO));
 		System.out.println("\nDodajem oglas");

@@ -2,13 +2,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<script src="jquery-3.2.1.min.js"></script>
-<title>Fan Zona</title>
-
-
+<title>Provera Oglasa</title>
 </head>
 <body>
-
+<h1>Provera oglasa </h1>
+<h2> NEZAVRSENO!</h2>
 	<table id="oglasi">
    					<tr >
     					<th>Nazivv</th>
@@ -23,7 +21,7 @@
 <script type="text/javascript">
 		$(document).ready(function() {
 			$.ajax({
-				url: "http://localhost:8099/oglasController/getOdobreniOglasi"
+				url: "http://localhost:8099/oglasController/getOglasi"
 			}).then(function(data) {
 				for(i=0; i<data.length; i++) {
 					popuni = "<tr>"
@@ -39,19 +37,7 @@
 		});	
 	
 	</script>
-	
-	
-	<hr><br>
-	<form action="dodajOglas.html">
-				        
-		<input  type="submit" value="Napravi oglas">
-				        
-	 </form>
-	 
-	 <br><br>
-	 <form id ="nazadForma" action="home.html" >
-					        
-					  <input type="submit" value="Nazad">				        
-	 </form> 
+
+
 </body>
 </html>

@@ -111,6 +111,31 @@ public class KorisnikContreller {
 		System.out.println("\n\t\ttrenutno aktivan korisnik: " + (Korisnik)request.getSession().getAttribute("aktivanKorisnik"));
 		return (Korisnik)request.getSession().getAttribute("aktivanKorisnik");	
 	}
+	
+	
+	
+	//ADMIN FAN ZONA AZURIRANJE
+	@RequestMapping(value = "/azuriraj", method = RequestMethod.PUT)
+	public Korisnik azuriraj(@RequestBody Korisnik requestKorisnik,HttpServletRequest request){
+		
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik korAzuriraj = new Korisnik();
+		korAzuriraj = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");	
+		korAzuriraj.setEmail(requestKorisnik.getEmail());
+		korAzuriraj.setSifra(requestKorisnik.getSifra());
+		korAzuriraj.setIme(requestKorisnik.getIme());
+		korAzuriraj.setPrezime(requestKorisnik.getPrezime());
+		korAzuriraj.setGrad(requestKorisnik.getGrad());
+		korAzuriraj.setTelefon(requestKorisnik.getTelefon());
+		korAzuriraj.setTipKorisnika("ADMIN_FAN");
+		
+		request.getSession().setAttribute("aktivanKorisnik", korAzuriraj);
+		korisnikService.save(korAzuriraj);
+		
+		return korAzuriraj;
+	}//kraj admin fan zona azuriranje
+	
+	
 }
 
 

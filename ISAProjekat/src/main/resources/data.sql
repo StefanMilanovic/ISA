@@ -4,6 +4,15 @@ VALUES ('adminfan@gmail.com','adminfan' ,'adminfan','adminfan','adminfan','06000
 INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika)
 VALUES ('a@a','a' ,'a','a','a','0','ADMIN_FAN');
 
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika)
+VALUES ('r','r' ,'r','r','r','0','REGISTROVAN');
+
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika)
+VALUES ('s','s' ,'s','s','s','0','ADMIN_SIST');
+
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika)
+VALUES ('o','o' ,'o','o','o','0','ADMIN_OBJ');
+
 INSERT INTO fan_zona (naziv)
 VALUES ('fanZona1');
 INSERT INTO fan_zona (naziv)
