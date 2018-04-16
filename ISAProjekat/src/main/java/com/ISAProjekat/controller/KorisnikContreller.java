@@ -42,11 +42,7 @@ public class KorisnikContreller {
 		System.out.println("\nbyEmail:" +korisnik.getEmail()+ "->" + korisnik.getSifra());
 		if(korisnik!= null) {
 			if(korisnik.getSifra().equals(requestKorisnik.getSifra())) {
-				if(!korisnik.isBioUlogovan()){
-					korisnik.setBioUlogovan(true);// prvo logovanje
-					System.out.println("\n Prvi put se ulogovao ! ");
 				
-				}
 					request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
 				
 				return new ResponseEntity<Korisnik>(korisnik, HttpStatus.OK);
@@ -146,6 +142,29 @@ public class KorisnikContreller {
 		request.getSession().invalidate();
 		return true;
 	}
+	
+	//promenaLozAdminFan
+	
+	@RequestMapping(value = "/promenaLozAdminFan", method = RequestMethod.PUT)
+	public Korisnik promenaLozAdminFan(@RequestBody Korisnik requestKorisnik,HttpServletRequest request){
+		
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik korAzuriraj = new Korisnik();
+		korAzuriraj = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");	
+		
+		korAzuriraj.setSifra(requestKorisnik.getSifra());
+		if(!korAzuriraj.isBioUlogovan()){
+			System.out.println("\n Prvi put se ulogovao !  vrednost :"+ korAzuriraj.isBioUlogovan());
+			korAzuriraj.setBioUlogovan(true);// prvo logovanje
+			System.out.println("\n Prvi put se ulogovao !  vrednost :"+ korAzuriraj.isBioUlogovan());
+			
+		}
+		
+		request.getSession().setAttribute("aktivanKorisnik", korAzuriraj);
+		korisnikService.save(korAzuriraj);
+		
+		return korAzuriraj;
+	}//kraj admin fan zona promena lozinke
 	
 }
 

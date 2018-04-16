@@ -70,10 +70,20 @@
 								alert(data.tipKorisnika)
 								
 								if(data.tipKorisnika=="ADMIN_FAN"){
-
-									alert("Logovanje uspesno Admin fan zone! " );
 									localStorage.setItem("adminfan", "fanzona");
-									location.href = "http://localhost:8099/adminFanHome.html"				
+									
+									if(data.bioUlogovan== true){//1 = true
+										alert(" bio ulogovan = true");
+										location.href = "http://localhost:8099/adminFanHome.html"	
+										
+									}else if(data.bioUlogovan == false){
+										alert(" bio ulogovan = false");
+										location.href = "http://localhost:8099/adminFanPrviLog.html"	
+										
+									}
+									
+									
+									
 								}else if(data.tipKorisnika=="REGISTROVAN"){
 									localStorage.setItem("registrovan korisnik", data.id);
 									location.href = "http://localhost:8099/home.html"

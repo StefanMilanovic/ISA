@@ -2,16 +2,16 @@ INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ul
 VALUES ('adminfan@gmail.com','adminfan' ,'adminfan','adminfan','adminfan','060000000','ADMIN_FAN',0);
 
 INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan)
-VALUES ('a@a','a' ,'a','a','a','0','ADMIN_FAN',0);
+VALUES ('a@a','a' ,'a','a','a','011','ADMIN_FAN',1);
 
 INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan)
-VALUES ('r','r' ,'r','r','r','0','REGISTROVAN',0);
+VALUES ('r','r' ,'r','r','r','021','REGISTROVAN',0);
 
 INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan)
-VALUES ('s','s' ,'s','s','s','0','ADMIN_SIST',0);
+VALUES ('s','s' ,'s','s','s','022','ADMIN_SIST',0);
 
 INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan)
-VALUES ('o','o' ,'o','o','o','0','ADMIN_OBJ',0);
+VALUES ('o','o' ,'o','o','o','022','ADMIN_OBJ',0);
 
 INSERT INTO fan_zona (naziv)
 VALUES ('fanZona1');

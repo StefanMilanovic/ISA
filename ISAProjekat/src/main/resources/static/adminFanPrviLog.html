@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+<title>Promena lozinke</title>
+</head>
+<body>
+<h1> Prvo logovanje - promena lozinke </h1>
+
+
+
+
+<form id = "registrationForm" name = "registrationForm" method="POST">
+
+			
+			
+			<label>Sifra</label><br/>
+			<input id = "sifraID" type="password" class="form-control" name="lozinka" placeholder="Sifra"><br/>
+			 
+			<label>Ponovljena sifra</label><br/>
+			<input id="sifra2ID" type="password" name="ponovljenaLoz" class="form-control"  placeholder="Sifra"><br/>
+			
+		
+			
+			<hr><br>
+			
+			<input id="zavrseno" type="button" class="btn btn-info"  value="Prihvati"> 	 	
+			
+				
+		</form>
+		<br><br>
+		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
+					        
+					  <input type="submit" value="Odustani">				        
+		</form> 
+		
+		
+		
+		
+		
+			<script type="text/javascript">
+		
+			$("#zavrseno").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+				
+				var lozinka = forma.find('[name=lozinka]').val();
+				var ponovljenaLoz = forma.find('[name=ponovljenaLoz]').val();
+	
+				if(!lozinka) {
+					alert("Unesite sifru!");
+					provera = false;
+				
+				}
+				else if(!ponovljenaLoz) {
+					alert("Unesite sifru!");
+					provera = false;
+				
+	
+				}else if(lozinka!=ponovljenaLoz) {
+					
+					
+					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
+					provera = false;
+				}
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						
+						sifra:$("#registrationForm [name='lozinka']").val(),
+						
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/promenaLozAdminFan",
+						type: "PUT",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Azuriranje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/adminFanHome.html" 			
+							}else{
+								alert("Azuriranje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});		
+		</script>		
+
+
+
+
+
+</body>
+</html>
