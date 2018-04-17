@@ -10,4 +10,5 @@ import com.ISAProjekat.model.Projekcija;
 public interface ProjekcijaRepository extends JpaRepository<Projekcija, Long>{
 	
 	List<Projekcija> findAll();
+	
 }

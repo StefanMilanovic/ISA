@@ -71,6 +71,7 @@ function getSelectedBiskop(id){
 				top.location.href="/bioskopi/profil_bioskopa.html";
 			}
 		},
+		
 		error:function(textStatus, errorThrown){
 			console.log(textStatus);
 		}		

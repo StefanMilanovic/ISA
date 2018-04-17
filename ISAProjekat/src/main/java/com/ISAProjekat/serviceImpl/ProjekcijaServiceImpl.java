@@ -25,6 +25,11 @@ public class ProjekcijaServiceImpl implements ProjekcijaService{
 		projekcijaRepository.save(p);
 		return null;
 	}
+
+	@Override
+	public void delete(Long id) {
+		projekcijaRepository.delete(id);		
+	}
 	
 	
 }

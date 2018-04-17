@@ -165,7 +165,7 @@ public class BioskopController{
 		
 	}
 	
-	@RequestMapping(value="/editBioskop", method= RequestMethod.POST)
+	@RequestMapping(value="/editBioskop", method= RequestMethod.PUT)
 	public ResponseEntity<Bioskop> editBioskop(@RequestBody Bioskop requestBioskop)
 	{								
 		Bioskop iz_baze = bioskopService.findBioskopById(requestBioskop.getId());
@@ -185,5 +185,20 @@ public class BioskopController{
 		return new ResponseEntity<>(bioskopService.findBioskopById(requestBioskop.getId()),HttpStatus.OK);
 	}
 	
-	
+	@RequestMapping(value="/obrisiProjekciju", method= RequestMethod.DELETE)
+	public ResponseEntity<Projekcija> obrisiProjekciju(@RequestBody String data){
+		
+		System.out.println(data);
+		data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+		
+		Long id = Long.parseLong(data,10);
+		
+		List<Projekcija> projekcije = projekcijaService.findAll();
+		projekcijaService.delete(id);
+		
+		return new ResponseEntity <>(projekcije.get(0), HttpStatus.OK);
+	}
 }

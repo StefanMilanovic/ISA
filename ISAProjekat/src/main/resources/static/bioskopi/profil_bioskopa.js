@@ -1,3 +1,5 @@
+var iterator =0;
+
 $(document).ready(function(){
 	console.log("Usao na profil bioskopa.");
 
@@ -73,7 +75,7 @@ function getProjekcije(selectedBioskop, salaList){
 function ispisiProfil(data, salaList, projekcijaList){
 	var options="";
 	var projekcije="";
-	
+	var iterator_dugmad = 0;
 	
 	if(salaList!=null){
 			
@@ -92,14 +94,14 @@ function ispisiProfil(data, salaList, projekcijaList){
 			"</div>" +
 			
 			"<div class=\"projekcija_dugmad_div\">"+
-				"<button>Izmeni</button>"+
-				"<button>Obrisi</button>"+
+				"<button id=\"izmeni"+iterator_dugmad+" \""+">Izmeni</button>"+
+				"<button id=\"obrisi"+iterator_dugmad+" \""+"  >Obrisi</button>"+
 			"</div>"+					
 			
-			"<div class = \"jedna_projekcija_content\">"+
-				"<div class=\"naslov_projekcije\">"+
+			"<div id=\"jedna_projekcija_content"+iterator_dugmad+" \""+" class = \"jedna_projekcija_content\">"+
+				"<div id=\"naslov_projekcije\" class=\"naslov_projekcije\">"+
 					"<h4>"+ value.naziv +"</h4>"+
-					"<label id=\"projekcija_label_id\">"+value.id+"</label>"
+					"<label class=\"labela_class\" id=\"id_label"+iterator_dugmad+" \" "+">"+value.id+"</label>"+
 				"</div>"+
 				"<div class=\"opis_projekcije\">"+
 					"<p>"+ value.opis +"</p>"+
@@ -113,6 +115,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 		"</div>";
 		
 		projekcije+=text;
+		iterator_dugmad = iterator_dugmad+1; 
 	});
 		
 
@@ -178,4 +181,51 @@ function ispisiProfil(data, salaList, projekcijaList){
 		$("#body").append(text);
 		$("#sale_select").append(options);
 		$("#repertoar_content_div").append(projekcije);
+}
+
+$(document).on('click','button',function(e) { 
+	var button_id = e.target.id;
+	if	(button_id.includes("obrisi")){
+		console.log("Obrisi");
+		button_id = button_id.replace("obrisi","");
+		console.log(button_id);
+		
+		var id_labele = "id_label"+button_id;		
+		var x=document.getElementById(id_labele).textContent;
+		console.log("ID LABELE JE: " + x);
+		obrisiProjekciju(x);
+		
+	}
+	else if(button_id.includes("izmeni")){
+		console.log("Izmeni");
+		button_id = button_id.replace("izmeni","");
+		console.log(button_id);
+		
+		var id_labele = "id_label"+button_id;		
+		var x=document.getElementById(id_labele).textContent;
+		console.log("ID LABELE JE: " + x);
+	}
+});
+
+function obrisiProjekciju(id){
+	var id_projekcije = JSON.stringify(id);
+	
+	$.ajax({
+		url:"../bioskopController/obrisiProjekciju",
+		type: "DELETE",
+		data:{id: id_projekcije},
+		dataType:"json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno obrisano.");
+			}
+			else{
+				top.location.href="/bioskopi/profil_bioskopa.html";
+			}			
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
+	
 }

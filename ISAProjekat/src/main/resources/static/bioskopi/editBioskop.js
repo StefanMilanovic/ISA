@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	console.log("Usao na profil bioskopa.");
+	//console.log("Usao na profil bioskopa.");
 
 	$.ajax({
 		url:"../bioskopController/getSelectedBioskop",
@@ -10,8 +10,8 @@ $(document).ready(function(){
 				console.log("Data je null");
 			}
 			else{
-				console.log("PISE DATA");
-				console.log(data);
+			//	console.log("PISE DATA");
+			//	console.log(data);
 				
 				popuniData(data);
 				
@@ -37,8 +37,8 @@ function izmeniBioskop(){
 	var $form = $("#editujBioskop_froma");
 	var data = getFormData($form);
 	
-	console.log("----------ISPISUJE POSLATI DATA-----------");
-	console.log(data);
+	//console.log("----------ISPISUJE POSLATI DATA-----------");
+//	console.log(data);
 	
 	if(data.naziv=="" || data.adresa=="" || data.opis==""){
 		alert("Molimo Vas popunite sva polja.");
@@ -50,7 +50,7 @@ function izmeniBioskop(){
 		
 		$.ajax({
 			url:"../bioskopController/editBioskop",
-			type:"POST",
+			type: "PUT",
 			data:p,
 			contentType:"application/json",
 			dataType:'json',
@@ -61,6 +61,7 @@ function izmeniBioskop(){
 				}
 				else{
 					console.log("Doslo je do greske.");
+					top.location.href="profil_bioskopa.html";
 				}
 			},
 			error: function (textStatus, errorThrown) {
