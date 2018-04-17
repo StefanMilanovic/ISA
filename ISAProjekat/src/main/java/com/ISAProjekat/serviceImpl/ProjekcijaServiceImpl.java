@@ -22,8 +22,7 @@ public class ProjekcijaServiceImpl implements ProjekcijaService{
 
 	@Override
 	public Projekcija save(Projekcija p) {
-		System.out.println("Treba da sacuva u repository.");
-		//return projekcijaRepository.save(p);
+		projekcijaRepository.save(p);
 		return null;
 	}
 	

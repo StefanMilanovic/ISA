@@ -1,3 +1,12 @@
+	$(document).on('click','a',function(e) { 
+		e.preventDefault();
+		var id = e.target.closest("div").childNodes[1].textContent;
+		//console.log(id);
+		getSelectedBiskop(id);
+	});
+	
+
+
 $(document).ready(function(){
 	console.log("Dokument spreman.");
 	
@@ -18,6 +27,7 @@ $(document).ready(function(){
 							"<div class=\"naziv_div\">"+
 								"<div class=\"ime_div\">"+
 									"<a href=\"/bioskopi/profil_bioskopa.html\">"+value.naziv+"</a>"+
+									"<label class=\"labela\" id=\"key\">"+value.id+"</label>"+
 								"</div>"+
 								"<div class=\"adresa_div\">"+
 									"<h5>"+value.adresa+"</h5>"+
@@ -42,3 +52,29 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function getSelectedBiskop(id){
+	
+	var id_data = JSON.stringify(id);
+	
+	$.ajax({
+		url:"http://localhost:8099/bioskopController/findClickedBioskop",
+		type:"POST",
+		data:{id: id_data},
+		dataType:"json",
+		success:function(data){
+			if(data==null){
+				console.log("Data je null.");
+			}
+			else{
+				console.log(data);
+				top.location.href="/bioskopi/profil_bioskopa.html";
+			}
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
+	
+	
+}

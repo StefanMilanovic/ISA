@@ -32,7 +32,7 @@ public class ProjekcijaController {
 	{		
 		System.out.println("\n\nPoslati podaci: \n"+requestProjekcija.getNaziv()+"\n"+requestProjekcija.getIme_reditelja()+"\n");	
 		
-		if(requestProjekcija.getNaziv().length()!=0){
+		/*if(requestProjekcija.getNaziv().length()!=0){
 			Projekcija nova_projekcija = new Projekcija(requestProjekcija.getNaziv(),requestProjekcija.getZarn(),requestProjekcija.getIme_reditelja(),
 					requestProjekcija.getTrajanje(), 0, requestProjekcija.getOpis(),requestProjekcija.getCena(), requestProjekcija.getSpisak_glumaca(), requestProjekcija.getSala());
 			
@@ -40,7 +40,7 @@ public class ProjekcijaController {
 			projekcijaService.save(nova_projekcija);
 			return new ResponseEntity<Projekcija>(nova_projekcija,HttpStatus.OK);
 			
-		}
+		}*/
 		
 		
 		return null;

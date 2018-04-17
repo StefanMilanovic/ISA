@@ -15,7 +15,7 @@ function dodajProjekciju(){
 	var $form = $("#dodajprojekciju_froma");
 	var data= getFormData($form);
 
-	console.log(data.naziv);
+	//console.log(data);
 	
 	if(data.naziv=="" || data.zanr=="" ||data.reditelj=="" || data.trajanje==""
 		|| data.termin_od=="" || data.termin_dod=="" || data.opis=="" || data.glumci==""){
@@ -24,6 +24,8 @@ function dodajProjekciju(){
 	}
 	else{
 		var p = JSON.stringify(data);
+		//console.log(data);
+		
 		$.ajax({
 			url:"http://localhost:8099/projekcija/dodajProjekciju",
 			type:"POST",
@@ -42,6 +44,6 @@ function dodajProjekciju(){
 				console.log("NE VALJA NESTO");
 				console.log(textStatus);
 			}
-		})
+		});
 	}	
 }

@@ -1,0 +1,68 @@
+@CHARSET "ISO-8859-1";
+
+p,h4,h5,h1,h2,h3 {margin: 0;}
+.titleheader {overflow: hidden;}
+
+
+.backgorund{
+	
+	width:1355px;
+	height:740px;
+	
+	background-color: black;	
+	
+}
+
+.jedna_projekcija_div{
+	width:100%;
+	hegiht:150px;
+	background-color:yellow;
+}
+
+.jedna_projekcija_thumbnail{
+	background-color:red;
+	width:150px;
+	height:150px;
+	float:left;
+}
+
+.jedna_projekcija_content{
+	background-color:white;
+	width:1055px;
+	height:150px;
+	float:right;
+}
+
+.naslov_projekcije{
+	width:100%;
+	height:30px;
+	background-color:brown;
+	vertical-align:middle;
+	font-size:20px;
+	line-height:20px;
+	text-align:center;
+}
+
+.ocena_projekcije{
+	width:100%;
+	height:30px;
+	background-color:brown;
+	float:bottom;
+	vertical-align:middle;
+	font-size:20px;
+	line-height:20px;
+}
+
+.opis_projekcije{
+	height:90px;
+	width:100%;
+}
+
+.projekcija_dugmad_div{
+	
+	background-color:red;
+	width:150px;
+	height:150px;
+	float:right;
+	
+}

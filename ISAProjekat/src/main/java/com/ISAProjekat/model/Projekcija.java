@@ -18,17 +18,19 @@ public class Projekcija {
 	
 	
 	public Projekcija(String naziv, String zarn, String ime_reditelja, String trajanje, double prosecna_ocena,
-			String opis, double cena, String spisak_glumaca, String sala) {
+			int broj_glasova, String opis, double cena, String spisak_glumaca, Long sala, String ime_sale) {
 		super();
 		this.naziv = naziv;
 		this.zarn = zarn;
 		this.ime_reditelja = ime_reditelja;
 		this.trajanje = trajanje;
 		this.prosecna_ocena = prosecna_ocena;
+		this.broj_glasova = broj_glasova;
 		this.opis = opis;
 		this.cena = cena;
 		this.spisak_glumaca = spisak_glumaca;
 		this.sala = sala;
+		this.ime_sale = ime_sale;
 	}
 
 
@@ -66,8 +68,15 @@ public class Projekcija {
 	@Column(name="glumci",nullable=false)
 	private String spisak_glumaca;
 	
-	@Column(name="sala", nullable=true)
-	private String sala;
+	@Column(name="sala", nullable=false)
+	private Long sala;
+	
+	@Column(name="ime_sale")
+	private String ime_sale;
+	
+	
+	@Column(name="broj_glasova")
+	private int broj_glasova;
 	
 	
 	public Long getId() {
@@ -124,11 +133,39 @@ public class Projekcija {
 	public void setSpisak_glumaca(String spisak_glumaca) {
 		this.spisak_glumaca = spisak_glumaca;
 	}
-	public String getSala() {
+	public Long getSala() {
 		return sala;
 	}
-	public void setSala(String sala) {
+	public void setSala(Long sala) {
 		this.sala = sala;
+	}
+
+
+
+
+	public String getIme_sale() {
+		return ime_sale;
+	}
+
+
+
+
+	public void setIme_sale(String ime_sale) {
+		this.ime_sale = ime_sale;
+	}
+
+
+
+
+	public int getBroj_glasova() {
+		return broj_glasova;
+	}
+
+
+
+
+	public void setBroj_glasova(int broj_glasova) {
+		this.broj_glasova = broj_glasova;
 	}
 	
 	

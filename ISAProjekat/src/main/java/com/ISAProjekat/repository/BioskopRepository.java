@@ -8,4 +8,5 @@ import com.ISAProjekat.model.Bioskop;
 
 public interface BioskopRepository extends JpaRepository<Bioskop, Long>{
 	List<Bioskop>findAll();
+	Bioskop findById(Long id);
 }

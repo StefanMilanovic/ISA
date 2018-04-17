@@ -13,6 +13,10 @@ a{
 	text-decoration:none;
 }
 
+#key{
+	display:none;
+}
+
 /* Ovo mora da se stavi jer u suprotom div "propadne"*/
 p,h4,h5 {margin: 0;}
 .titleheader {overflow: hidden;}

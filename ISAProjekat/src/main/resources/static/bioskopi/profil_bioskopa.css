@@ -3,31 +3,35 @@
 p,h4,h5,h1,h2,h3 {margin: 0;}
 .titleheader {overflow: hidden;}
 
+.top_div {
+	height: 45px;
+	width: 100%;
+	background-color: black;
+}
+
 .header_div{
 	height:600px;
 	width:100%;
-	background-color:red;
 }
 
 .image_div{
 	height:600px;
 	width:800px;
-	background-color:blue;
+	background-image: url('../images/noimage.jpg');
+	background-size:100% 100%;
 	float:left;
 }
 
 .content_div{
 	float:right;
 	height:600px;
-	width: 1077px;
-	background-color:yellow;
-	margin-right:10px;
+	width: 1084px;
+	border-left:3px solid black;
 }
 
 .name_and_address_div{
 	height:30%;
 	width:100%;
-	background-color:lime;
 }
 
 .name_div{
@@ -39,6 +43,7 @@ p,h4,h5,h1,h2,h3 {margin: 0;}
 	line-height:110px;
 	font-family: 'Rouge Script';
 	font-size:50px;
+	border-bottom:3px solid black;
 }
 
 .address_div{
@@ -53,7 +58,6 @@ p,h4,h5,h1,h2,h3 {margin: 0;}
 }
 
 .desc_div{
-	background-color:gray;
 	height:420px;
 	width:100%;
 	font-size:30px;
@@ -62,33 +66,163 @@ p,h4,h5,h1,h2,h3 {margin: 0;}
 .central_div{
 	width:100%;
 	height:800px;
-	background-color:brown;
 	overflow:hidden;
 }
 
 .tickets_div{
 	width:500px;
 	height:100%;
-	background-color:yellow;
 	float:left;
+	border-top:3px solid black;
+	background-image: url('../images/ticket.jpg');
+	background-position:center;
+}
+
+.tickets_div_text{
+	width:500px;
+	height:50px;
+	font-size:35px;
+	line-height:50px;
+	text-align:center;
+	vertical-align:middle;
+	background-color:#c0c0c0;
+}
+
+.tickets_div_content{
+	width:480px;
+	height:740px;
+	margin-left:10px;
+	border:1px solid black;
 }
 
 .repertoar_div{
-	width:1385px;
+	width:1382px;
 	height:100%;
-	background-color:#dbd8f0;
 	float:right;
+	border-top:3px solid black;
+	border-left:3px solid black;
+}
+
+.repertoar_div_text{
+	width:1385px;
+	height:50px;
+	font-size:35px;
+	line-height:50px;
+	text-align:center;
+	vertical-align:middle;
+	background-color:#c0c0c0;
+}
+
+.repertoar_content_div{
+	width:1355px;
+	height:740px;
+	margin-left:15px;
+	border:1px solid black;
+	overflow:hidden;
 }
 
 .sale_div{
 	height:800px;
 	width:100%;
-	background-color:blue;
+	background-image: url('../images/bioskop2.jpg');
+	
 }
 
+
+.sale_div_text{
+	
+	height:50px;
+	width:100%;
+	background-color:white;
+	font-size:35px;
+	line-height:50px;
+	text-align:center;
+	background-color:#c0c0c0;
+}
+
+.combo_box_div{
+	height: 30px;
+	width:100%;
+	background-color: #c0c0c0;
+	vertical-align:middle;
+	line-height:30px;
+}
+
+.jedna_sala_div{
+	width:80%;
+	height:80%;
+	background-color:white;
+	margin: 0 auto;
+	margin-top: 35px;
+	border: 3px solid gray;
+}
 .stats_div{
 	height:800px;
 	width:100%;
 	background-color:yellow;
 }
 
+#edit_button{
+	float:left;
+}
+
+
+/*-----------------------PROJEKCIJE----------------------*/
+
+.jedna_projekcija_div{
+	width:100%;
+	height:150px;
+	background-color:yellow;
+}
+
+.jedna_projekcija_thumbnail{
+	background-color:red;
+	width:150px;
+	height:150px;
+	float:left;
+}
+
+.jedna_projekcija_content{
+	background-color:white;
+	width:1055px;
+	height:150px;
+	float:right;
+}
+
+.naslov_projekcije{
+	width:100%;
+	height:30px;
+	background-color:brown;
+	vertical-align:middle;
+	font-size:20px;
+	line-height:20px;
+	text-align:center;
+}
+
+.ocena_projekcije{
+	width:100%;
+	height:30px;
+	background-color:brown;
+	float:bottom;
+	vertical-align:middle;
+	font-size:20px;
+	line-height:20px;
+}
+
+.opis_projekcije{
+	height:90px;
+	width:100%;
+}
+
+.projekcija_dugmad_div{
+	
+	background-color:red;
+	width:150px;
+	height:150px;
+	float:right;
+}
+
+.razmak_projekcija_div{
+	width:100%;
+	height:20px;
+}

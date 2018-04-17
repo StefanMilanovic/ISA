@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit Bioskop</title>
+<link rel="stylesheet" href="dodaj_projekciju.css">
+<script src='../jquery-3.2.1.min.js'></script>
+<script src="editBioskop.js"></script>
+</head>
+<body>
+	
+	<form class="cd-form floating-labels" id="editujBioskop_froma">
+		<fieldset>
+			<legend>Edituj Bioskop</legend>					
+			
+			<div class="icon">
+				<label class="cd-label" for="cd-name">ID</label>
+				<input class="user" type="text" name="idd" id="idd" disabled>
+		    </div>
+			
+			<div class="icon">
+				<label class="cd-label" for="cd-name">Naziv</label>
+				<input class="user" type="text" name="naziv" id="naziv">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Adresa</label>
+				<input class="company" type="text" name="adresa" id="adresa">
+		    </div> 
+
+			<div class="icon">
+				<label class="cd-label" id="cd-opis">Opis</label>
+      			<textarea class="message" name="opis" id="opis"></textarea>
+			</div>
+
+			<div class="icon" style="visibility:hidden;">
+				<label class="cd-label" for="cd-name" style="visibility:hidden;">ID</label>
+				<input class="user" type="text" name="id" id="id" style="visibility:hidden;">
+		    </div> 
+
+			<div>
+		      	<input onclick="izmeniBioskop()" type="submit" value="Izmeni">
+		    </div>
+		    
+		</fieldset>
+	</form>
+	
+	
+</body>
+</html>

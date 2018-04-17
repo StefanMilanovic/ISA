@@ -20,4 +20,14 @@ public class BioskopServiceImpl implements BioskopService{
 		return this.bioskopRepository.findAll();
 	}
 
+	@Override
+	public Bioskop save(Bioskop b) {
+		return bioskopRepository.save(b);
+	}
+
+	@Override
+	public Bioskop findBioskopById(Long id) {
+		return this.bioskopRepository.findById(id);		
+	}
+
 }
