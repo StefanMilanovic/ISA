@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+<title>Blagajna</title>
+
+</head>
+<body>
+<h1>Prodavnica</h1>
+
+
+<h3>Prikaz postojecih rekvizita:</h3>
+	<table id="rekviziti" > </table>
+
+<hr><br>
+	 <form id ="nazadForma" action="home.html" >
+					        
+					  <input type="submit" value="Nazad">				        
+	 </form>
+	 
+	 
+	 <script type="text/javascript">
+	
+	
+	$(document).ready(function() {
+		$.ajax({
+			url: "http://localhost:8099/rekvizitController/getRekviziti"
+		}).then(function(data) {
+			for(i=0; i<data.length; i++) {
+				popuni = "<tr >"
+					+"<td >" + data[i].id + "</td>"
+					+ "<td >" + data[i].naziv + "</td>"
+					+ "<td >" + data[i].opis + "</td>"
+					+ "<td >" + data[i].slika + "</td>"
+					+ "<td >" + data[i].cena + "</td>"
+
+					+ "</tr>"
+				$("#rekviziti").append(popuni)
+			}
+		});
+	});	
+	</script>
+	  
+</body>
+</html>

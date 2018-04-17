@@ -19,6 +19,10 @@
 	   <input type="submit" value="Azuriraj podatke">				        
 	</form>
 	<hr><br>
+	<form action="dodajRekvizit.html">			      
+	   <input type="submit" id="dodajRekvizit" value="Dodaj rekvizit">				        
+	</form>
+	<hr><br>
 	
 	
 	<form id ="odjavaForma" method="GET" >
@@ -26,7 +30,37 @@
 	</form>
 	<hr><br>
 	
+	<h3>Prikaz postojecih rekvizita:</h3>
+	<table id="rekviziti" > </table>
+	
 	<script type="text/javascript">
+	
+	
+	$(document).ready(function() {
+		$.ajax({
+			url: "http://localhost:8099/rekvizitController/getRekviziti"
+		}).then(function(data) {
+			for(i=0; i<data.length; i++) {
+				popuni = "<tr >"
+					+"<td >" + data[i].id + "</td>"
+					+ "<td >" + data[i].naziv + "</td>"
+					+ "<td >" + data[i].opis + "</td>"
+					+ "<td >" + data[i].slika + "</td>"
+					+ "<td >" + data[i].cena + "</td>"
+					+ "<td > <form  method='DELETE' ><input type='button' id='izmeniDugme' value='Izmeni' /> </form> </td>" 
+					
+					
+						
+					
+					
+					
+					
+					+ "</tr>"
+				$("#rekviziti").append(popuni)
+			}
+		});
+	});	
+
 	$("#odjavaDugme").click(function(){
 
 					$.ajax({
@@ -36,6 +70,7 @@
 						contentType: "application/json",
 						datatype: 'json',
 						success: function(data){
+							
 							if(data){
 								location.href = "http://localhost:8099/index.html"	
 								
@@ -50,7 +85,30 @@
 					});
 				
 			});	
+	$("#izmeniDugme").click(function(){
+
+		$.ajax({
+			url: "http://localhost:8099/rekvizitController/obrisi",
+			type: "DELETE",
+			data: null,
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data){
+				alert("Pokrenuta izmena")
+				if(data){
+					location.href = "http://localhost:8099/adminFanHome.html"	
+					
+				}else
+					alert("Greska brisanje!");
+		
+			},
+			error: function(data){
+				alert('Greskaaaa !')
+				
+			}
+		});
 	
+});	
 	</script>
 </body>
 </html>

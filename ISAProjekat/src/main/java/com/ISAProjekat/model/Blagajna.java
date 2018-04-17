@@ -1,7 +1,5 @@
 package com.ISAProjekat.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,35 +13,32 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class FanZona {
-	
+public class Blagajna {
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false, updatable = false)
 	private Long id;
 	
-	@Column(name = "naziv", nullable = false, updatable = true)
+	@Column(nullable = false,updatable = true)
 	private String naziv;
-	
-	//Value of mappedBy is name of the field that is owning side of bidirectional relationship
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fanZona")
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blagajna")
 	@JsonIgnore
-	private Set<Oglas> oglasi;
-	
-	
-	
-	public FanZona(){
-		
-	}
+	private Set<Rekvizit> rekviziti;
 
-	
-
-	public FanZona(Long id, String naziv, Set<Oglas> oglasi) {
+	public Blagajna(Long id, String naziv, Set<Rekvizit> rekviziti) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
-		this.oglasi = oglasi;
+		this.rekviziti = rekviziti;
+	}
+	
+	
+	
+	public Blagajna(){
+		
+		
 	}
 
 
@@ -72,15 +67,18 @@ public class FanZona {
 
 
 
-	public Set<Oglas> getOglasi() {
-		return oglasi;
+	public Set<Rekvizit> getRekviziti() {
+		return rekviziti;
 	}
 
 
 
-	public void setOglasi(Set<Oglas> oglasi) {
-		this.oglasi = oglasi;
+	public void setRekviziti(Set<Rekvizit> rekviziti) {
+		this.rekviziti = rekviziti;
 	}
+	
+	
+	
 	
 	
 }

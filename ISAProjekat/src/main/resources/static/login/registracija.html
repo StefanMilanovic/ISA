@@ -25,7 +25,7 @@
 			<input type="text" class="form-control" name = "prezime" placeholder= "Prezime"><br/> 
 			
 			<label>Email</label><br/>
-			<input type="email" class="form-control" name ="email" placeholder="Email"><br/> 
+			<input type="email" class="form-control" name ="email" placeholder="Email" ><br/> 
 			
 			<label>Sifra</label><br/>
 			<input type="password" class="form-control" name="lozinka" placeholder="Sifra"><br/>
@@ -105,6 +105,14 @@
 					
 					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
 					provera = false;
+				}
+				if (email.indexOf("@") >= 0) { 
+					//alert("email je u redu");
+					
+				}else{
+					alert("Email je neispravan!");
+					provera = false;
+				
 				}
 				if(provera) {
 					

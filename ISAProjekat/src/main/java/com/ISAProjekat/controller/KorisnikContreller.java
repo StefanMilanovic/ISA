@@ -39,7 +39,7 @@ public class KorisnikContreller {
 		for(Korisnik k : lk){
 			System.out.println("\n Iz BAZE podaci :"+ k.getEmail()+"->" + k.getSifra());
 		}
-		System.out.println("\nbyEmail:" +korisnik.getEmail()+ "->" + korisnik.getSifra());
+		//System.out.println("\nbyEmail:" +korisnik.getEmail()+ "->" + korisnik.getSifra());
 		if(korisnik!= null) {
 			if(korisnik.getSifra().equals(requestKorisnik.getSifra())) {
 				
@@ -47,9 +47,9 @@ public class KorisnikContreller {
 				
 				return new ResponseEntity<Korisnik>(korisnik, HttpStatus.OK);
 			}
-		} else {
+		} 
 			System.out.println("\nNema zeljenog korisnika!");
-		}
+		
 			
 		return new ResponseEntity<Korisnik>(korisnik, HttpStatus.BAD_REQUEST);
 	}

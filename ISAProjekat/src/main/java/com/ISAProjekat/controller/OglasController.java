@@ -33,7 +33,7 @@ public class OglasController {
 	private OglasDTOAdap oglasDTOAdap;
 
 	
-/*
+
 	@RequestMapping(value="/getOglasi", method = RequestMethod.GET)
 	public ResponseEntity<List<Oglas>> getOglasi() {
 		List<Oglas> oglasi = oglasService.findAll();
@@ -42,15 +42,15 @@ public class OglasController {
 				+oglasi.get(0).getSlika()+oglasi.get(0).getDatum());
 		return new ResponseEntity<>(oglasi, HttpStatus.OK);
 	}
-	*/
+	/*
 	@RequestMapping(value="getOglasi", method = RequestMethod.GET)
 	public ResponseEntity<List<OglasDTO>> getOglasi() {
 		System.out.println("\nUzimam oglas");
 		List<Oglas> oglasi = oglasService.findAll();
 		return new ResponseEntity<>(oglasAdap.convert(oglasi), HttpStatus.OK);
-	}
+	}*/
 	
-	
+	/*
 	@RequestMapping(value="getOdobreniOglasi", method = RequestMethod.GET)
 	public ResponseEntity<List<OglasDTO>> getOdobreniOglasi() {
 		System.out.println("\nUzimam  odobreni oglas");
@@ -65,7 +65,21 @@ public class OglasController {
 		}
 		return new ResponseEntity<>(oglasAdap.convert(odobreniOglasi), HttpStatus.OK);
 	}
-	
+	*/
+	@RequestMapping(value="getOdobreniOglasi", method = RequestMethod.GET)
+	public ResponseEntity<List<Oglas>> getOdobreniOglasi() {
+		System.out.println("\nUzimam  odobreni oglas");
+		List<Oglas> oglasi = oglasService.findAll();
+		List<Oglas> odobreniOglasi  = new ArrayList<Oglas>();
+		for(Oglas o : oglasi ){
+			if(o.isOdobren()){
+				odobreniOglasi.add(o);				
+				
+			}
+			
+		}
+		return new ResponseEntity<>(odobreniOglasi, HttpStatus.OK);
+	}
 	@RequestMapping(value="dodajOglas",method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<OglasDTO> addOglas(@RequestBody OglasDTO oglasDTO){
 		Oglas noviOglas = oglasService.save(oglasDTOAdap.convert(oglasDTO));
