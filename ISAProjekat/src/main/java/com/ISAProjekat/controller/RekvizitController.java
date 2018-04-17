@@ -98,8 +98,8 @@ public class RekvizitController {
 	
 	
 	
-	@RequestMapping(value = "/izmeni", method = RequestMethod.POST)
-	public ResponseEntity<Rekvizit> izmeni(@RequestBody Rekvizit requestRekvizit){
+	@RequestMapping(value = "/izmeni", method = RequestMethod.PUT)
+	public Rekvizit izmeni(@RequestBody Rekvizit requestRekvizit){
 		
 		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
 		Rekvizit iz_baze = rekvizitService.findById(requestRekvizit.getId());
@@ -116,10 +116,10 @@ public class RekvizitController {
 		
 		System.out.println("\n naziv promenjenog "+rekvizitService.findById(requestRekvizit.getId()).getNaziv());
 		context.setAttribute("rekvizitIzmena", rekvizitService.findById(requestRekvizit.getId()));
-		
-		return new ResponseEntity<>(rekvizitService.findById(requestRekvizit.getId()),HttpStatus.OK);
+		rekvizitService.save(rekvizitService.findById(requestRekvizit.getId()));
+		return rekvizitService.findById(requestRekvizit.getId());
 	
-	}//kraj admin fan zona azuriranje
+	}//kraj izmene rekvizita
 	
 	
 	@RequestMapping(value = "/odjava", method = RequestMethod.GET)

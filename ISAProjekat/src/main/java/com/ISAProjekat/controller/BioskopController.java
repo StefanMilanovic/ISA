@@ -166,7 +166,7 @@ public class BioskopController{
 	}
 	
 	@RequestMapping(value="/editBioskop", method= RequestMethod.PUT)
-	public ResponseEntity<Bioskop> editBioskop(@RequestBody Bioskop requestBioskop)
+	public Bioskop editBioskop(@RequestBody Bioskop requestBioskop)
 	{								
 		Bioskop iz_baze = bioskopService.findBioskopById(requestBioskop.getId());
 		
@@ -182,7 +182,7 @@ public class BioskopController{
 		
 		context.setAttribute("bioskopProfil", bioskopService.findBioskopById(requestBioskop.getId()));
 		
-		return new ResponseEntity<>(bioskopService.findBioskopById(requestBioskop.getId()),HttpStatus.OK);
+		return bioskopService.findBioskopById(requestBioskop.getId());
 	}
 	
 	@RequestMapping(value="/obrisiProjekciju", method= RequestMethod.DELETE)
