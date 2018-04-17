@@ -2,9 +2,151 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
 <title>Izmeni rekvizit</title>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("Usao na Izmenu rekvizitas.");
+
+		$.ajax({
+			url:"http://localhost:8099/rekvizitController/getSelectedRekvizit",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+					console.log(data.naziv);
+					
+					
+				}
+				
+				document.getElementById("naziv").value = data.naziv;
+				document.getElementById("cena").value = data.cena;
+				document.getElementById("opis").value = data.opis;
+				document.getElementById("slika").value = data.slika;
+				document.getElementById('id').value=data.id;
+				
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	</script>
+
+
 </head>
 <body>
 <h1> Izmena rekvizita </h1>
-</body>
+
+
+<form id = "registrationForm" name = "registrationForm" method="POST">
+
+			<label  for="cd-name">ID</label>
+			<input  type="text" name="id" id="id" disabled><br/>
+					
+			<label  >Naziv</label><br/>
+			<input id ="naziv" name ="naziv"  type="text" class="form-control"   ><br/>
+			
+			<label>Cena</label><br/>
+			<input id = "cena" name = "cena" type="text" class="form-control" placeholder= "Cena"><br/> 
+			
+			<label > Opis :</label><br/>
+			<input id = "opis" name = "opis" type="text" class="form-control"  placeholder="opis"><br/> 
+			
+			<label>Slika</label><br/>
+			<input id = "slika" name ="slika" class="form-control" placeholder="slika"><br/>
+			 
+			
+			<hr><br>
+			
+			<input id="zavrseno" type="button" class="btn btn-info"  value="Izmeni"> 	 	
+			
+				
+		</form>
+		<br><br>
+		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
+					        
+					  <input type="submit" value="Odustani">				        
+		</form> 
+
+
+			<script type="text/javascript">
+		
+			$("#zavrseno").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+				var naziv = forma.find('[name=naziv]').val();
+				var cena = forma.find('[name=cena]').val();
+				var opis = forma.find('[name=opis]').val();
+				var slika = forma.find('[name=slika]').val();
+			
+				
+				if(!naziv) {
+					
+					alert("Unesite naziv!");
+					provera = false;
+				}else if(!cena) {
+					alert("Unesite cenu!");
+					provera = false;
+				}
+				else if(!opis) {
+					alert("Unesite opis!");
+					provera = false;
+				}	
+				
+				else if(!slika) {
+					alert("Unesite slika!");
+					provera = false;
+				}
+				
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						id:$("#registrationForm [name='id']").val(),
+						naziv:$("#registrationForm [name='naziv']").val(),
+						cena:$("#registrationForm [name='cena']").val(),
+						opis:$("#registrationForm [name='opis']").val(),
+						slika:$("#registrationForm [name='slika']").val()
+					   });
+					
+					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
+						url: "http://localhost:8099/rekvizitController/izmeni",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Azuriranje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/adminFanHome.html" 			
+							}else{
+								alert("Azuriranje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});		
+		</script>
+
+	</body>
 </html>

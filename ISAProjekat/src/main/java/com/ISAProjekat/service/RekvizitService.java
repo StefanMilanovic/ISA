@@ -13,4 +13,5 @@ public interface RekvizitService {
 	
 	Rekvizit delete(Long id);
 	Rekvizit findById(Long id);
+	
 }
