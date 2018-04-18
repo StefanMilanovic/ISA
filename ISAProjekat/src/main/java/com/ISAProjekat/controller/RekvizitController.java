@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ISAProjekat.model.Bioskop;
+import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Rekvizit;
 import com.ISAProjekat.service.RekvizitService;
 
@@ -39,25 +40,6 @@ public class RekvizitController {
 		System.out.println("\nUzimam rekvizit ..");
 		List<Rekvizit> rr = rekvizitService.findAll();
 		return new ResponseEntity<>(rr, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "obrisi", method = RequestMethod.DELETE)
-	public ResponseEntity<Rekvizit> delete(@RequestBody Rekvizit rekvizit,@PathVariable Long id) {
-		System.out.println("************\nasdasd");
-		long pom;
-		//Rekvizit deleted = rekvizitService.delete(id);
-		Rekvizit deleted = new Rekvizit();
-		for(Rekvizit r : rekvizitService.findAll()){
-			if(r.getId().equals(rekvizit.getId())){
-				System.out.println("\n Nasao sam rekvizit!\n");
-				pom = r.getId();
-				deleted = rekvizitService.delete(r.getId());
-			}
-			
-		}
-		
-	//	
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
 	
 	
@@ -101,6 +83,8 @@ public class RekvizitController {
 	@RequestMapping(value = "/izmeni", method = RequestMethod.PUT)
 	public Rekvizit izmeni(@RequestBody Rekvizit requestRekvizit){
 		
+		
+	
 		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
 		Rekvizit iz_baze = rekvizitService.findById(requestRekvizit.getId());
 		
@@ -121,11 +105,34 @@ public class RekvizitController {
 	
 	}//kraj izmene rekvizita
 	
+	//brisanje rekvizita
+	@RequestMapping(value="/obrisi", method= RequestMethod.DELETE)
+	public boolean obrisi(@RequestBody Rekvizit data){
+		Rekvizit iz_baze = rekvizitService.findById(data.getId());
+		System.out.println(data);
+	/*	data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+		*/
+		//Long id = Long.parseLong(data.getId(),10);
+		
+		
+		
+		
+	//	List<Projekcija> projekcije = projekcijaService.findAll();
+		//projekcijaService.delete(id);
+		 boolean prosao = rekvizitService.delete(data.getId());
+		return prosao;
+	}
+	
 	
 	@RequestMapping(value = "/odjava", method = RequestMethod.GET)
 	public boolean odjava(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return true;
 	}
+	
+	
 	
 }

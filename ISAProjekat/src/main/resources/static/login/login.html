@@ -73,11 +73,11 @@
 									localStorage.setItem("adminfan", "fanzona");
 									
 									if(data.bioUlogovan== true){//1 = true
-										alert(" bio ulogovan = true");
+										
 										location.href = "http://localhost:8099/adminFanHome.html"	
 										
 									}else if(data.bioUlogovan == false){
-										alert(" bio ulogovan = false");
+										
 										location.href = "http://localhost:8099/adminFanPrviLog.html"	
 										
 									}
@@ -88,6 +88,9 @@
 									localStorage.setItem("registrovan korisnik", data.id);
 									location.href = "http://localhost:8099/home.html"
 								
+								}else if(data.tipKorisnika=="ADMIN_SIST"){
+									location.href = "http://localhost:8099/adminSistemaHome.html"
+									
 								}else{
 									alert("Korisnik nije registrovan!");
 									//location.href = "http://localhost:8099/index.html" 

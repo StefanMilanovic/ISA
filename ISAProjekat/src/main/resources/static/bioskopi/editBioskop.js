@@ -70,7 +70,13 @@ function izmeniBioskop(){
 					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
 				}
 			},
+<<<<<<< HEAD
 			error: function (textStatus, errorThrown) {	
+=======
+			error: function (textStatus, errorThrown) {
+				alert("greska");
+				console.log("NE VALJA NESTO");
+>>>>>>> 3f746cb157dd971c9f7c9c30c7f7a47c86031f92
 				console.log(textStatus);
 				top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
 			}

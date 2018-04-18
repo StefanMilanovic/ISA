@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ISAProjekat.model.Oglas;
+import com.ISAProjekat.model.Rekvizit;
+import com.ISAProjekat.repository.FanZonaRepository;
 import com.ISAProjekat.repository.OglasRepository;
 import com.ISAProjekat.service.OglasService;
 
@@ -19,6 +21,10 @@ public class OglasServiceImpl  implements OglasService{
 
 		@Autowired
 		private OglasRepository oglasRepository;
+		
+		
+		@Autowired
+		private FanZonaRepository fanZonaRepository;
 		
 		@Override
 		public Oglas findOglasByNaziv(String naziv) {
@@ -38,8 +44,13 @@ public class OglasServiceImpl  implements OglasService{
 
 		@Override
 		public Oglas save(Oglas oglas) {
+			if(oglas.getFanZona() == null){
+			
+				oglas.setFanZona(fanZonaRepository.findOne((long) 1));
+			}
 			return oglasRepository.save(oglas);
 		}
+
 
 		@Override
 		public List<Oglas> save(List<Oglas> oglasi) {
@@ -56,7 +67,13 @@ public class OglasServiceImpl  implements OglasService{
 			oglasRepository.delete(oglas);
 			return oglas;
 		}
-
+		
+		
+		@Override
+		public Oglas findById(Long id) {
+			return oglasRepository.findOne(id);
+			//return null;
+		}
 
 	
 }

@@ -30,7 +30,7 @@ public class Korisnik implements Serializable {
 
 
 	public Korisnik( String email, String sifra,  String ime, String prezime, String grad,
-			String telefon, String tipKorisnika, boolean bioUlogovan) {
+			String telefon, String tipKorisnika, boolean bioUlogovan, boolean predefinisan) {
 		super();
 		
 		this.email = email;
@@ -42,6 +42,7 @@ public class Korisnik implements Serializable {
 		this.telefon = telefon;
 		this.tipKorisnika = tipKorisnika;
 		this.bioUlogovan = bioUlogovan;
+		this.predefinisan = predefinisan;
 	}
 
 
@@ -78,6 +79,8 @@ public class Korisnik implements Serializable {
     @Column(name =  "bioUlogovan", nullable= false)
     private boolean bioUlogovan; 
     
+    @Column(name =  "predefinisan", nullable= false)
+    private boolean predefinisan;
     
     
     
@@ -259,6 +262,24 @@ public class Korisnik implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+
+
+
+
+	public boolean isPredefinisan() {
+		return predefinisan;
+	}
+
+
+
+
+
+
+	public void setPredefinisan(boolean predefinisan) {
+		this.predefinisan = predefinisan;
 	}
 
     

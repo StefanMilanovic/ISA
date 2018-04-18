@@ -40,14 +40,14 @@ public class RekvizitServiceImpl implements RekvizitService {
 	}
 
 	@Override
-	public Rekvizit delete(Long id) {
+	public boolean delete(Long id) {
 		Rekvizit rekvizit = rekvizitRepository.findOne(id);
 		if(rekvizit == null){
 			throw new IllegalArgumentException("Tried to delete"
 					+ "non-existant rekvizit");
 		}
 		rekvizitRepository.delete(rekvizit);
-		return rekvizit;
+		return true;
 		//return null;
 	}
 

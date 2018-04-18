@@ -59,50 +59,61 @@ public class KorisnikContreller {
 	public ResponseEntity<Korisnik> registracija(@RequestBody Korisnik requestKorisnik){
 		
 		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false);
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false,false);
 		
 		List<Korisnik> lk = korisnikService.findAll() ;
 		
 		System.out.println("\n registracija Korisnika\n"+ preuzetKorisnik.getEmail()+"\n"+preuzetKorisnik.getIme() +"\n"+preuzetKorisnik.getPrezime()+"\n"+preuzetKorisnik.getSifra()
 		+"\n"+preuzetKorisnik.getGrad()+"\n"+preuzetKorisnik.getTelefon()+"\n");
 		
-		
 		//ako je baza prazna samo ga dodaj bez provere 
 		if(lk.isEmpty()){
 			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
 				
 			{
-				System.out.println("\nProsap2");
+				System.out.println("\nProsao 1");
 				preuzetKorisnik.setTipKorisnika("REGISTROVAN");
 				
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
 			}else{
+				System.out.println("\n NIJE Prosao 1");
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
 				
 			}
 			
 		}
+		
+		boolean prolazi = true;
 		for(Korisnik k : lk){
-			if(!(k.getEmail().equals(preuzetKorisnik.getEmail()))){
-				if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
-					
-					{
-						System.out.println("\nProsap2");
-						preuzetKorisnik.setTipKorisnika("REGISTROVAN");
-						
-						
-						korisnikService.save(preuzetKorisnik);
-						return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
-					}
+			if((k.getEmail().equals(preuzetKorisnik.getEmail()))){
+				prolazi =false;
+				System.out.println("\n ZAVRSI");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
 			}else{
-				System.out.println("Email zauzet!");
 				
+				prolazi = true;
+				System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetKorisnik.getEmail()+"\n");
 			}
-			
 		}
-		return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao2");
+				preuzetKorisnik.setTipKorisnika("REGISTROVAN");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}
+				System.out.println("\nEmail zauzet!");
+
+				System.out.println("\n NIJE Prosao 2");
+			
+	
+		
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
 		
 	}//kraj registracije
 	
@@ -166,6 +177,194 @@ public class KorisnikContreller {
 		return korAzuriraj;
 	}//kraj admin fan zona promena lozinke
 	
+	
+	
+	
+	@RequestMapping(value = "/registracijaAdminFan", method = RequestMethod.POST)
+	public ResponseEntity<Korisnik> registracijaAdminFan(@RequestBody Korisnik requestKorisnik){
+		
+		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false,false);
+		
+		List<Korisnik> lk = korisnikService.findAll() ;
+		
+		System.out.println("\n registracija Korisnika\n"+ preuzetKorisnik.getEmail()+"\n"+preuzetKorisnik.getIme() +"\n"+preuzetKorisnik.getPrezime()+"\n"+preuzetKorisnik.getSifra()
+		+"\n"+preuzetKorisnik.getGrad()+"\n"+preuzetKorisnik.getTelefon()+"\n");
+		
+		//ako je baza prazna samo ga dodaj bez provere 
+		if(lk.isEmpty()){
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao 1");
+				preuzetKorisnik.setTipKorisnika("ADMIN_FAN");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}else{
+				System.out.println("\n NIJE Prosao 1");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		}
+		
+		boolean prolazi = true;
+		for(Korisnik k : lk){
+			if((k.getEmail().equals(preuzetKorisnik.getEmail()))){
+				prolazi =false;
+				System.out.println("\n ZAVRSI");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+			}else{
+				
+				prolazi = true;
+				System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetKorisnik.getEmail()+"\n");
+			}
+		}
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao2");
+				preuzetKorisnik.setTipKorisnika("ADMIN_FAN");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}
+				System.out.println("\nEmail zauzet!");
+
+				System.out.println("\n NIJE Prosao 2");
+			
+	
+		
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+		
+	}//kraj registracije
+//kraj registracije admin fan
+	
+	@RequestMapping(value = "/registracijaAdminObj", method = RequestMethod.POST)
+	public ResponseEntity<Korisnik> registracijaAdminObj(@RequestBody Korisnik requestKorisnik){
+		
+		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false,false);
+		
+		List<Korisnik> lk = korisnikService.findAll() ;
+		
+		System.out.println("\n registracija Korisnika\n"+ preuzetKorisnik.getEmail()+"\n"+preuzetKorisnik.getIme() +"\n"+preuzetKorisnik.getPrezime()+"\n"+preuzetKorisnik.getSifra()
+		+"\n"+preuzetKorisnik.getGrad()+"\n"+preuzetKorisnik.getTelefon()+"\n");
+		
+		//ako je baza prazna samo ga dodaj bez provere 
+		if(lk.isEmpty()){
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao 1");
+				preuzetKorisnik.setTipKorisnika("ADMIN_OBJ");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}else{
+				System.out.println("\n NIJE Prosao 1");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		}
+		
+		boolean prolazi = true;
+		for(Korisnik k : lk){
+			if((k.getEmail().equals(preuzetKorisnik.getEmail()))){
+				prolazi =false;
+				System.out.println("\n ZAVRSI");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+			}else{
+				
+				prolazi = true;
+				System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetKorisnik.getEmail()+"\n");
+			}
+		}
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao2");
+				preuzetKorisnik.setTipKorisnika("ADMIN_OBJ");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}
+				System.out.println("\nEmail zauzet!");
+
+				System.out.println("\n NIJE Prosao 2");
+			
+	
+		
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+		
+	}//kraj registracije admin objekta
+	
+	@RequestMapping(value = "/registracijaAdminSist", method = RequestMethod.POST)
+	public ResponseEntity<Korisnik> registracijaAdminSist(@RequestBody Korisnik requestKorisnik){
+		
+		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false,false);
+		
+		List<Korisnik> lk = korisnikService.findAll() ;
+		
+		System.out.println("\n registracija Korisnika\n"+ preuzetKorisnik.getEmail()+"\n"+preuzetKorisnik.getIme() +"\n"+preuzetKorisnik.getPrezime()+"\n"+preuzetKorisnik.getSifra()
+		+"\n"+preuzetKorisnik.getGrad()+"\n"+preuzetKorisnik.getTelefon()+"\n");
+		
+		//ako je baza prazna samo ga dodaj bez provere 
+		if(lk.isEmpty()){
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao 1");
+				preuzetKorisnik.setTipKorisnika("ADMIN_SIST");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}else{
+				System.out.println("\n NIJE Prosao 1");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+				
+			}
+			
+		}
+		
+		boolean prolazi = true;
+		for(Korisnik k : lk){
+			if((k.getEmail().equals(preuzetKorisnik.getEmail()))){
+				prolazi =false;
+				System.out.println("\n ZAVRSI");
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+			}else{
+				
+				prolazi = true;
+				System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetKorisnik.getEmail()+"\n");
+			}
+		}
+			if(!preuzetKorisnik.getEmail().isEmpty() && !preuzetKorisnik.getSifra().isEmpty() && !preuzetKorisnik.getIme().isEmpty() && !preuzetKorisnik.getPrezime().isEmpty() && !preuzetKorisnik.getGrad().isEmpty()  &&  !preuzetKorisnik.getTelefon().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao2");
+				preuzetKorisnik.setTipKorisnika("ADMIN_SIST");
+				
+				
+				korisnikService.save(preuzetKorisnik);
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
+			}
+				System.out.println("\nEmail zauzet!");
+
+				System.out.println("\n NIJE Prosao 2");
+			
+	
+		
+				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
+		
+	}
+
 }
-
-
