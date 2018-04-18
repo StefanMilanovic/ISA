@@ -2,12 +2,17 @@ package com.ISAProjekat.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pozoriste implements Serializable{
@@ -24,12 +29,19 @@ public class Pozoriste implements Serializable{
 		this.opis = opis;
 		this.prosecna_ocena=prosecna_ocena;
 	}
+	public Pozoriste(String naziv, String adresa, String opis) {
+		super();
+		this.naziv = naziv;
+		this.adresa = adresa;
+		this.opis = opis;
+
+	}
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pozoriste_id", nullable = false, updatable = false)
 	private Long id;
 	
-	@Column(name = "naziv", nullable = false, updatable = true)
+	@Column(name = "naziv", nullable = false, updatable = true,unique = true)
 	private String naziv;
 	
 	@Column(name = "adresa", nullable = false, updatable = true)
@@ -41,6 +53,7 @@ public class Pozoriste implements Serializable{
 	@Column(name = "pros_ocena", nullable = true, updatable = true)
 	private double prosecna_ocena;
 
+	
 
 	public Long getId() {
 		return id;
@@ -81,7 +94,5 @@ public class Pozoriste implements Serializable{
 	public void setProsecna_ocena(double prosecna_ocena) {
 		this.prosecna_ocena = prosecna_ocena;
 	}
-	
-	
-	
+
 }

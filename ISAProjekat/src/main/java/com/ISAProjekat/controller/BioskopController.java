@@ -1,12 +1,12 @@
 package com.ISAProjekat.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -189,4 +189,109 @@ public class BioskopController{
 		
 		return new ResponseEntity <>(projekcije.get(0), HttpStatus.OK);
 	}
+	
+
+	
+	//Registracija bioskopa s
+	@RequestMapping(value = "/registracijaBioskopa", method = RequestMethod.POST)
+	public ResponseEntity<Bioskop> registracijaBioskopa(@RequestBody Bioskop requestBioskop){
+		
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Bioskop preuzetBioskop = new Bioskop(requestBioskop.getNaziv(),requestBioskop.getAdresa(),requestBioskop.getOpis());
+		
+		List<Bioskop> lk = bioskopService.findAll() ;		
+		//ako je baza prazna samo ga dodaj bez provere 
+		if(lk.isEmpty()){
+			if(!preuzetBioskop.getNaziv().isEmpty() && !preuzetBioskop.getOpis().isEmpty() && !preuzetBioskop.getAdresa().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao 1");	
+				preuzetBioskop.setSale(new HashSet<Sala>());
+				
+				bioskopService.save(preuzetBioskop);
+				context.setAttribute("regBioskop", preuzetBioskop);
+				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.OK);
+			}else{
+				System.out.println("\n NIJE Prosao 1");
+				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.BAD_REQUEST);				
+			}			
+		}		
+		boolean prolazi = true;
+		for(Bioskop k : lk){
+			if((k.getNaziv().equals(preuzetBioskop.getNaziv()))){
+				prolazi =false;
+				System.out.println("\n ZAVRSI");
+				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.BAD_REQUEST);
+			}else{
+				
+				prolazi = true;
+				//System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetBioskop.getEmail()+"\n");
+			}
+		}
+		if(!preuzetBioskop.getNaziv().isEmpty() && !preuzetBioskop.getOpis().isEmpty() && !preuzetBioskop.getAdresa().isEmpty()) 	
+				
+			{
+				System.out.println("\nProsao2");
+				preuzetBioskop.setSale(new HashSet<Sala>());
+				
+				bioskopService.save(preuzetBioskop);
+
+				context.setAttribute("regBioskop", preuzetBioskop);
+				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.OK);
+			}
+				System.out.println("\nEmail zauzet!");
+				System.out.println("\n NIJE Prosao 2");
+				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.BAD_REQUEST);
+		
+	}
+	
+
+	@RequestMapping(value="/getBioskopZaReg", method = RequestMethod.GET)
+	public ResponseEntity<Bioskop>getBioskopZaReg(HttpServletRequest request){
+		
+		Bioskop b = null;
+		b = (Bioskop) context.getAttribute("regBioskop");
+		System.out.println("\n Registracija sala za bioskop: "+b.getNaziv());
+		
+		return new ResponseEntity<>(b, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/registracijaSala", method = RequestMethod.POST)
+	public ResponseEntity<Sala> registracijaSala(@RequestBody Sala requestSala){
+		
+		Bioskop b = null;
+		b = (Bioskop) context.getAttribute("regBioskop");
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Sala preuzetSala = new Sala(requestSala.getNaziv());
+		
+		
+		 Bioskop bRoditelj = bioskopService.findBioskopById(b.getId());
+		 List<Sala>sve_sale = salaService.findAll();
+		
+		 
+			for(Sala s: bRoditelj.getSale()){
+				if(s.getNaziv().equals(preuzetSala.getNaziv())){
+					System.out.println("\n ****** IMA SALA SA TIM IMENOM!");
+					return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
+					
+				}
+				
+			}
+			preuzetSala.setBioskop(bRoditelj);
+			salaService.save(preuzetSala);
+			bioskopService.findBioskopById(b.getId()).getSale().add(preuzetSala);
+				
+				
+			
+			bioskopService.save(bioskopService.findBioskopById(b.getId()));
+			
+		
+			
+			return new ResponseEntity<Sala>(preuzetSala, HttpStatus.OK);
+			//return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
+		//ako je baza prazna samo ga dodaj bez provere 
+	
+	}
+
+
 }

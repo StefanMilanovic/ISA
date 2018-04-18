@@ -32,6 +32,14 @@ public class Bioskop implements Serializable{
 		this.broj_glasova = broj_glasova;
 		this.sale=sale;
 	}
+	
+	public Bioskop(String naziv, String adresa, String opis	) {
+		super();
+		this.naziv = naziv;
+		this.adresa = adresa;
+		this.opis = opis;
+	
+	}
 
 
 	@Id
@@ -39,7 +47,7 @@ public class Bioskop implements Serializable{
     @Column(name = "bioskop_id", nullable = false, updatable = false)
 	private Long id;
 	
-	@Column(name = "naziv", nullable = false, updatable = true)
+	@Column(name = "naziv", nullable = false, updatable = true,unique = true)
 	private String naziv;
 	
 	@Column(name = "adresa", nullable = false, updatable = true)

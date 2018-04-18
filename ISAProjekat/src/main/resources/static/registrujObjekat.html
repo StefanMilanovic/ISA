@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+
+<script src="jquery-3.2.1.min.js"></script>
+
+<title>Registruj objekat</title>
+</head>
+<body>
+
+
+<h1>Registruj objekat </h1>
+
+		<form id = "registrationForm" name = "registrationForm" method="POST">
+			
+			<label>Naziv</label><br/>
+			<input name = "naziv" type="text" class="form-control"   placeholder= "Naziv"><br/>
+			
+			<label>Adresa</label><br/>
+			<input type="text" class="form-control" name = "adresa" placeholder= "Adresa"><br/> 
+			
+			<label>Opis</label><br/>
+			<input type="text" class="form-control" name ="opis" placeholder="Opis" ><br/> 
+			
+			
+			<br/>
+			
+	
+			<br/>
+			<br/>
+				
+			<input id="regPozoriste" type="button" class="btn btn-info"  value="Registruj Pozoriste" disabled> 	
+			<input id="regBioskop" type="button" class="btn btn-info"  value="Registruj Bioskop"> 	
+					
+				
+				
+		</form>
+
+
+
+	<hr><br/>
+	<form id ="nazadForma" action="adminSistemaHome.html" class="form-horizontal">
+					        
+		  <input class="btn btn-link" type="submit" value="Odustani">				        
+	</form> 
+	
+	
+	
+	
+<script type="text/javascript">
+function provera1(){
+	
+	var provera = true;
+	var forma = $('form[id="registrationForm"]');
+	
+	var naziv = forma.find('[name=naziv]').val();
+	var adresa = forma.find('[name=adresa]').val();
+	var opis = forma.find('[name=opis]').val();
+
+	
+	if(!naziv) {
+		
+		alert("Unesite naziv!");
+		provera = false;
+	}else if(!adresa) {
+		alert("Unesite adresa!");
+		provera = false;
+	}
+	else if(!opis) {
+		alert("Unesite opis!");
+		provera = false;
+	}	
+	
+	return provera;
+}
+		$("#regBioskop").click(function(){
+				
+				var provera= provera1();
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						naziv:$("#registrationForm [name='naziv']").val(),
+						adresa:$("#registrationForm [name='adresa']").val(),
+						opis:$("#registrationForm [name='opis']").val(),
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/bioskopController/registracijaBioskopa",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Registracija uspesna");
+								
+								
+								
+								location.href = "http://localhost:8099/registrujSale.html" 			
+							}else
+								alert("Registracija neuspesna!");
+						},
+						error: function(data){
+							alert('Greska podaci registracija!')
+							
+						}
+					});
+				}
+			});	
+		
+		$("#regPozoriste").click(function(){
+			
+			var provera= provera1();
+			if(provera) {
+				
+					
+				formData = JSON.stringify({
+					naziv:$("#registrationForm [name='naziv']").val(),
+					adresa:$("#registrationForm [name='adresa']").val(),
+					opis:$("#registrationForm [name='opis']").val(),
+				   });
+				
+				$.ajax({
+					url: "http://localhost:8099/pozoristeController/registracijaPozorista",
+					type: "POST",
+					data: formData,
+					contentType: "application/json",
+					datatype: 'json',
+					success: function(data){
+						if(data){
+							alert("Registracija uspesna");
+							
+							
+							
+							location.href = "http://localhost:8099/registrujSalePozoriste.html" 			
+						}else
+							alert("Registracija neuspesna!");
+					},
+					error: function(data){
+						alert('Greska podaci registracija!')
+						
+					}
+				});
+			}
+		});	
+		</script>
+</body>
+</html>

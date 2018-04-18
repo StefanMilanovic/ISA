@@ -24,6 +24,8 @@ public class Sala {
 	@ManyToOne(optional = false)
 	private Bioskop bioskop;
 	
+	
+	
 	@Column(name = "naziv", nullable = false)
 	private String naziv;
 	
@@ -36,6 +38,10 @@ public class Sala {
 		this.naziv = naziv;
 		this.bioskop = bioskop;
 		this.projekcije=projekcije;
+	}
+	public Sala(String naziv) {
+		super();
+		this.naziv = naziv;
 	}
 	
 	public Sala(){}

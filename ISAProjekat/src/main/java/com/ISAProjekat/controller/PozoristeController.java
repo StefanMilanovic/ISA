@@ -1,6 +1,7 @@
 package com.ISAProjekat.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -205,4 +206,114 @@ public class PozoristeController {
 		
 		return new ResponseEntity <>(projekcije.get(0), HttpStatus.OK);
 	}
+	
+	
+	
+	//Registracija pozorista s
+		@RequestMapping(value = "/registracijaPozorista", method = RequestMethod.POST)
+		public ResponseEntity<Pozoriste> registracijaPozorista(@RequestBody Pozoriste requestPozoriste){
+			
+			//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+			Pozoriste preuzetBioskop = new Pozoriste(requestPozoriste.getNaziv(),requestPozoriste.getAdresa(),requestPozoriste.getOpis());
+			
+			List<Pozoriste> lk = pozoristeService.findAll() ;		
+			//ako je baza prazna samo ga dodaj bez provere 
+			if(lk.isEmpty()){
+				if(!preuzetBioskop.getNaziv().isEmpty() && !preuzetBioskop.getOpis().isEmpty() && !preuzetBioskop.getAdresa().isEmpty()) 	
+					
+				{
+					System.out.println("\nProsao 1");	
+					//preuzetBioskop.setSale(new HashSet<Sala>());
+					pozoristeService.save(preuzetBioskop);
+
+					context.setAttribute("regPozoriste", preuzetBioskop);
+					return new ResponseEntity<Pozoriste>(preuzetBioskop, HttpStatus.OK);
+				}else{
+					System.out.println("\n NIJE Prosao 1");
+					return new ResponseEntity<Pozoriste>(preuzetBioskop, HttpStatus.BAD_REQUEST);				
+				}			
+			}		
+			boolean prolazi = true;
+			for(Pozoriste k : lk){
+				if((k.getNaziv().equals(preuzetBioskop.getNaziv()))){
+					prolazi =false;
+					System.out.println("\n ZAVRSI");
+					return new ResponseEntity<Pozoriste>(preuzetBioskop, HttpStatus.BAD_REQUEST);
+				}else{
+					
+					prolazi = true;
+					//System.out.println("\n UPOREDI "+k.getEmail() +" i "+ preuzetBioskop.getEmail()+"\n");
+				}
+			}
+			if(!preuzetBioskop.getNaziv().isEmpty() && !preuzetBioskop.getOpis().isEmpty() && !preuzetBioskop.getAdresa().isEmpty()) 	
+					
+				{
+					System.out.println("\nProsao2");
+					//preuzetBioskop.setSale(new HashSet<Sala>());
+					pozoristeService.save(preuzetBioskop);
+
+					context.setAttribute("regPozoriste", preuzetBioskop);
+					return new ResponseEntity<Pozoriste>(preuzetBioskop, HttpStatus.OK);
+				}
+					System.out.println("\nEmail zauzet!");
+					System.out.println("\n NIJE Prosao 2");
+					return new ResponseEntity<Pozoriste>(preuzetBioskop, HttpStatus.BAD_REQUEST);
+			
+		}
+		
+		
+		
+		
+		@RequestMapping(value="/getPozoristeZaReg", method = RequestMethod.GET)
+		public ResponseEntity<Pozoriste>getBioskopZaReg(HttpServletRequest request){
+			
+			Pozoriste b = null;
+			b = (Pozoriste) context.getAttribute("regPozoriste");
+			System.out.println("\n Registracija sala za pozoriste: "+b.getNaziv());
+			
+			return new ResponseEntity<>(b, HttpStatus.OK);
+		}
+		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//PREUZMI SALU DOBRU , i otkomentarisi u registraciji pozorista inicijalizaciju skupa sala !!!
+		/*
+		@RequestMapping(value = "/registracijaSala", method = RequestMethod.POST)
+		public ResponseEntity<Sala> registracijaSala(@RequestBody Sala requestSala){
+			
+			Pozoriste b = null;
+			b = (Pozoriste) context.getAttribute("regPozoriste");
+			//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+			Sala preuzetSala = new Sala(requestSala.getNaziv());
+			
+			
+			Pozoriste bRoditelj = pozoristeService.findPozoristeById(b.getId());
+			 List<Sala>sve_sale = salaService.findAll();
+			
+			 
+				for(Sala s: bRoditelj.getSale()){
+					if(s.getNaziv().equals(preuzetSala.getNaziv())){
+						System.out.println("\n ****** IMA SALA SA TIM IMENOM!");
+						return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
+						
+					}
+					
+				}
+				
+				
+				//OVDE SAMO PRILAGOI !!!
+				preuzetSala.setPozoriste(bRoditelj);
+				salaService.save(preuzetSala);
+				pozoristeService.findPozoristeById(b.getId()).getSale().add(preuzetSala);
+					
+					
+				
+				pozoristeService.save(pozoristeService.findPozoristeById(b.getId()));
+				
+			
+				
+				return new ResponseEntity<Sala>(preuzetSala, HttpStatus.OK);
+				//return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
+			//ako je baza prazna samo ga dodaj bez provere 
+		
+		}*/
+		
 }

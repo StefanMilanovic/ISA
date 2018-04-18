@@ -54,10 +54,3 @@ values ('Bioskop3','Aleksandra Lupica 33, Novi Sad','Novi bioskop u gradu, 200 s
 
 insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
 values ('Bioskop4','Jovice Cubrica 142, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
-
-insert into sala(naziv, bioskop)
-values ('Sala1','1');
-
-insert into sala(naziv, bioskop)
-values ('Sala2','1');
-
