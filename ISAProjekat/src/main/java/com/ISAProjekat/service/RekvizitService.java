@@ -11,7 +11,7 @@ public interface RekvizitService {
 	
 	List<Rekvizit> findAll();
 	
-	Rekvizit delete(Long id);
+	boolean delete(Long id);
 	Rekvizit findById(Long id);
 	
 }

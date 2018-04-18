@@ -3,14 +3,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <script src="jquery-3.2.1.min.js"></script>
-<title>Izmeni rekvizit</title>
+<title>Odabran oglas</title>
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		console.log("Usao na Izmenu rekvizitas.");
+		console.log("Usao na odabran oglas.");
 
 		$.ajax({
-			url:"http://localhost:8099/rekvizitController/getSelectedRekvizit",
+			url:"http://localhost:8099/oglasController/getSelectedOglas",
 			type:"GET",
 			dataType:"json",
 			success:function(data){
@@ -31,8 +31,8 @@
 				document.getElementById("cena").value = data.cena;
 				document.getElementById("opis").value = data.opis;
 				document.getElementById("slika").value = data.slika;
+				document.getElementById("datum").value = data.datum;
 				document.getElementById('id').value=data.id;
-				document.getElementById('id1').value=data.id;
 				
 			},
 			error:function(textStatus, errorThrown){
@@ -47,7 +47,7 @@
 
 </head>
 <body>
-<h1> Izmena rekvizita </h1>
+<h1> Profil oglasa</h1>
 
 
 <form id = "registrationForm" name = "registrationForm" method="POST">
@@ -56,31 +56,32 @@
 			<input  type="text" name="id" id="id" disabled><br/>
 					
 			<label  >Naziv</label><br/>
-			<input id ="naziv" name ="naziv"  type="text" class="form-control"   ><br/>
+			<input id ="naziv" name ="naziv"  type="text" class="form-control"   disabled ><br/>
 			
 			<label>Cena</label><br/>
-			<input id = "cena" name = "cena" type="text" class="form-control" placeholder= "Cena"><br/> 
+			<input id = "cena" name = "cena" type="text" class="form-control" placeholder= "Cena" disabled><br/> 
 			
 			<label > Opis :</label><br/>
-			<input id = "opis" name = "opis" type="text" class="form-control"  placeholder="opis"><br/> 
+			<input id = "opis" name = "opis" type="text" class="form-control"  placeholder="opis" disabled><br/> 
 			
 			<label>Slika</label><br/>
-			<input id = "slika" name ="slika" class="form-control" placeholder="slika"><br/>
+			<input id = "slika" name ="slika" class="form-control" placeholder="slika" disabled><br/>
+			 
+			<label>Datum</label><br/>
+			<input id = "datum" name ="datum" class="form-control" placeholder="datum" disabled><br/>
 			 
 			
 			<hr><br>
-			
-			<input id="izmeni" type="button" class="btn btn-info"  value="Izmeni"><br><br> 	 
-				
+			<p>
+				<input id="odobri" type="button" class="btn btn-info"  value="Odobri"> <pre>		 </pre>
+				<input id="odbi" type="button" class="btn btn-info"  value="Odbi">
+			</p>
 		</form>
 		<br><br>
 		
-		<form id ="obrisiForm" action="adminFanHome.html" >
-					   <input  type="text" name="id1" id="id1" disabled><br/>    
-					  <input id="obrisi" type="button" class="btn btn-info"  value="Obrisi">			        
-		</form> 
 		
-		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
+		
+		<form id ="nazadForma" action="proveraOglasa.html" class="form-horizontal">
 					        
 			<input type="submit" value="Odustani">				        
 		</form> 
@@ -88,7 +89,7 @@
 
 		<script type="text/javascript">
 		
-			$("#izmeni").click(function(){
+			$("#odobri").click(function(){
 				
 				var provera = true;
 				var forma = $('form[id="registrationForm"]');
@@ -97,26 +98,8 @@
 				var cena = forma.find('[name=cena]').val();
 				var opis = forma.find('[name=opis]').val();
 				var slika = forma.find('[name=slika]').val();
-			
-				
-				if(!naziv) {
-					
-					alert("Unesite naziv!");
-					provera = false;
-				}else if(!cena) {
-					alert("Unesite cenu!");
-					provera = false;
-				}
-				else if(!opis) {
-					alert("Unesite opis!");
-					provera = false;
-				}	
-				
-				else if(!slika) {
-					alert("Unesite slika!");
-					provera = false;
-				}
-				
+				var slika = forma.find('[name=datum]').val();
+						
 				if(provera) {
 					
 						
@@ -125,24 +108,26 @@
 						naziv:$("#registrationForm [name='naziv']").val(),
 						cena:$("#registrationForm [name='cena']").val(),
 						opis:$("#registrationForm [name='opis']").val(),
-						slika:$("#registrationForm [name='slika']").val()
+						slika:$("#registrationForm [name='slika']").val(),
+
+						datum:$("#registrationForm [name='datum']").val()
 					   });
 					
 					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
-						url: "http://localhost:8099/rekvizitController/izmeni",
+						url: "http://localhost:8099/oglasController/odobri",
 						type: "PUT",
 						data: formData,
 						contentType: "application/json",
 						datatype: 'json',
 						success: function(data){
 							if(data){
-								alert("Azuriranje uspesno");
+								alert("Odobravanje uspesno");
 								
 								
 								
-								location.href = "http://localhost:8099/adminFanHome.html" 			
+								location.href = "http://localhost:8099/proveraOglasa.html" 			
 							}else{
-								alert("Azuriranje neuspesno!");
+								alert("Odobravanje neuspesno!");
 							}
 						},
 						error: function(data){
@@ -153,38 +138,49 @@
 				}
 			});	
 			
-			
-$("#obrisi").click(function(){
+	$("#odbi").click(function(){
 				
 				var provera = true;
-				var forma = $('form[id="obrisiForm"]');
+				var forma = $('form[id="registrationForm"]');
 				
+				var naziv = forma.find('[name=naziv]').val();
+				var cena = forma.find('[name=cena]').val();
+				var opis = forma.find('[name=opis]').val();
+				var slika = forma.find('[name=slika]').val();
+				var slika = forma.find('[name=datum]').val();
+						
 				if(provera) {
 					
 						
 					formData = JSON.stringify({
-						id:$("#registrationForm [name='id']").val()
+						id:$("#registrationForm [name='id']").val(),
+						naziv:$("#registrationForm [name='naziv']").val(),
+						cena:$("#registrationForm [name='cena']").val(),
+						opis:$("#registrationForm [name='opis']").val(),
+						slika:$("#registrationForm [name='slika']").val(),
+
+						datum:$("#registrationForm [name='datum']").val()
 					   });
 					
 					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
-						url: "http://localhost:8099/rekvizitController/obrisi",
-						type: "DELETE",
+						url: "http://localhost:8099/oglasController/odbi",
+						type: "PUT",
 						data: formData,
 						contentType: "application/json",
 						datatype: 'json',
 						success: function(data){
 							if(data){
-								alert("Brisanje uspesno");
+								alert("Odobravanje uspesno");
 								
 								
 								
-								location.href = "http://localhost:8099/adminFanHome.html" 			
+								location.href = "http://localhost:8099/proveraOglasa.html" 			
 							}else{
-								alert("Brisanje neuspesno!");
+								alert("Odobravanje neuspesno!");
 							}
 						},
 						error: function(data){
-							alert('Greska podaci brisanju!')
+							alert('Greska podaci azuriranje!')
 							
 						}
 					});

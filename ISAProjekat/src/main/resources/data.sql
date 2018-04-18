@@ -18,15 +18,15 @@ VALUES ('fanZona1');
 INSERT INTO fan_zona (naziv)
 VALUES ('fanZona2');
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id)
-VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
+VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1);
 
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id)
-VALUES ('123','2011-11-11' ,'Oglas naziv2',1,'opis2','nekijpg..','1');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
+VALUES ('123','2011-11-11' ,'Oglas naziv2',0,'opis2','nekijpg..','1',0);
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id)
-VALUES ('13','2011-11-11' ,'Oglas naziv3',0,'opis3','nekijpg..','2');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
+VALUES ('13','2011-11-11' ,'Oglas naziv3',0,'opis3','nekijpg..','2',0);
 
 INSERT INTO blagajna (naziv)
 VALUES ('BlagajnaNaziv1');

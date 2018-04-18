@@ -57,14 +57,15 @@ function izmeniBioskop(){
 			success: function(data){
 				if(data){
 					console.log("USPESNO IZMENJENO");
-					top.location.href="profil_bioskopa.html";
+					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
 				}
 				else{
 					console.log("Doslo je do greske.");
-					top.location.href="profil_bioskopa.html";
+					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
 				}
 			},
 			error: function (textStatus, errorThrown) {
+				alert("greska");
 				console.log("NE VALJA NESTO");
 				console.log(textStatus);
 			}

@@ -181,7 +181,7 @@ public class BioskopController{
 		bioskopService.findBioskopById(requestBioskop.getId()).setNaziv(requestBioskop.getNaziv());
 		
 		context.setAttribute("bioskopProfil", bioskopService.findBioskopById(requestBioskop.getId()));
-		
+		bioskopService.save(bioskopService.findBioskopById(requestBioskop.getId()));
 		return bioskopService.findBioskopById(requestBioskop.getId());
 	}
 	
