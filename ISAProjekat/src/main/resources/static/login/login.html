@@ -88,6 +88,9 @@
 									localStorage.setItem("registrovan korisnik", data.id);
 									location.href = "http://localhost:8099/home.html"
 								
+								}else if(data.tipKorisnika=="ADMIN_SIST"){
+									location.href = "http://localhost:8099/adminSistemaHome.html"
+									
 								}else{
 									alert("Korisnik nije registrovan!");
 									//location.href = "http://localhost:8099/index.html" 
