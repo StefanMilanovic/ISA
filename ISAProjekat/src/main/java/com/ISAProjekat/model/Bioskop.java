@@ -1,13 +1,17 @@
 package com.ISAProjekat.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Bioskop implements Serializable{
@@ -19,12 +23,14 @@ public class Bioskop implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	public Bioskop(String naziv, String adresa, String opis,
-			 double prosecna_ocena) {
+			 double prosecna_ocena, int broj_glasova, Set<Sala>sale) {
 		super();
 		this.naziv = naziv;
 		this.adresa = adresa;
 		this.opis = opis;
 		this.prosecna_ocena=prosecna_ocena;
+		this.broj_glasova = broj_glasova;
+		this.sale=sale;
 	}
 
 
@@ -44,10 +50,19 @@ public class Bioskop implements Serializable{
 	
 	@Column(name = "pros_ocena", nullable = true, updatable = true)
 	private double prosecna_ocena;
+	
+	@Column(name ="broj_glasova")
+	private int broj_glasova;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bioskop")
+	@JsonIgnore
+	private Set<Sala> sale;
 
 	public Long getId() {
 		return id;
 	}
+	
+	
 
 	public void setId(Long id) {
 		this.id = id;
@@ -87,6 +102,26 @@ public class Bioskop implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getBroj_glasova() {
+		return broj_glasova;
+	}
+
+	public void setBroj_glasova(int broj_glasova) {
+		this.broj_glasova = broj_glasova;
+	}
+
+
+
+	public Set<Sala> getSale() {
+		return sale;
+	}
+
+
+
+	public void setSale(Set<Sala> sale) {
+		this.sale = sale;
 	}
 	
 	

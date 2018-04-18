@@ -1,10 +1,8 @@
-var iterator =0;
-
 $(document).ready(function(){
-	console.log("Usao na profil bioskopa.");
+	console.log("Usao na profil pozorista.");
 
 	$.ajax({
-		url:"../bioskopController/getSelectedBioskop",
+		url:"../pozoristeController/getSelectedPozoriste",
 		type:"GET",
 		dataType:"json",
 		success:function(data){
@@ -32,17 +30,17 @@ function getSale(data){
 	
 	$.ajax({
 		
-		url:"../bioskopController/getSelectedBioskopSale",
+		url:"../pozoristeController/getSelectedPozoristeSale",
 		type:"GET",
 		dataType:"json",
 		success:function(salaList){
 			if(salaList==null){
-				console.log("Bioskop nema sala.");				
+				console.log("Pozoriste nema sala.");				
 				getProjekcije(selectedBioskop, salaList);
 			}
 			
 			else{
-				console.log("Bioskop ima sale.");
+				console.log("Pozoriste ima sale.");
 				getProjekcije(selectedBioskop, salaList);
 			}
 		}
@@ -54,17 +52,17 @@ function getProjekcije(selectedBioskop, salaList){
 	
 	$.ajax({
 		
-		url:"../bioskopController/getSelectedBioskopProjekcije",
+		url:"../pozoristeController/getSelectedPozoristeProjekcije",
 		type:"GET",
 		dataType:"json",
 		success:function(projekcijaList){
 			if(projekcijaList==null){
-				console.log("Bioskop nema projekcijaList.");				
+				console.log("Pozoriste nema projekcijaList.");				
 				ispisiProfil(selectedBioskop, salaList, projekcijaList);
 			}
 			
 			else{
-				console.log("Bioskop ima projekcijaList.");
+				console.log("Pozoriste ima projekcijaList.");
 				ispisiProfil(selectedBioskop, salaList, projekcijaList);
 			}
 		}
@@ -122,7 +120,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 		
 		
 	var top_text="<div class=\"top_div\">"+
-	"<button onclick=\"location.href='editBioskop.html'\" id=\"edit_button\">Edit</button>"+
+	"<button onclick=\"location.href='editPozoriste.html'\" id=\"edit_button\">Edit</button>"+
 	"</div>";
 	
 	var text=
@@ -183,6 +181,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 		$("#repertoar_content_div").append(projekcije);
 }
 
+
 $(document).on('click','button',function(e) { 
 	var button_id = e.target.id;
 	if	(button_id.includes("obrisi")){
@@ -211,7 +210,7 @@ function obrisiProjekciju(id){
 	var id_projekcije = JSON.stringify(id);
 	
 	$.ajax({
-		url:"../bioskopController/obrisiProjekciju",
+		url:"../pozoristeController/obrisiProjekciju",
 		type: "DELETE",
 		data:{id: id_projekcije},
 		dataType:"json",
@@ -220,7 +219,7 @@ function obrisiProjekciju(id){
 				console.log("Neuspesno obrisano.");
 			}
 			else{
-				top.location.href="/bioskopi/profil_bioskopa.html";
+				top.location.href="/pozorista/profil_pozorista.html";
 			}			
 		},
 		error:function(textStatus, errorThrown){

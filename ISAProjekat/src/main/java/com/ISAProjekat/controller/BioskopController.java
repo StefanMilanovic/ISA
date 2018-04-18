@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,32 +44,19 @@ public class BioskopController{
 		List<Sala> sale = salaService.findAll();
 		List<Projekcija> projekcije = projekcijaService.findAll();
 		
-		Bioskop b1 = new Bioskop("Bioskop1","Stefana Milanovica BB, Novi Sad","Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.",4.7);
-		Bioskop b2 = new Bioskop("Bioskop2","Nadje Loncar BB, Novi Sad","Novi bioskop u gradu, 1500 sala, besplatni prikazi prvih 35 godina.",4.5);
-		
-		Bioskop b3 = new Bioskop("Bioskop2","Nadje Loncar BB, Novi Sad","Novi bioskop u gradu, 1500 sala, besplatni prikazi prvih 35 godina.",4.5);
-		
-		Bioskop b4 = new Bioskop("Bioskop2","Nadje Loncar BB, Novi Sad","Novi bioskop u gradu, 1500 sala, besplatni prikazi prvih 35 godina.", 4.5);
-		
-		if(bioskopi.isEmpty()){			
-			
-			bioskopService.save(b1);
-			bioskopService.save(b2);
-			bioskopService.save(b3);
-			bioskopService.save(b4);
-			
+		if(bioskopi.isEmpty()){					
 			bioskopi = bioskopService.findAll();
 					
 			System.out.println("DODATI BIOSKOPI U BAZU.");
 			
 			
 			if(sale.isEmpty()){
+			//	Set sala_projekcije = new Set(null, null);
+			//	Sala s1 = new Sala("Sala 1",bioskopi.get(0), new Set<Projekcija>());
+			//	Sala s2 = new Sala("Sala 2", bioskopi.get(0).getId());
 				
-				Sala s1 = new Sala("Sala 1", bioskopi.get(0).getId());
-				Sala s2 = new Sala("Sala 2", bioskopi.get(0).getId());
-				
-				salaService.save(s1);
-				salaService.save(s2);
+				//salaService.save(s1);
+			//	salaService.save(s2);
 				
 				sale = salaService.findAll();
 				
@@ -128,15 +116,12 @@ public class BioskopController{
 	@RequestMapping(value="/getSelectedBioskopSale", method = RequestMethod.GET)
 	public ResponseEntity<List<Sala>>getSelectedBioskopSale(HttpServletRequest request){
 		
-		List<Sala> sale = salaService.findAll();
 		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");
 		
 		ArrayList<Sala> ret = new ArrayList<Sala>();
 	
-		for(Sala s: sale){
-			if(s.getId_parent().compareTo(b.getId())==0){
-				ret.add(s);
-			}
+		for(Sala s: b.getSale()){
+			ret.add(s);
 		}
 		
 		context.setAttribute("sale", ret);
@@ -166,7 +151,7 @@ public class BioskopController{
 	}
 	
 	@RequestMapping(value="/editBioskop", method= RequestMethod.PUT)
-	public Bioskop editBioskop(@RequestBody Bioskop requestBioskop)
+	public ResponseEntity<Bioskop> editBioskop(@RequestBody Bioskop requestBioskop)
 	{								
 		Bioskop iz_baze = bioskopService.findBioskopById(requestBioskop.getId());
 		
@@ -180,9 +165,12 @@ public class BioskopController{
 		bioskopService.findBioskopById(requestBioskop.getId()).setAdresa(requestBioskop.getAdresa());
 		bioskopService.findBioskopById(requestBioskop.getId()).setNaziv(requestBioskop.getNaziv());
 		
+		bioskopService.save(bioskopService.findBioskopById(requestBioskop.getId()));
 		context.setAttribute("bioskopProfil", bioskopService.findBioskopById(requestBioskop.getId()));
 		
-		return bioskopService.findBioskopById(requestBioskop.getId());
+		
+		
+		return null;
 	}
 	
 	@RequestMapping(value="/obrisiProjekciju", method= RequestMethod.DELETE)

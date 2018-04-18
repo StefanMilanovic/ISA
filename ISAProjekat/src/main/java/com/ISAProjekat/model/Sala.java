@@ -1,12 +1,17 @@
 package com.ISAProjekat.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Sala {
@@ -16,19 +21,21 @@ public class Sala {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name="pripada")
-	private Long id_parent;
+	@ManyToOne(optional = false)
+	private Bioskop bioskop;
 	
 	@Column(name = "naziv", nullable = false)
 	private String naziv;
 	
-	
-	//private List<Projekcija> projekcije;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sala")
+	@JsonIgnore
+	private Set<Projekcija> projekcije;
 
-	public Sala(String naziv, Long id_parent) {
+	public Sala(String naziv, Bioskop bioskop, Set<Projekcija> projekcije) {
 		super();
 		this.naziv = naziv;
-		this.id_parent = id_parent;
+		this.bioskop = bioskop;
+		this.projekcije=projekcije;
 	}
 	
 	public Sala(){}
@@ -49,11 +56,22 @@ public class Sala {
 		this.naziv = naziv;
 	}
 
-	public Long getId_parent() {
-		return id_parent;
+
+	public Set<Projekcija> getProjekcije() {
+		return projekcije;
 	}
 
-	public void setId_parent(Long id_parent) {
-		this.id_parent = id_parent;
+	public void setProjekcije(Set<Projekcija> projekcije) {
+		this.projekcije = projekcije;
 	}
+
+	public Bioskop getBioskop() {
+		return bioskop;
+	}
+
+	public void setBioskop(Bioskop bioskop) {
+		this.bioskop = bioskop;
+	}
+	
+	
 }

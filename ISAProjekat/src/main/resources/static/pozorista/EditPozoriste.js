@@ -2,7 +2,7 @@ $(document).ready(function(){
 	//console.log("Usao na profil bioskopa.");
 
 	$.ajax({
-		url:"../bioskopController/getSelectedBioskop",
+		url:"../pozoristeController/getSelectedPozoriste",
 		type:"GET",
 		dataType:"json",
 		success:function(data){
@@ -43,9 +43,6 @@ function izmeniBioskop(){
 	var $form = $("#editujBioskop_froma");
 	var data = getFormData($form);
 	
-	//console.log("----------ISPISUJE POSLATI DATA-----------");
-//	console.log(data);
-	
 	if(data.naziv=="" || data.adresa=="" || data.opis==""){
 		alert("Molimo Vas popunite sva polja.");
 		return;
@@ -55,7 +52,7 @@ function izmeniBioskop(){
 		//console.log(data);
 		
 		$.ajax({
-			url:"../bioskopController/editBioskop",
+			url:"../pozoristeController/editPozoriste",
 			type: "PUT",
 			data:p,
 			contentType:"application/json",
@@ -63,16 +60,16 @@ function izmeniBioskop(){
 			success: function(data){
 				if(data){
 					console.log("USPESNO IZMENJENO");
-					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
+					top.location.href="../pozorista/profil_pozorista.html";
 				}
 				else{
 					console.log("Doslo je do greske.");
-					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
+					top.location.href="../pozorista/profil_pozorista.html";
 				}
 			},
-			error: function (textStatus, errorThrown) {	
-				console.log(textStatus);
-				top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
+			error: function (textStatus, errorThrown) {
+				top.location.href="../pozorista/profil_pozorista.html";
+				console.log(textStatus);				
 			}
 		});
 	}
