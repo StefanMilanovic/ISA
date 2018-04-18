@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+<title>Registruj salu</title>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("Usao na Izmenu rekvizitas.");
+
+		$.ajax({
+			url:"http://localhost:8099/bioskopController/getBioskopZaReg",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+					console.log(data.naziv);
+					
+					
+				}
+				
+				document.getElementById("nazivBioskopa").value = data.naziv;
+				
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	</script>
+
+</head>
+<body>
+<h1>Registruj salu bioskopa </h1>
+<br/>
+<label>Naziv objekta</label><br/>
+<input id ="nazivBioskopa" name = "nazivBioskopa" type="text" class="form-control"   placeholder= "Naziv bioskopa" disabled><br/>
+			
+<br/><br/>
+	<form id = "registrationForm" name = "registrationForm" method="POST">
+			
+			
+			<label>Naziv sale</label><br/>
+			<input id ="naziv" name = "naziv" type="text" class="form-control"   placeholder= "Naziv"><br/>
+			
+
+			<br/>
+			<br/>
+				
+			<input id="regSalu" type="button" class="btn btn-info"  value="Registruj Salu"> 	
+		
+		</form>
+		
+		<hr><br/>
+	<form id ="nazadForma" action="adminSistemaHome.html" class="form-horizontal">
+					        
+		  <input class="btn btn-link" type="submit" value="Odustani">				        
+	</form> 
+
+
+<script type="text/javascript">
+function provera1(){
+	
+	var provera = true;
+	var forma = $('form[id="registrationForm"]');
+	
+	var naziv = forma.find('[name=naziv]').val();
+
+	
+	if(!naziv) {
+		
+		alert("Unesite naziv!");
+		provera = false;
+	}
+	return provera;
+}
+		$("#regSalu").click(function(){
+				
+				var provera= provera1();
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						naziv:$("#registrationForm [name='naziv']").val(),
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/bioskopController/registracijaSala",
+						type: "POST",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Registracija uspesna");
+								
+								
+								
+								location.href = "http://localhost:8099/registrujSale.html" 			
+							}else
+								alert("Registracija neuspesna!");
+						},
+						error: function(data){
+							alert('Greska podaci registracija!')
+							
+						}
+					});
+				}
+			});	
+	</script>
+
+</body>
+</html>
