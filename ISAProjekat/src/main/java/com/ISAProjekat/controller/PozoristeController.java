@@ -77,14 +77,14 @@ public class PozoristeController {
 			
 				if(projekcije.isEmpty()){
 					
-					Projekcija pr1 = new Projekcija("Hamlet", "Tragedija", "Vilijam Sekspir", "3:00", 0, 0, "Ima nesto trulo u drzavi Danskoj.", 
+				/*	Projekcija pr1 = new Projekcija("Hamlet", "Tragedija", "Vilijam Sekspir", "3:00", 0, 0, "Ima nesto trulo u drzavi Danskoj.", 
 							300.00, "Piter Stelers, Dzordz C. Scott", sale.get(0).getId(), sale.get(0).getNaziv());
 					
 					Projekcija pr2 = new Projekcija("Makbet", "Tragedija", "Vilijam Sekspir", "2:23", 0, 0, "Zivot je samo senka koja hoda, kukavni glumac sto na pozornici Sat-dva se puci i razbacuje...", 
 							350.00, "Takashi Shimura", sale.get(1).getId(),sale.get(1).getNaziv());
 					
 					projekcijaService.save(pr1);
-					projekcijaService.save(pr2);
+					projekcijaService.save(pr2);*/
 				}
 			}
 		}
@@ -153,14 +153,14 @@ public class PozoristeController {
 		
 		ArrayList<Sala> sale = (ArrayList<Sala>) context.getAttribute("sale_poz");
 		ArrayList<Projekcija> ret = new ArrayList<Projekcija>();	
-		for(Projekcija p: projekcije){
+		/*for(Projekcija p: projekcije){
 			for(Sala s: sale){
 				if(p.getSala().compareTo(s.getId())==0){
 					ret.add(p);
 				}
 			}
 		}
-		
+		*/
 		
 		return new ResponseEntity<>(ret, HttpStatus.OK);
 		

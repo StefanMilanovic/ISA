@@ -1,13 +1,11 @@
 package com.ISAProjekat.model;
 
-import java.awt.Image;
-import java.util.ArrayList;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Projekcija {
@@ -18,7 +16,7 @@ public class Projekcija {
 	
 	
 	public Projekcija(String naziv, String zarn, String ime_reditelja, String trajanje, double prosecna_ocena,
-			int broj_glasova, String opis, double cena, String spisak_glumaca, Long sala, String ime_sale) {
+			int broj_glasova, String opis, double cena, String spisak_glumaca, Sala sala) {
 		super();
 		this.naziv = naziv;
 		this.zarn = zarn;
@@ -30,7 +28,6 @@ public class Projekcija {
 		this.cena = cena;
 		this.spisak_glumaca = spisak_glumaca;
 		this.sala = sala;
-		this.ime_sale = ime_sale;
 	}
 
 
@@ -68,11 +65,8 @@ public class Projekcija {
 	@Column(name="glumci",nullable=false)
 	private String spisak_glumaca;
 	
-	@Column(name="sala", nullable=false)
-	private Long sala;
-	
-	@Column(name="ime_sale")
-	private String ime_sale;
+	@ManyToOne(optional=false)
+	private Sala sala;
 	
 	
 	@Column(name="broj_glasova")
@@ -133,28 +127,12 @@ public class Projekcija {
 	public void setSpisak_glumaca(String spisak_glumaca) {
 		this.spisak_glumaca = spisak_glumaca;
 	}
-	public Long getSala() {
+	public Sala getSala() {
 		return sala;
 	}
-	public void setSala(Long sala) {
+	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
-
-
-
-
-	public String getIme_sale() {
-		return ime_sale;
-	}
-
-
-
-
-	public void setIme_sale(String ime_sale) {
-		this.ime_sale = ime_sale;
-	}
-
-
 
 
 	public int getBroj_glasova() {

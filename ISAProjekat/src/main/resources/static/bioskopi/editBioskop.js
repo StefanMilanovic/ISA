@@ -63,22 +63,16 @@ function izmeniBioskop(){
 			success: function(data){
 				if(data){
 					console.log("USPESNO IZMENJENO");
-					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
+					top.location.href="../bioskopi/profil_bioskopa.html";
 				}
 				else{
 					console.log("Doslo je do greske.");
-					top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
+					top.location.href="../bioskopi/profil_bioskopa.html";
 				}
-			},
-<<<<<<< HEAD
-			error: function (textStatus, errorThrown) {	
-=======
+			}, {	
 			error: function (textStatus, errorThrown) {
-				alert("greska");
 				console.log("NE VALJA NESTO");
->>>>>>> 3f746cb157dd971c9f7c9c30c7f7a47c86031f92
 				console.log(textStatus);
-				top.location.href="http://localhost:8099/bioskopi/profil_bioskopa.html";
 			}
 		});
 	}
@@ -94,3 +88,8 @@ function getFormData($form){
 
     return indexed_array;
 }
+
+$(document).on('click','#PROKLETODUGME',function(e) { 
+	console.log("KLIKNUO JE DUGME");
+	e.preventDefault();
+});

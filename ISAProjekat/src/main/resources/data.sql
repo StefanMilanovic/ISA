@@ -55,9 +55,17 @@ values ('Bioskop3','Aleksandra Lupica 33, Novi Sad','Novi bioskop u gradu, 200 s
 insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
 values ('Bioskop4','Jovice Cubrica 142, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
 
-insert into sala(naziv, bioskop)
+insert into sala(naziv, bioskop_bioskop_id)
 values ('Sala1','1');
 
-insert into sala(naziv, bioskop)
+insert into sala(naziv, bioskop_bioskop_id)
 values ('Sala2','1');
+
+insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id)
+values ('Dr.Strangelove','Komedija','Stenli Kubrik','1:30',0 , 0, 'Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.',
+300.00,'Piter Stelers, Dzordz C. Scott','1');
+
+insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id)
+values ('Ziveti','Drama','Akira Kurosava','2:33',0 , 0, 'Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak',
+350.00,'Takashi Shimura','2');
 

@@ -29,6 +29,7 @@ $(document).ready(function(){
 function getSale(data){
 	
 	var selectedBioskop = data;
+	console.log("USAO U GET SALE")
 	
 	$.ajax({
 		
@@ -107,7 +108,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 					"<p>"+ value.opis +"</p>"+
 				"</div>"+
 				"<div class=\"ocena_projekcije\">"+
-					"<h4>Ocena:"+value.prosecna_ocena+" Cena:"+value.cena+" Sala:"+value.ime_sale+"</h4>"+
+					"<h4>Ocena:"+value.prosecna_ocena+" Cena:"+value.cena+" Sala:"+value.sala.naziv+"</h4>"+
 				"</div>"+
 			"</div>"+			
 		"</div>" +
@@ -123,6 +124,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 		
 	var top_text="<div class=\"top_div\">"+
 	"<button onclick=\"location.href='editBioskop.html'\" id=\"edit_button\">Edit</button>"+
+	"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>"+
 	"</div>";
 	
 	var text=
@@ -228,4 +230,34 @@ function obrisiProjekciju(id){
 		}		
 	});
 	
+}
+
+
+$(document).on('click','a',function(e) { 
+	e.preventDefault();
+	var id = e.target.closest("div").childNodes[1].textContent;
+	console.log(id);
+	findSelectedProjekcija(id);
+});
+
+function findSelectedProjekcija(id){
+	var id_projekcije = JSON.stringify(id);
+	
+	$.ajax({
+		url:"../bioskopController/findProjekciju",
+		type: "POST",
+		data:{id: id_projekcije},
+		dataType:"json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno obrisano.");
+			}
+			else{
+				top.location.href="/bioskopi/ProjekcijaFilma.html";
+			}			
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
 }

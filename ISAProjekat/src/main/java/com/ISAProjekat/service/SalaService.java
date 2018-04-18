@@ -10,4 +10,6 @@ public interface SalaService {
 	
 	Sala save(Sala s);
 	
+	Sala findSalaById(Long id);
+	
 }

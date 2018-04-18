@@ -25,5 +25,10 @@ public class SalaServiceImpl implements SalaService{
 	public Sala save(Sala s) {
 		return salaRepository.save(s);
 	}
+
+	@Override
+	public Sala findSalaById(Long id) {
+		return salaRepository.findOne(id);
+	}
 	
 }

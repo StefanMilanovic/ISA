@@ -1,4 +1,8 @@
 @CHARSET "ISO-8859-1";
+
+p,h4,h5,h1,h2,h3 {margin: 0;}
+.titleheader {overflow: hidden;}
+
 .slika_div{
 	height:400px;
 	width:100%;

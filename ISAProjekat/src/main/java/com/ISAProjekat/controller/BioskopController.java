@@ -1,6 +1,7 @@
 package com.ISAProjekat.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -65,14 +66,14 @@ public class BioskopController{
 			
 				if(projekcije.isEmpty()){
 					
-					Projekcija p1 = new Projekcija("Dr.Strangelove", "Komedija", "Stenli Kubrik", "1:30", 0, 0, "Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.", 
-							300.00, "Piter Stelers, Dzordz C. Scott", sale.get(0).getId(), sale.get(0).getNaziv());
+				//	Projekcija p1 = new Projekcija("Dr.Strangelove", "Komedija", "Stenli Kubrik", "1:30", 0, 0, "Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.", 
+				//			300.00, "Piter Stelers, Dzordz C. Scott", sale.get(0).getId(), sale.get(0).getNaziv());
+				//	
+				//	Projekcija p2 = new Projekcija("Ziveti", "Drama", "Akira Kurosava", "2:23", 0, 0, "Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak", 
+				//			350.00, "Takashi Shimura", sale.get(1).getId(),sale.get(1).getNaziv());
 					
-					Projekcija p2 = new Projekcija("Ziveti", "Drama", "Akira Kurosava", "2:23", 0, 0, "Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak", 
-							350.00, "Takashi Shimura", sale.get(1).getId(),sale.get(1).getNaziv());
-					
-					projekcijaService.save(p1);
-					projekcijaService.save(p2);
+				//	projekcijaService.save(p1);
+				//	projekcijaService.save(p2);
 				}
 			}
 		}
@@ -114,18 +115,24 @@ public class BioskopController{
 	}
 	
 	@RequestMapping(value="/getSelectedBioskopSale", method = RequestMethod.GET)
-	public ResponseEntity<List<Sala>>getSelectedBioskopSale(HttpServletRequest request){
+	public ResponseEntity<java.util.Set<Sala>> getSelectedBioskopSale(HttpServletRequest request){
 		
-		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");
-		
-		ArrayList<Sala> ret = new ArrayList<Sala>();
+		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");		
+		List<Sala>sve_sale = salaService.findAll();
+		bioskopService.findBioskopById(b.getId()).setSale(new HashSet<Sala>());
 	
-		for(Sala s: b.getSale()){
-			ret.add(s);
+		for(Sala s: sve_sale){
+			if(s.getBioskop().getId().compareTo(bioskopService.findBioskopById(b.getId()).getId())==0){
+				bioskopService.findBioskopById(b.getId()).getSale().add(s);
+			}
 		}
+		bioskopService.save(bioskopService.findBioskopById(b.getId()));
 		
-		context.setAttribute("sale", ret);
-		return new ResponseEntity<>(ret, HttpStatus.OK);
+		System.out.println("IZLAZI IZ GET SALE");
+		
+		context.setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
+		
+		return new ResponseEntity<>(bioskopService.findBioskopById(b.getId()).getSale(), HttpStatus.OK);
 		
 	}
 	
@@ -135,16 +142,21 @@ public class BioskopController{
 		List<Projekcija> projekcije = projekcijaService.findAll();
 		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");
 		
-		ArrayList<Sala> sale = (ArrayList<Sala>) context.getAttribute("sale");
+		List<Sala> sale = salaService.findAll();
+		for(Sala s: sale){
+			salaService.findSalaById(s.getId()).setProjekcije(new HashSet<Projekcija>());
+		}
+		
 		ArrayList<Projekcija> ret = new ArrayList<Projekcija>();	
 		for(Projekcija p: projekcije){
-			for(Sala s: sale){
-				if(p.getSala().compareTo(s.getId())==0){
+			for(Sala s : b.getSale()){
+				if (p.getSala().getId().compareTo(s.getId())==0){
+					salaService.findSalaById(s.getId()).getProjekcije().add(p);
+					salaService.save(salaService.findSalaById(s.getId()));
 					ret.add(p);
 				}
 			}
 		}
-		
 		
 		return new ResponseEntity<>(ret, HttpStatus.OK);
 		
@@ -188,5 +200,40 @@ public class BioskopController{
 		projekcijaService.delete(id);
 		
 		return new ResponseEntity <>(projekcije.get(0), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/findProjekciju", method = RequestMethod.POST)
+	public ResponseEntity<Projekcija>findSelectedProjekcija(@RequestBody String data, HttpServletRequest request){
+		
+		System.out.println(data);
+		data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+		
+		Long id = Long.parseLong(data,10);
+		
+		
+		
+		List<Projekcija> projekcije = projekcijaService.findAll();
+		Projekcija ret=null;
+		for(Projekcija p: projekcije){
+			if(p.getId().compareTo(id)==0){
+				ret = p;
+			}
+		}
+		
+		context.setAttribute("aktivnaProjekcija", ret);
+		
+		return new ResponseEntity<>(ret, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getSelectedProjekcijaProfil", method = RequestMethod.GET)
+	public ResponseEntity<Projekcija>getSelectedProjekcija(HttpServletRequest request){
+		
+		Projekcija b = null;
+		b = (Projekcija) context.getAttribute("aktivnaProjekcija");
+		
+		return new ResponseEntity<>(b, HttpStatus.OK);
 	}
 }

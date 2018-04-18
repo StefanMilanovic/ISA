@@ -2,6 +2,8 @@ package com.ISAProjekat.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ISAProjekat.model.Bioskop;
 import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Projekcija;
+import com.ISAProjekat.model.Sala;
 import com.ISAProjekat.service.ProjekcijaService;
 
 @RestController
@@ -21,28 +25,37 @@ public class ProjekcijaController {
 	@Autowired
 	private ProjekcijaService projekcijaService;
 	
-	@RequestMapping(value="getProjekcije", method = RequestMethod.GET)
+	@Autowired
+	ServletContext context;
+	
+	@RequestMapping(value="/getProjekcije", method = RequestMethod.GET)
 	public ResponseEntity<List<Projekcija>>getProjekcije(){
 		List<Projekcija> projekcije = projekcijaService.findAll();
 		return new ResponseEntity<>(projekcije, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/dodajProjekciju", method= RequestMethod.POST)
-	public ResponseEntity<Projekcija> dodajProjekciju(@RequestBody Projekcija requestProjekcija)
+	public Projekcija dodajProjekciju(@RequestBody Projekcija requestProjekcija)
 	{		
 		System.out.println("\n\nPoslati podaci: \n"+requestProjekcija.getNaziv()+"\n"+requestProjekcija.getIme_reditelja()+"\n");	
 		
-		/*if(requestProjekcija.getNaziv().length()!=0){
-			Projekcija nova_projekcija = new Projekcija(requestProjekcija.getNaziv(),requestProjekcija.getZarn(),requestProjekcija.getIme_reditelja(),
-					requestProjekcija.getTrajanje(), 0, requestProjekcija.getOpis(),requestProjekcija.getCena(), requestProjekcija.getSpisak_glumaca(), requestProjekcija.getSala());
-			
-					
-			projekcijaService.save(nova_projekcija);
-			return new ResponseEntity<Projekcija>(nova_projekcija,HttpStatus.OK);
-			
-		}*/
+		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");
+		Sala s = (Sala) context.getAttribute("setovana_sala");
 		
+		Projekcija nova_p = new Projekcija(requestProjekcija.getNaziv(),requestProjekcija.getZarn(),requestProjekcija.getIme_reditelja(),
+				requestProjekcija.getTrajanje(),0,0,requestProjekcija.getOpis(),300,requestProjekcija.getSpisak_glumaca(),s);
 		
-		return null;
+		projekcijaService.save(nova_p);
+		
+		System.out.println("DODAO PROJEKCIJU");
+		return nova_p;
+	}
+	
+	@RequestMapping(value="/setujSala", method= RequestMethod.POST)
+	public Sala setujSalu(@RequestBody Sala requestSala)
+	{				
+		context.setAttribute("setovana_sala", requestSala);
+		System.out.println("SETOVAO SALU");
+		return requestSala;
 	}
 }
