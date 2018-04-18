@@ -47,7 +47,7 @@ function dodajProjekciju(){
 	//console.log(data);
 	
 	if(data.naziv=="" || data.zanr=="" ||data.reditelj=="" || data.trajanje==""
-		|| data.termin_od=="" || data.termin_dod=="" || data.opis=="" || data.glumci==""){
+		|| data.termin_od=="" || data.termin_do=="" || data.opis=="" || data.glumci=="" || data.cena=="" || isNaN(data.cena)==true){
 		alert("Molimo Vas popunite sva polja.");
 		return;
 	}
@@ -109,9 +109,10 @@ function dodajProjekciju2() {
 			success: function(data){
 				if(data){
 					console.log("USPESNO DODATO");
+					top.location.href="../bioskopi/profil_bioskopa.html";
 				}
 				else{
-					console.log("Doslo je do greske.");
+					top.location.href="../bioskopi/profil_bioskopa.html";
 				}
 			},
 			error: function (textStatus, errorThrown) {

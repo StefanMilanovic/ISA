@@ -107,6 +107,7 @@ a{
 	float:right;
 	border-top:3px solid black;
 	border-left:3px solid black;
+	overflow:scroll;
 }
 
 .repertoar_div_text{
@@ -123,8 +124,7 @@ a{
 	width:1355px;
 	height:740px;
 	margin-left:15px;
-	border:1px solid black;
-	overflow:hidden;
+	border:1px solid black;	
 }
 
 .sale_div{

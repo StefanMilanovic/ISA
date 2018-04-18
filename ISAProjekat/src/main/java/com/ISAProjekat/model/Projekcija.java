@@ -15,7 +15,7 @@ public class Projekcija {
 	
 	
 	
-	public Projekcija(String naziv, String zarn, String ime_reditelja, String trajanje, double prosecna_ocena,
+	public Projekcija(String naziv, String zarn, String ime_reditelja, String trajanje,String termin_od, String termin_do, double prosecna_ocena,
 			int broj_glasova, String opis, double cena, String spisak_glumaca, Sala sala) {
 		super();
 		this.naziv = naziv;
@@ -28,6 +28,8 @@ public class Projekcija {
 		this.cena = cena;
 		this.spisak_glumaca = spisak_glumaca;
 		this.sala = sala;
+		this.termin_do = termin_do;
+		this.termin_od = termin_do;
 	}
 
 
@@ -71,6 +73,13 @@ public class Projekcija {
 	
 	@Column(name="broj_glasova")
 	private int broj_glasova;
+	
+	@Column(name="termin_od")
+	private String termin_od;
+	
+	@Column(name="termin_do")
+	private String termin_do;
+	
 	
 	
 	public Long getId() {
@@ -144,6 +153,34 @@ public class Projekcija {
 
 	public void setBroj_glasova(int broj_glasova) {
 		this.broj_glasova = broj_glasova;
+	}
+
+
+
+
+	public String getTermin_od() {
+		return termin_od;
+	}
+
+
+
+
+	public void setTermin_od(String termin_od) {
+		this.termin_od = termin_od;
+	}
+
+
+
+
+	public String getTermin_do() {
+		return termin_do;
+	}
+
+
+
+
+	public void setTermin_do(String termin_do) {
+		this.termin_do = termin_do;
 	}
 	
 	

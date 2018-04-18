@@ -61,10 +61,10 @@ values ('Sala1','1');
 insert into sala(naziv, bioskop_bioskop_id)
 values ('Sala2','1');
 
-insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id)
+insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id, termin_od, termin_do)
 values ('Dr.Strangelove','Komedija','Stenli Kubrik','1:30',0 , 0, 'Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.',
-300.00,'Piter Stelers, Dzordz C. Scott','1');
+300.00,'Piter Stelers, Dzordz C. Scott','1','12:00','13:30');
 
-insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id)
+insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id, termin_od, termin_do)
 values ('Ziveti','Drama','Akira Kurosava','2:33',0 , 0, 'Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak',
-350.00,'Takashi Shimura','2');
+350.00,'Takashi Shimura','2','13:00','15:33');

@@ -108,7 +108,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 					"<p>"+ value.opis +"</p>"+
 				"</div>"+
 				"<div class=\"ocena_projekcije\">"+
-					"<h4>Ocena:"+value.prosecna_ocena+" Cena:"+value.cena+" Sala:"+value.sala.naziv+"</h4>"+
+					"<h4>Ocena:"+value.prosecna_ocena+" Cena:"+value.cena+" Sala:"+value.sala.naziv+" Od: "+value.termin_od+" Do: "+value.termin_do+"</h4>"+
 				"</div>"+
 			"</div>"+			
 		"</div>" +
@@ -191,6 +191,7 @@ $(document).on('click','button',function(e) {
 		console.log("Obrisi");
 		button_id = button_id.replace("obrisi","");
 		console.log(button_id);
+		editujProjekciju(x);
 		
 		var id_labele = "id_label"+button_id;		
 		var x=document.getElementById(id_labele).textContent;
@@ -232,6 +233,20 @@ function obrisiProjekciju(id){
 	
 }
 
+function editujProjekciju(id){
+	url:"../bioskopController/setSelektovanuProjekciju",
+	type:"POST",
+	data:{id: id_projekcije},
+	dataType: "json",
+	success:function(data){
+		if(data==null){
+			console.log("Neuspesno postavljeno.");
+		}
+		else{
+			top.location.href="/bioskopi/edit_projekcija.html";
+		}
+	}
+}
 
 $(document).on('click','a',function(e) { 
 	e.preventDefault();

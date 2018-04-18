@@ -337,4 +337,22 @@ public class BioskopController{
 		//ako je baza prazna samo ga dodaj bez provere 
 	
 	}
+	
+	@RequestMapping(value="/setSelektovanuProjekciju", method= RequestMethod.POST)
+	public ResponseEntity<Projekcija> setEditovanuProjekciju(@RequestBody String data){
+		
+		System.out.println(data);
+		data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+		
+		Long id = Long.parseLong(data,10);
+		
+		context.setAttribute("editovanaProjekcija", projekcijaService.findProjekcijaById(id));
+		
+		
+		return new ResponseEntity <>(projekcijaService.findProjekcijaById(id), HttpStatus.OK);
+	}
+	
 }

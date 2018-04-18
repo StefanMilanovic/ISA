@@ -69,9 +69,10 @@ function izmeniBioskop(){
 					console.log("Doslo je do greske.");
 					top.location.href="../bioskopi/profil_bioskopa.html";
 				}
-			}, {	
+			},	
 			error: function (textStatus, errorThrown) {
 				console.log("NE VALJA NESTO");
+				top.location.href="../bioskopi/profil_bioskopa.html";
 				console.log(textStatus);
 			}
 		});

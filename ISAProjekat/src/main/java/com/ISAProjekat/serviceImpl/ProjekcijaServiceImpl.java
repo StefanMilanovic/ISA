@@ -30,6 +30,11 @@ public class ProjekcijaServiceImpl implements ProjekcijaService{
 	public void delete(Long id) {
 		projekcijaRepository.delete(id);		
 	}
+
+	@Override
+	public Projekcija findProjekcijaById(Long id) {
+		return projekcijaRepository.findOne(id);
+	}
 	
 	
 }
