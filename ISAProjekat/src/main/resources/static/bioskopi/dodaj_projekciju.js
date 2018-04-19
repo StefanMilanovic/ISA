@@ -151,9 +151,6 @@ function getSale(data){
 
 function popuniSale(selectedBioskop,salaList){
 	var options="";
-	
-	var text= 
-		
 			$.each(salaList, function(index,value){
 				var text="<option>"+value.naziv+"</option>";
 				options += text;

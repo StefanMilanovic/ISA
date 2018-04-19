@@ -190,8 +190,7 @@ $(document).on('click','button',function(e) {
 	if	(button_id.includes("obrisi")){
 		console.log("Obrisi");
 		button_id = button_id.replace("obrisi","");
-		console.log(button_id);
-		editujProjekciju(x);
+		console.log(button_id);		
 		
 		var id_labele = "id_label"+button_id;		
 		var x=document.getElementById(id_labele).textContent;
@@ -207,6 +206,8 @@ $(document).on('click','button',function(e) {
 		var id_labele = "id_label"+button_id;		
 		var x=document.getElementById(id_labele).textContent;
 		console.log("ID LABELE JE: " + x);
+		
+		editujProjekciju(x);
 	}
 });
 
@@ -234,18 +235,21 @@ function obrisiProjekciju(id){
 }
 
 function editujProjekciju(id){
-	url:"../bioskopController/setSelektovanuProjekciju",
-	type:"POST",
-	data:{id: id_projekcije},
-	dataType: "json",
-	success:function(data){
-		if(data==null){
-			console.log("Neuspesno postavljeno.");
+	var id_projekcije = JSON.stringify(id);
+	$.ajax({
+		url:"../bioskopController/setSelektovanuProjekciju",
+		type:"POST",
+		data:{id: id_projekcije},
+		dataType: "json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno postavljeno.");
+			}
+			else{
+				top.location.href="/bioskopi/edit_projekcija.html";
+			}
 		}
-		else{
-			top.location.href="/bioskopi/edit_projekcija.html";
-		}
-	}
+	});
 }
 
 $(document).on('click','a',function(e) { 
@@ -257,7 +261,6 @@ $(document).on('click','a',function(e) {
 
 function findSelectedProjekcija(id){
 	var id_projekcije = JSON.stringify(id);
-	
 	$.ajax({
 		url:"../bioskopController/findProjekciju",
 		type: "POST",

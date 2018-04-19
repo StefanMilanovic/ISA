@@ -349,10 +349,14 @@ public class BioskopController{
 		
 		Long id = Long.parseLong(data,10);
 		
-		context.setAttribute("editovanaProjekcija", projekcijaService.findProjekcijaById(id));
-		
-		
+		context.setAttribute("editovanaProjekcija", projekcijaService.findProjekcijaById(id));			
 		return new ResponseEntity <>(projekcijaService.findProjekcijaById(id), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getSelektovanuProjekciju", method= RequestMethod.GET)
+	public ResponseEntity<Projekcija> getEditovanuProjekciju(){						
+		Projekcija p = (Projekcija) context.getAttribute("editovanaProjekcija");			
+		return new ResponseEntity <>(p, HttpStatus.OK);
 	}
 	
 }

@@ -58,4 +58,35 @@ public class ProjekcijaController {
 		System.out.println("SETOVAO SALU");
 		return requestSala;
 	}
+	
+	@RequestMapping(value="/editProjekciju", method= RequestMethod.PUT)
+	public ResponseEntity<Projekcija> editBioskop(@RequestBody Projekcija requestProjekcija)
+	{								
+		Projekcija iz_baze = projekcijaService.findProjekcijaById(requestProjekcija.getId());
+		
+		System.out.println("NAZIV MENJANOG "+requestProjekcija.getNaziv());
+		System.out.println("REZISER MENJANOG "+requestProjekcija.getIme_reditelja());
+		System.out.println("ID MENJANOG "+requestProjekcija.getId());
+		System.out.println("OPIS MENJANOG "+requestProjekcija.getOpis());
+		
+		System.out.println("MENJAM PROJEKCIJU: "+iz_baze.getNaziv());
+		
+		Sala s = (Sala) context.getAttribute("setovana_sala");
+		
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setNaziv(requestProjekcija.getNaziv());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setZarn(requestProjekcija.getZarn());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setIme_reditelja(requestProjekcija.getIme_reditelja());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setTrajanje(requestProjekcija.getTrajanje());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setOpis(requestProjekcija.getOpis());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setCena(requestProjekcija.getCena());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setSpisak_glumaca(requestProjekcija.getSpisak_glumaca());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setSala(s);
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setTermin_od(requestProjekcija.getTermin_od());
+		projekcijaService.findProjekcijaById(requestProjekcija.getId()).setTermin_do(requestProjekcija.getTermin_do());
+		
+		
+		projekcijaService.save(projekcijaService.findProjekcijaById(requestProjekcija.getId()));
+		return null;
+	}
+	
 }

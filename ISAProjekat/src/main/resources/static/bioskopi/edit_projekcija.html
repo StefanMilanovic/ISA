@@ -11,6 +11,12 @@
 	<form class="cd-form floating-labels" id="dodajprojekciju_froma">
 		<fieldset>
 			<legend>Nova projekcija</legend>
+			
+			<div class="icon">
+				<label class="cd-label" for="cd-name">ID</label>
+				<input class="user" type="text" name="idd" id="idd" disabled>
+		    </div> 
+			
 			<div class="icon">
 				<label class="cd-label" for="cd-name">Naziv</label>
 				<input class="user" type="text" name="naziv" id="naziv">
@@ -63,9 +69,14 @@
 				<label class="cd-label" id="cd-opis">Spisak glumaca</label>
       			<textarea class="message" name="spisak_glumaca" id="spisak_glumaca"></textarea>
 			</div>
-
+			
+			<div class="icon" style="visibility: hidden;">
+				<label class="cd-label" for="cd-name">ID</label>
+				<input class="user" type="text" name="id" id="id" style="visibility: hidden;">
+		    </div> 
+			
 			<div>
-		      	<input id="PROKLETODUGME" onclick="dodajProjekciju()" type="submit" value="Kreiraj">
+		      	<input id="PROKLETODUGME" onclick="editProjekciju()" type="submit" value="Kreiraj">
 		    </div>
 		</fieldset>
 	</form>
