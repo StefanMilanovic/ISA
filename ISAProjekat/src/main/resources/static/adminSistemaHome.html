@@ -4,6 +4,42 @@
 <meta charset="ISO-8859-1">
 
 <script src="jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	//	console.log("Usao na Izmenu .");
+
+		$.ajax({
+			url:"http://localhost:8099/bodovnaSkalaController/getBodovnaSkalaVrednosti",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+			//		console.log(data.naziv);
+					
+					
+				}
+				
+				document.getElementById("bronzaniBodStaro").value = data.bronzaniBod;
+				document.getElementById("srebrniBodStaro").value = data.srebrniBod;
+				document.getElementById("zlatniBodStaro").value = data.zlatniBod;
+				
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	</script>
+
 
 <title>Admin Sistema Home</title>
 </head>
@@ -25,6 +61,16 @@
 		<input type="submit" id="registrujObjekat" value="Registruj objekat" />
 	</form>
 	<hr/><br/>
+	
+	<form id ="bodovnaSkalaForma" method="GET" >
+		<label> Bronzani bodovi : </label>
+		<input type="text" id="bronzaniBodStaro" name= "bronzaniBodStaro" />
+		<label> Srebrni bodovi : </label>
+		<input type="text" id="srebrniBodStaro" name= "srebrniBodStaro" />
+		<label> Zlatni bodovi : </label>
+		<input type="text" id="zlatniBodStaro" name= "zlatniBodStaro" />
+		<input type="button" id="izmeni" value="Izmeni" />
+	</form>
 
 <script type="text/javascript">
 $("#odjavaDugme").click(function(){
@@ -51,6 +97,78 @@ $("#odjavaDugme").click(function(){
 					});
 				
 			});	
+			
+			
+			
+$("#izmeni").click(function(){
+	
+	var provera = true;
+	var forma = $('form[id="bodovnaSkalaForma"]');
+	
+	var bronzaniBodStaro = forma.find('[name=bronzaniBodStaro]').val();
+	var srebrniBodStaro = forma.find('[name=srebrniBodStaro]').val();
+	var zlatniBodStaro = forma.find('[name=zlatniBodStaro]').val();
+
+	
+	if(!bronzaniBodStaro) {
+		
+		alert("Unesite bronzani!");
+		provera = false;
+	}else if(!srebrniBodStaro) {
+		alert("Unesite srebrni!");
+		provera = false;
+	}
+	else if(!zlatniBodStaro) {
+		alert("Unesite zlatni!");
+		provera = false;
+	}	
+	
+	else if(zlatniBodStaro<srebrniBodStaro ) {
+		alert("Zlatni mora biti vec od srebrnog");
+		provera = false;
+	}else if(zlatniBodStaro<bronzaniBodStaro ) {
+		alert("Zlatni mora biti vec od bronzanog");
+		provera = false;
+	}else if(srebrniBodStaro<bronzaniBodStaro ) {
+		alert("Srebrni mora biti vec od bronzanog");
+		provera = false;
+	}
+	
+	
+	if(provera) {
+		
+			
+		formData = JSON.stringify({
+			bronzaniBod:$("#bodovnaSkalaForma [name='bronzaniBodStaro']").val(),
+			srebrniBod:$("#bodovnaSkalaForma [name='srebrniBodStaro']").val(),
+			zlatniBod:$("#bodovnaSkalaForma [name='zlatniBodStaro']").val()
+		   });
+		
+		$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
+			url: "http://localhost:8099/bodovnaSkalaController/izmeni",
+			type: "PUT",
+			data: formData,
+			contentType: "application/json",
+			datatype: 'json',
+			success: function(data){
+				if(data){
+					alert("Azuriranje uspesno");
+					
+					
+					
+					location.href = "http://localhost:8099/adminSistemaHome.html" 			
+				}else{
+					alert("Azuriranje neuspesno!");
+				}
+			},
+			error: function(data){
+				alert('Greska podaci azuriranje!')
+				
+			}
+		});
+	}
+});	
+
 </script>
 </body>
 </html>

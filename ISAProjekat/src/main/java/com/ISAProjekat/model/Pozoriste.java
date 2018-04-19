@@ -53,7 +53,9 @@ public class Pozoriste implements Serializable{
 	@Column(name = "pros_ocena", nullable = true, updatable = true)
 	private double prosecna_ocena;
 
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pozoriste")
+	@JsonIgnore
+	private Set<PozorisnaSala> pozorisneSale;
 
 	public Long getId() {
 		return id;
@@ -94,5 +96,12 @@ public class Pozoriste implements Serializable{
 	public void setProsecna_ocena(double prosecna_ocena) {
 		this.prosecna_ocena = prosecna_ocena;
 	}
-
+	public Set<PozorisnaSala> getPozorisneSale() {
+		return pozorisneSale;
+	}
+	public void setPozorisneSale(Set<PozorisnaSala> pozorisneSale) {
+		this.pozorisneSale = pozorisneSale;
+	}
+	
+	
 }

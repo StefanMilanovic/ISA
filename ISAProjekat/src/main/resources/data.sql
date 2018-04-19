@@ -1,20 +1,20 @@
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('adminfan@gmail.com','adminfan' ,'adminfan','adminfan','adminfan','060000000','ADMIN_FAN',0,0);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('adminfan@gmail.com','adminfan' ,'adminfan','adminfan','adminfan','060000000','ADMIN_FAN',0,0,0,'BRONZANI');
 
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('a@a','a' ,'a','a','a','011','ADMIN_FAN',1,0);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('a@a','a' ,'a','a','a','011','ADMIN_FAN',1,0,0,'BRONZANI');
 
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('r@r','r' ,'r','r','r','021','REGISTROVAN',0,0);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('r@r','r' ,'r','r','r','021','REGISTROVAN',0,0,0,'BRONZANI');
 
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('s@s','s' ,'s','s','s','022','ADMIN_SIST',0,0);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('s@s','s' ,'s','s','s','022','ADMIN_SIST',0,0,0,'BRONZANI');
 
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('o@o','o' ,'o','o','o','022','ADMIN_OBJ',0,0);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('o@o','o' ,'o','o','o','022','ADMIN_OBJ',0,0,0,'BRONZANI');
 
-INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan)
-VALUES ('p@p','p' ,'p','p','p','022','ADMIN_SIST',0,1);
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('p@p','p' ,'p','p','p','022','ADMIN_SIST',0,1,0,'BRONZANI');
 
 
 INSERT INTO fan_zona (naziv)
@@ -68,3 +68,7 @@ values ('Dr.Strangelove','Komedija','Stenli Kubrik','1:30',0 , 0, 'Nakon sto jed
 insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id, termin_od, termin_do)
 values ('Ziveti','Drama','Akira Kurosava','2:33',0 , 0, 'Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak',
 350.00,'Takashi Shimura','2','13:00','15:33');
+
+
+INSERT INTO bodovna_skala (bronzani_bod,srebrni_bod,zlatni_bod)
+VALUES (2,3,4);

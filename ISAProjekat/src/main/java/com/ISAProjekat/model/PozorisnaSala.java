@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,13 +28,26 @@ public class PozorisnaSala {
 	@JsonIgnore
 	private Set<Projekcija> projekcije;
 
-	public PozorisnaSala(Long id, String naziv, Set<Projekcija> projekcije) {
+	
+	@ManyToOne(optional = false)
+	private Pozoriste pozoriste;
+	
+	public PozorisnaSala(){
+		
+		
+	}
+	
+	public PozorisnaSala(Long id, String naziv, Set<Projekcija> projekcije,Pozoriste pozoriste) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
 		this.projekcije = projekcije;
+		this.pozoriste = pozoriste;
 	}
-
+	public PozorisnaSala(String naziv) {
+		super();
+		this.naziv = naziv;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -57,5 +71,14 @@ public class PozorisnaSala {
 	public void setProjekcije(Set<Projekcija> projekcije) {
 		this.projekcije = projekcije;
 	}
+
+	public Pozoriste getPozoriste() {
+		return pozoriste;
+	}
+
+	public void setPozoriste(Pozoriste pozoriste) {
+		this.pozoriste = pozoriste;
+	}
+	
 	
 }

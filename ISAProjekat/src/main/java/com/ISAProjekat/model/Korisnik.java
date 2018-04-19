@@ -43,6 +43,7 @@ public class Korisnik implements Serializable {
 		this.tipKorisnika = tipKorisnika;
 		this.bioUlogovan = bioUlogovan;
 		this.predefinisan = predefinisan;
+		
 	}
 
 
@@ -83,7 +84,11 @@ public class Korisnik implements Serializable {
     private boolean predefinisan;
     
     
+    @Column(name =  "brojPoseta", nullable= false)
+    private int brojPoseta;
     
+    @Column(name =  "status", nullable= false) //zlatni srebrni i bronzani
+    private String status;
     //get i set metode
 
 	public Long getId() {
@@ -280,6 +285,42 @@ public class Korisnik implements Serializable {
 
 	public void setPredefinisan(boolean predefinisan) {
 		this.predefinisan = predefinisan;
+	}
+
+
+
+
+
+
+	public int getBrojPoseta() {
+		return brojPoseta;
+	}
+
+
+
+
+
+
+	public void setBrojPoseta(int brojPoseta) {
+		this.brojPoseta = brojPoseta;
+	}
+
+
+
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
     

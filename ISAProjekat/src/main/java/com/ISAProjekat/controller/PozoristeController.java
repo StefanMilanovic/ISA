@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ISAProjekat.model.Bioskop;
+import com.ISAProjekat.model.PozorisnaSala;
 import com.ISAProjekat.model.Pozoriste;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
+import com.ISAProjekat.service.PozorisnaSalaService;
 import com.ISAProjekat.service.PozoristeService;
 import com.ISAProjekat.service.ProjekcijaService;
 import com.ISAProjekat.service.SalaService;
@@ -28,6 +29,10 @@ import com.ISAProjekat.service.SalaService;
 public class PozoristeController {
 	@Autowired
 	private PozoristeService pozoristeService;
+	
+
+	@Autowired
+	private PozorisnaSalaService pozorisnaSalaService;
 	
 	@Autowired
 	private SalaService salaService;
@@ -223,7 +228,7 @@ public class PozoristeController {
 					
 				{
 					System.out.println("\nProsao 1");	
-					//preuzetBioskop.setSale(new HashSet<Sala>());
+					preuzetBioskop.setPozorisneSale(new HashSet<PozorisnaSala>());
 					pozoristeService.save(preuzetBioskop);
 
 					context.setAttribute("regPozoriste", preuzetBioskop);
@@ -249,7 +254,7 @@ public class PozoristeController {
 					
 				{
 					System.out.println("\nProsao2");
-					//preuzetBioskop.setSale(new HashSet<Sala>());
+					preuzetBioskop.setPozorisneSale(new HashSet<PozorisnaSala>());
 					pozoristeService.save(preuzetBioskop);
 
 					context.setAttribute("regPozoriste", preuzetBioskop);
@@ -273,47 +278,48 @@ public class PozoristeController {
 			
 			return new ResponseEntity<>(b, HttpStatus.OK);
 		}
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		//PREUZMI SALU DOBRU , i otkomentarisi u registraciji pozorista inicijalizaciju skupa sala !!!
-		/*
+		
 		@RequestMapping(value = "/registracijaSala", method = RequestMethod.POST)
-		public ResponseEntity<Sala> registracijaSala(@RequestBody Sala requestSala){
+		public ResponseEntity<PozorisnaSala> registracijaSala(@RequestBody PozorisnaSala requestSala){
 			
 			Pozoriste b = null;
 			b = (Pozoriste) context.getAttribute("regPozoriste");
+			System.out.println("\n usao u reg sale1 "+b.getNaziv());
 			//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-			Sala preuzetSala = new Sala(requestSala.getNaziv());
-			
+			PozorisnaSala preuzetSala = new PozorisnaSala(requestSala.getNaziv());
+			System.out.println("\n usao u reg sale2 "+b.getNaziv());
 			
 			Pozoriste bRoditelj = pozoristeService.findPozoristeById(b.getId());
-			 List<Sala>sve_sale = salaService.findAll();
-			
+			// List<Sala>sve_sale = salaService.findAll();
+			System.out.println("\n usao u reg sale3 "+b.getNaziv());
 			 
-				for(Sala s: bRoditelj.getSale()){
+				for(PozorisnaSala s: bRoditelj.getPozorisneSale()){
 					if(s.getNaziv().equals(preuzetSala.getNaziv())){
 						System.out.println("\n ****** IMA SALA SA TIM IMENOM!");
-						return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<PozorisnaSala>(preuzetSala, HttpStatus.BAD_REQUEST);
 						
 					}
 					
 				}
 				
-				
+				System.out.println("\n usao u reg sale4 "+b.getNaziv());
 				//OVDE SAMO PRILAGOI !!!
 				preuzetSala.setPozoriste(bRoditelj);
-				salaService.save(preuzetSala);
-				pozoristeService.findPozoristeById(b.getId()).getSale().add(preuzetSala);
+				pozorisnaSalaService.save(preuzetSala);
+				pozoristeService.findPozoristeById(b.getId()).getPozorisneSale().add(preuzetSala);
 					
 					
 				
 				pozoristeService.save(pozoristeService.findPozoristeById(b.getId()));
 				
-			
+				System.out.println("\n usao u reg sale1 "+b.getNaziv());
 				
-				return new ResponseEntity<Sala>(preuzetSala, HttpStatus.OK);
+				return new ResponseEntity<PozorisnaSala>(preuzetSala, HttpStatus.OK);
 				//return new ResponseEntity<Sala>(preuzetSala, HttpStatus.BAD_REQUEST);
 			//ako je baza prazna samo ga dodaj bez provere 
 		
-		}*/
+		}
 		
 }

@@ -2,6 +2,7 @@ package com.ISAProjekat.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ISAProjekat.model.BodovnaSkala;
 import com.ISAProjekat.model.Korisnik;
+import com.ISAProjekat.service.BodovnaSkalaService;
 import com.ISAProjekat.service.KorisnikService;
 
 @RestController
@@ -22,6 +25,13 @@ public class KorisnikContreller {
 	@Autowired
 	private KorisnikService korisnikService ;
 
+	
+	@Autowired
+	private BodovnaSkalaService bodovnaSkalaService;
+	
+	@Autowired
+	ServletContext context;
+	
 	@RequestMapping(value="getKorisnici", method = RequestMethod.GET) 
 	public ResponseEntity<List<Korisnik>> getKorisnici() {
 		List<Korisnik> korisnici = korisnikService.findAll();
@@ -43,7 +53,23 @@ public class KorisnikContreller {
 		if(korisnik!= null) {
 			if(korisnik.getSifra().equals(requestKorisnik.getSifra())) {
 				
-					request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
+				if(korisnik.getTipKorisnika().equals("REGISTROVAN")){
+					
+					BodovnaSkala bodovnaSkala=  bodovnaSkalaService.findById((long)1);
+					
+					System.out.println("\nBROJ POSETA "+ korisnik.getBrojPoseta() +" status:" +korisnik.getStatus()+"Granica "+ bodovnaSkala.getSrebrniBod());
+					korisnik.setBrojPoseta(korisnik.getBrojPoseta()+1);
+
+					System.out.println("\nBROJ POSETA "+ korisnik.getBrojPoseta());
+					if(korisnik.getBrojPoseta() >bodovnaSkala.getSrebrniBod()){
+						korisnik.setStatus("SREBRNI");
+						if(korisnik.getBrojPoseta()>bodovnaSkala.getZlatniBod()){
+							korisnik.setStatus("ZLATNI");
+						}
+					}
+					korisnikService.save(korisnikService.findKorisnikByEmail(korisnik.getEmail()));
+				}
+				request.getSession().setAttribute("aktivanKorisnik", korisnik);//DORADI! 
 				
 				return new ResponseEntity<Korisnik>(korisnik, HttpStatus.OK);
 			}
@@ -60,6 +86,8 @@ public class KorisnikContreller {
 		
 		System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
 		Korisnik preuzetKorisnik = new Korisnik( requestKorisnik.getEmail(), requestKorisnik.getSifra(), requestKorisnik.getIme(), requestKorisnik.getPrezime(), requestKorisnik.getGrad(), requestKorisnik.getTelefon(), "REGISTROVAN", false,false);
+		preuzetKorisnik.setBrojPoseta(0);
+		preuzetKorisnik.setStatus("BRONZANI");
 		
 		List<Korisnik> lk = korisnikService.findAll() ;
 		
@@ -366,5 +394,6 @@ public class KorisnikContreller {
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.BAD_REQUEST);
 		
 	}
+
 
 }
