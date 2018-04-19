@@ -110,3 +110,8 @@ p,h4,h5 {margin: 0;}
 	background-color:#7fbeeb;
 	float:bottom;
 }
+
+#map-canvas{
+	width: 500px;
+	height : 300px;
+}
