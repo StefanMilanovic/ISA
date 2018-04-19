@@ -34,13 +34,20 @@ public class Rekvizit {
 		@ManyToOne(optional = false)
 		private Blagajna blagajna;
 		
+		@ManyToOne(optional = true)
+		private Korisnik korisnik = new Korisnik();
+		
+		@Column(name = "rezervisan", nullable = false, updatable = true)
+		private boolean rezervisan;
+		
+		
 		public Rekvizit(){
 			
 		}
 
 		
 		
-		public Rekvizit(Long id, String naziv, String opis, String cena, String slika, Blagajna blagajna) {
+		public Rekvizit(Long id, String naziv, String opis, String cena, String slika, Blagajna blagajna, boolean rezervisan) {
 			super();
 			this.id = id;
 			this.naziv = naziv;
@@ -48,6 +55,7 @@ public class Rekvizit {
 			this.cena = cena;
 			this.slika = slika;
 			this.blagajna = blagajna;
+			this.rezervisan = rezervisan;
 		}
 
 
@@ -99,6 +107,31 @@ public class Rekvizit {
 		public void setBlagajna(Blagajna blagajna) {
 			this.blagajna = blagajna;
 		}
+
+
+
+		public Korisnik getKorisnik() {
+			return korisnik;
+		}
+
+
+
+		public void setKorisnik(Korisnik korisnik) {
+			this.korisnik = korisnik;
+		}
+
+
+
+		public boolean isRezervisan() {
+			return rezervisan;
+		}
+
+
+
+		public void setRezervisan(boolean rezervisan) {
+			this.rezervisan = rezervisan;
+		}
+		
 		
 		
 }

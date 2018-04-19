@@ -36,12 +36,12 @@ INSERT INTO blagajna (naziv)
 VALUES ('BlagajnaNaziv1');
 
 
-INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id)
-VALUES ('132' ,'rekvizitNaziv1','opis1','nekijpg..','1');
+INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan)
+VALUES ('132' ,'rekvizitNaziv1','opis1','nekijpg..','1',0);
 
 
-INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id)
-VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1');
+INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan)
+VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1',0);
 
 insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
 values ('Bioskop1','Stefana Milanovica 66, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);

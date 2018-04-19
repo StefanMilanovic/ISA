@@ -1,5 +1,6 @@
 package com.ISAProjekat.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -8,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ISAProjekat.model.Bioskop;
-import com.ISAProjekat.model.Projekcija;
+import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Rekvizit;
+import com.ISAProjekat.service.KorisnikService;
 import com.ISAProjekat.service.RekvizitService;
 
 @RestController
@@ -27,11 +27,34 @@ public class RekvizitController {
 	private RekvizitService rekvizitService;
 	
 	@Autowired
+	private KorisnikService korisnikService;
+	
+	@Autowired
 	ServletContext context;
 	
 	@RequestMapping(value="dodajRekvizit",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Rekvizit> addRekvizit(@RequestBody Rekvizit rekvizit){
-		Rekvizit r = rekvizitService.save(rekvizit);
+	public ResponseEntity<Rekvizit> addRekvizit(@RequestBody Rekvizit rekvizit,HttpServletRequest request){
+		//Rekvizit r = rekvizitService.findById(rekvizit.getId());
+
+		Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
+		rekvizit.setRezervisan(false);
+		rekvizit.setKorisnik(k);
+		Rekvizit r =rekvizitService.save(rekvizit );
+		Rekvizit iz_baze = rekvizitService.findById(rekvizit.getId());
+			
+		
+			
+		
+			//rekvizitService.save(requestRekvizit);
+		korisnikService.findKorisnikByEmail(k.getEmail()).getRekviziti().add(iz_baze);
+			
+			
+			
+		korisnikService.save(korisnikService.findKorisnikByEmail(k.getEmail()));
+			
+		
+	
 		return new ResponseEntity<>(r, HttpStatus.OK);
 	}	
 	
@@ -134,6 +157,67 @@ public class RekvizitController {
 	}
 	
 
+
+	@RequestMapping(value = "/rezervisi", method = RequestMethod.PUT)
+	public Rekvizit rezervisi(@RequestBody Rekvizit requestRekvizit,HttpServletRequest request){
+		
+		
+		 Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Rekvizit iz_baze = rekvizitService.findById(requestRekvizit.getId());
+		
+		if(!(iz_baze.isRezervisan())){
+			iz_baze.setRezervisan(true);
+			Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
+			System.out.println("\n Korisnik "+k.getEmail());
+			System.out.println("\nNAZIV MENJANOG "+requestRekvizit.getNaziv());
+			System.out.println("\nID MENJANOG "+requestRekvizit.getId());
+			
+			
+			iz_baze.setKorisnik(k);
+			//rekvizitService.save(requestRekvizit);
+			korisnikService.findKorisnikByEmail(kor.getEmail()).getRekviziti().add(iz_baze);
+			
+			
+			
+			korisnikService.save(korisnikService.findKorisnikByEmail(kor.getEmail()));
+			
+		
+			//kor.getRekviziti().add(rekvizitService.findById(requestRekvizit.getId()));
+			System.out.println("\n OPIS MENJANOG "+requestRekvizit.getOpis());
+			//rekvizitService.findById(requestRekvizit.getId()).setKorisnik(k);
+		/*	System.out.println("\nMENJAM rekvizit: "+iz_baze.getNaziv());
+			rekvizitService.findById(requestRekvizit.getId()).setOpis(requestRekvizit.getOpis());
+			rekvizitService.findById(requestRekvizit.getId()).setCena(requestRekvizit.getCena());
+			rekvizitService.findById(requestRekvizit.getId()).setNaziv(requestRekvizit.getNaziv());
+			rekvizitService.findById(requestRekvizit.getId()).setSlika(requestRekvizit.getSlika());
+		*/
+			
+			System.out.println("\n naziv promenjenog "+rekvizitService.findById(requestRekvizit.getId()).getNaziv());
+			context.setAttribute("rekvizitIzmena", rekvizitService.findById(requestRekvizit.getId()));
+			rekvizitService.save(rekvizitService.findById(iz_baze.getId()));
+			
+		}//ako je rezervisan nista ne radi
+		else{
+			System.out.println("\nREKVIZIT JE VEC REZERVISAN");
+		}
+		return rekvizitService.findById(requestRekvizit.getId());
 	
+	}
+	
+	@RequestMapping(value="getNerezervisaniRekviziti", method = RequestMethod.GET)
+	public ResponseEntity<List<Rekvizit>> 	getNerezervisaniRekviziti() {
+		System.out.println("\nUzimam rekvizite ..");
+		List<Rekvizit> rr = rekvizitService.findAll();
+		List<Rekvizit> nerezervisani = new ArrayList<Rekvizit>();
+		for(Rekvizit r : rr){
+			if(!(r.isRezervisan())){
+				
+				nerezervisani.add(r);
+				System.out.println("\nUzimam rekvizite ..1" +r.getNaziv() );	
+			}
+		}
+		return new ResponseEntity<>(nerezervisani, HttpStatus.OK);
+	}
 	
 }
