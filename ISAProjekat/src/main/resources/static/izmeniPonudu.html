@@ -28,7 +28,7 @@
 					
 					
 					var aktivni_korisnik;
-					
+					var asd =data.oglas.korisnik.id;
 					document.getElementById("cena").value = data.cena;
 					document.getElementById("id").value = data.id;
 					document.getElementById("odRegistrovanog").value = data.odRegistrovanog;
@@ -45,8 +45,14 @@
 						   else{
 							 aktivni_korisnik = data;
 						    console.log("aaaaaaaaa");
-
+						    console.log(asd);
 						    console.log(aktivni_korisnik);
+								  if(asd == aktivni_korisnik.id){
+									document.getElementById("prihvati").disabled = false;
+									
+								}else{
+									document.getElementById("prihvati").disabled = true;
+								}
 						   }
 						  }
 						 });
@@ -59,16 +65,8 @@
 					}
 					
 					console.log("iddddd");
-					//console.log(data.oglas.korisnik.id);
-					console.log(aktivni_korisnik);
-				
-					if(data.oglas.korisnik.id == data.korisnik.id){
-						document.getElementById("prihvati").disabled = false;
-						
-					}else{
-						document.getElementById("prihvati").disabled = true;
-					}
-				}
+				}	//console.log(data.oglas.korisnik.id);
+
 			},
 			error:function(textStatus, errorThrown){
 				console.log("Ne valja nesto.")
@@ -249,15 +247,6 @@ $("#prihvati").click(function(){
 			
 
 
-function getAktivnogKorisnika(){
-	$.ajax({
-		url : "http://localhost:8099/korisnikController/getAktivan"
-	}).then(function(data){
-		var korisnik = data;
-		//alert(data.id);
-		return data.id;
-	});
-}
 </script>
 </body>
 </html>
