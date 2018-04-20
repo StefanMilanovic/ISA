@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Oglas;
-import com.ISAProjekat.model.Rekvizit;
 import com.ISAProjekat.model.DTO.OglasAdap;
-import com.ISAProjekat.model.DTO.OglasDTO;
 import com.ISAProjekat.model.DTO.OglasDTOAdap;
+import com.ISAProjekat.service.FanZonaService;
+import com.ISAProjekat.service.KorisnikService;
 import com.ISAProjekat.service.OglasService;
 
 @RestController
@@ -38,6 +39,12 @@ public class OglasController {
 
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	private KorisnikService korisnikService;
+
+	@Autowired
+	private FanZonaService fanZonaService;
 
 	@RequestMapping(value="/getOglasi", method = RequestMethod.GET)
 	public ResponseEntity<List<Oglas>> getOglasi() {
@@ -109,13 +116,26 @@ public class OglasController {
 	}*/
 
 	@RequestMapping(value="dodajOglas",method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Oglas> addOglas(@RequestBody Oglas oglas){
-		oglas.setOdobren(false);
-		oglas.setProveren(false);
-		Oglas noviOglas = oglasService.save(oglas);
+	public ResponseEntity<Oglas> addOglas(@RequestBody Oglas oglas, HttpServletRequest request){
+	//	oglas.setOdobren(false);
+	//	oglas.setProveren(false);
+	//	Oglas noviOglas = oglasService.save(oglas);
 		System.out.println("\nDodajem oglas");
 		
-		return new ResponseEntity<>(noviOglas, HttpStatus.OK);
+		Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
+		
+		oglas.setKorisnik(k);
+		Oglas r =oglasService.save(oglas );
+		Oglas iz_baze = oglasService.findById(oglas.getId());
+			
+
+		korisnikService.findKorisnikByEmail(k.getEmail()).getOglasi().add(iz_baze);
+			
+		korisnikService.save(korisnikService.findKorisnikByEmail(k.getEmail()));
+
+		
+		return new ResponseEntity<>(r, HttpStatus.OK);
 	}
 	
 	
@@ -200,4 +220,41 @@ public class OglasController {
 		return oglasService.findById(requestOglas.getId());
 	
 	}
+	
+	//Za ponude da imamo oglas sa kog su dosli
+	@RequestMapping(value="/findClickedOglasPonuda", method = RequestMethod.POST)
+	public ResponseEntity<Oglas>findClickedOglasPonuda(@RequestBody String data, HttpServletRequest request){
+		
+		System.out.println(data);
+		data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+		
+		Long id = Long.parseLong(data,10);
+		
+		
+		
+		List<Oglas> oglasi = oglasService.findAll();
+		Oglas ret=null;
+		for(Oglas b: oglasi){
+			if(b.getId().compareTo(id)==0){
+				ret = b;
+				context.setAttribute("oglasPonuda", ret);// samo postavimo koji je poslednji kliknut
+			}
+		}
+		return new ResponseEntity<>(ret, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/getSelectedOglasPonuda", method = RequestMethod.GET)
+	public ResponseEntity<Oglas>getSelectedOglasPonuda(HttpServletRequest request){
+		
+		Oglas b = null;
+		b = (Oglas) context.getAttribute("oglasPonuda");
+		System.out.println("\nSALJE NA PROFIL: "+b.getNaziv());
+		
+		return new ResponseEntity<>(b, HttpStatus.OK);
+	}
+	
 }

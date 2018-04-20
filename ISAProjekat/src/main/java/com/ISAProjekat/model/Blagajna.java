@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +28,10 @@ public class Blagajna {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "blagajna")
 	@JsonIgnore
 	private Set<Rekvizit> rekviziti;
-
+	
+	@ManyToOne(optional = false)
+	private FanZona fanZona;
+	
 	public Blagajna(Long id, String naziv, Set<Rekvizit> rekviziti) {
 		super();
 		this.id = id;

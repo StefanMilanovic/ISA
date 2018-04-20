@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<input type= "text" id = "mapsearch" size="50">
+<input type= "text" id = "mapsearch" size="50" value="Novi sad">
 <div id = "map-canvas"> </div>
 
 <script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCyB6K1CFUQ1RwVJ-nyXxd6W0rfiIBe12Q&libraries=places"
@@ -56,6 +56,26 @@ google.maps.event.addDomListener(searchBox, 'places_changed', function() {
     map.setZoom(15);
     
 });
+
+
+$('.mapsearch').each(function() {
+	   var elem = $(this);
+
+	   // Save current value of element
+	   elem.data('oldVal', elem.val());
+
+	   // Look for changes in the value
+	   elem.bind("propertychange change click keyup input paste", function(event){
+	      // If value has changed...
+	      if (elem.data('oldVal') != elem.val()) {
+	       // Updated stored value
+	       elem.data('oldVal', elem.val());
+
+	       // Do action
+	       
+	     }
+	   });
+	 });
 </script>
 
 </body>

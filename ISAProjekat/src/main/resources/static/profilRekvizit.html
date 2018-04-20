@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="jquery-3.2.1.min.js"></script>
+<title>Rekvizit</title>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("Usao na odabran oglas.");
+
+		$.ajax({
+			url:"http://localhost:8099/rekvizitController/getSelectedRekvizit",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+					console.log(data.naziv);
+					
+					
+				}
+				
+				document.getElementById("naziv").value = data.naziv;
+				document.getElementById("cena").value = data.cena;
+				document.getElementById("opis").value = data.opis;
+				document.getElementById("slika").value = data.slika;
+				
+				document.getElementById('id').value=data.id;
+				
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	</script>
+</head>
+<body>
+<h1>Rekvizit </h1>
+
+
+<form id = "registrationForm" name = "registrationForm" method="POST">
+
+			<label  for="cd-name">ID</label>
+			<input  type="text" name="id" id="id" disabled><br/>
+					
+			<label  >Naziv</label><br/>
+			<input id ="naziv" name ="naziv"  type="text" class="form-control"   disabled ><br/>
+			
+			<label>Cena</label><br/>
+			<input id = "cena" name = "cena" type="text" class="form-control" placeholder= "Cena" disabled><br/> 
+			
+			<label > Opis :</label><br/>
+			<input id = "opis" name = "opis" type="text" class="form-control"  placeholder="opis" disabled><br/> 
+			
+			<label>Slika</label><br/>
+			<input id = "slika" name ="slika" class="form-control" placeholder="slika" disabled><br/>
+			 
+			
+			
+			<hr><br/>
+		
+				<input id="rezervisi" type="button" class="btn btn-info"  value="Rezervisi">
+			
+		</form>
+		<br/><br/>
+		
+		
+		
+		<form id ="nazadForma" action="blagajna.html" class="form-horizontal">
+					        
+			<input type="submit" value="Odustani">				        
+		</form> 
+
+
+		<script type="text/javascript">
+		
+			$("#rezervisi").click(function(){
+				//alert("tu sam negde");
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+				var naziv = forma.find('[name=naziv]').val();
+				var cena = forma.find('[name=cena]').val();
+				var opis = forma.find('[name=opis]').val();
+				var slika = forma.find('[name=slika]').val();
+						
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						id:$("#registrationForm [name='id']").val(),
+						naziv:$("#registrationForm [name='naziv']").val(),
+						cena:$("#registrationForm [name='cena']").val(),
+						opis:$("#registrationForm [name='opis']").val(),
+						slika:$("#registrationForm [name='slika']").val(),
+
+					   });
+					
+					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
+						url: "http://localhost:8099/rekvizitController/rezervisi",
+						type: "PUT",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								//alert("Odobravanje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/blagajna.html" 			
+							}else{
+								alert("Odobravanje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});	
+			</script>
+</body>
+</html>

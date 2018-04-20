@@ -104,6 +104,20 @@ public class Korisnik implements Serializable {
     
     
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
+	@JsonIgnore
+	private Set<Rekvizit> rekviziti = new HashSet<Rekvizit>(); //rezervisani rekviziti
+    
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
+   	@JsonIgnore
+   	private Set<Oglas> oglasi = new HashSet<Oglas>();//oglasi koje je korisnik objavio 
+     
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
+   	@JsonIgnore
+   	private Set<Ponuda> ponude = new HashSet<Ponuda>();
+  
 	public Long getId() {
 		return id;
 	}
@@ -344,6 +358,10 @@ public class Korisnik implements Serializable {
 	public Set<Ocena> getOcene() {
 		return ocene;
 	}
+		
+		public Set<Rekvizit> getRekviziti() {
+		return rekviziti;
+	}
 
 
 
@@ -352,6 +370,46 @@ public class Korisnik implements Serializable {
 
 	public void setOcene(Set<Ocena> ocene) {
 		this.ocene = ocene;
+		
+	}
+	public void setRekviziti(Set<Rekvizit> rekviziti) {
+		this.rekviziti = rekviziti;
+	}
+
+
+
+
+
+
+	public Set<Oglas> getOglasi() {
+		return oglasi;
+	}
+
+
+
+
+
+
+	public void setOglasi(Set<Oglas> oglasi) {
+		this.oglasi = oglasi;
+	}
+
+
+
+
+
+
+	public Set<Ponuda> getPonude() {
+		return ponude;
+	}
+
+
+
+
+
+
+	public void setPonude(Set<Ponuda> ponude) {
+		this.ponude = ponude;
 	}
 
     

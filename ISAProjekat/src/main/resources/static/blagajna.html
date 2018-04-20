@@ -5,12 +5,21 @@
 <script src="jquery-3.2.1.min.js"></script>
 <title>Blagajna</title>
 
+<script  type="text/javascript">
+	$(document).on('click','a',function(e) { 
+		//alert("Usao u oznacavanje kliknutog!")
+		e.preventDefault();
+		var id = e.target.closest("div").childNodes[1].textContent;
+		//console.log(id);
+		getSelectedRekvizit(id);
+	});
+</script>
 </head>
 <body>
 <h1>Prodavnica</h1>
 
 
-<h3>Prikaz postojecih rekvizita:</h3>
+<h3>Prikaz i rezervacija rekvizita:</h3>
 	<table id="rekviziti" > </table>
 
 <hr><br>
@@ -19,28 +28,96 @@
 					  <input type="submit" value="Nazad">				        
 	 </form>
 	 
-	 
-	 <script type="text/javascript">
+<script type="text/javascript">
 	
+$(document).ready(function(){
+	console.log("Dokument spreman.");
 	
-	$(document).ready(function() {
-		$.ajax({
-			url: "http://localhost:8099/rekvizitController/getRekviziti"
-		}).then(function(data) {
-			for(i=0; i<data.length; i++) {
-				popuni = "<tr >"
-					+"<td >" + data[i].id + "</td>"
-					+ "<td >" + data[i].naziv + "</td>"
-					+ "<td >" + data[i].opis + "</td>"
-					+ "<td >" + data[i].slika + "</td>"
-					+ "<td >" + data[i].cena + "</td>"
+	$.ajax({
+		url: "http://localhost:8099/rekvizitController/getNerezervisaniRekviziti",
+		type:"GET",
+		dataType:"json",
+		success: function(data){
+			//console.log(data);
+			$.each(data, function(index, value){
+				console.log(value);
+				
+				// alert(value.rezervisan);
+			
+				var text=
+					"<div class=\"bioskop_div\">" +
+						"<div class=\"thumbnail_div\">" +
+						
+						"</div>" +
+						"<div class=\"podaci_div\">"+
+							"<div class=\"naziv_div\">"+
+								"<div class=\"ime_div\">"+
+									"<a href=\"profilOglasa.html\">"+value.naziv+"</a>"+
+									"<label class=\"labela\" id=\"key\" hidden>"+value.id+"</label>"+
+									
+								"</div>"+
+								"<div class=\"adresa_div\">"+
+									"<h5 hidden>"+value.cena+"</h5>"+
+								"</div>"+
+							"</div>"+
+							"<div class=\"opis_div\">"+
+								"<p hidden>"+value.opis+"</p>"+
+							"</div>"+					
+							"<div class=\"ocena_div\">"+
+								"<h5 hidden>Slika :"+value.slika+"</h5>"+
+							"</div>"+
+							
+							
+							
+							"</div><br>"+
+						
+					"</div>"+
+				"<div class=\"razmak_div\"></div>";
+				$("#rekviziti").append(text);
+			});
+		},
+		error:function(textStatus,errorThrown){
+			console.log("Ne valja nesto");
+			console.log(textStatus);
+		}
+	});
+});
 
-					+ "</tr>"
-				$("#rekviziti").append(popuni)
-			}
+
+	
+	
+	
+
+	function getSelectedRekvizit(id){
+		
+		var id_data = JSON.stringify(id);
+		
+		$.ajax({
+			url:"http://localhost:8099/rekvizitController/findClickedRekvizit",
+			type:"POST",
+			data:{id: id_data},
+			dataType:"json",
+			success:function(data){
+				if(data==null){
+					console.log("Data je null.");
+				}
+				else{
+					console.log(data);
+					//alert("Uspesno oznacen oglas!");
+					top.location.href="profilRekvizit.html";
+				}
+			},
+			error:function(textStatus, errorThrown){
+				console.log(textStatus);
+			}		
 		});
-	});	
-	</script>
+		
+	}
+</script>
+	  
+	  
+	  
+	  
 	  
 </body>
 </html>

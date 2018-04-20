@@ -1,7 +1,5 @@
 package com.ISAProjekat.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,7 +30,9 @@ public class FanZona {
 	@JsonIgnore
 	private Set<Oglas> oglasi;
 	
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fanZona")
+	@JsonIgnore
+	private Set<Blagajna> blagajna;
 	
 	public FanZona(){
 		
