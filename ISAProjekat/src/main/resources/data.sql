@@ -48,23 +48,24 @@ VALUES ('132' ,'rekvizitNaziv1','opis1','nekijpg..','1',0,'2');
 INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan,korisnik_id)
 VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1',0,'2');
 
-insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
-values ('Bioskop1','Stefana Milanovica 66, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
+insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova,ukupan_prihod)
+values ('Bioskop1','Jefimije Zivkovic 14, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0,0);
 
-insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
-values ('Bioskop2','Jefimije Zivkovic 14, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
+insert into pozoriste(naziv, adresa, opis, pros_ocena, broj_glasova,ukupan_prihod)
+values ('Pozoriste1','Stefana Milanovica BB, Novi Sad','Novo pozoriste u gradu, 200 sala, besplatni prikazi prvih 300 godina.',0, 0, 0);
 
-insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
-values ('Bioskop3','Aleksandra Lupica 33, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
-
-insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
-values ('Bioskop4','Jovice Cubrica 142, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
 
 insert into sala(naziv, bioskop_bioskop_id)
 values ('Sala1','1');
 
 insert into sala(naziv, bioskop_bioskop_id)
 values ('Sala2','1');
+
+insert into pozorisna_sala(naziv, pozoriste_pozoriste_id)
+values ('Sala1p','1');
+
+insert into pozorisna_sala(naziv, pozoriste_pozoriste_id)
+values ('Sala2p','1');
 
 insert into projekcija(naziv, zanr, ime_reditelja, trajanje, pros_ocena, broj_glasova, opis, cena, glumci, sala_sala_id, termin_od, termin_do)
 values ('Dr.Strangelove','Komedija','Stenli Kubrik','1:30',0 , 0, 'Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.',
@@ -79,6 +80,14 @@ INSERT INTO bodovna_skala (bronzani_bod,srebrni_bod,zlatni_bod)
 VALUES (2,3,4);
 
 
-INSERT INTO ponuda (cena,status,oglas_id,korisnik_id,od_registrovanog)
-VALUES ('132' ,'NISTA','1','3',0);
+--INSERT INTO ponuda (cena,status,oglas_id,korisnik_id)
+--VALUES ('132' ,'NISTA','1','3');
 
+insert into mesec(broj_meseca, godina, naziv, bioskop_bioskop_id, pozoriste_pozoriste_id)
+values (4, 2018, 'April', '1', '1');
+
+insert into mesec(broj_meseca, godina, naziv, bioskop_bioskop_id, pozoriste_pozoriste_id)
+values (3, 2018, 'Mart', '1', '1');
+
+insert into mesec(broj_meseca, godina, naziv, bioskop_bioskop_id, pozoriste_pozoriste_id)
+values (2, 2018, 'Februar', '1', '1');

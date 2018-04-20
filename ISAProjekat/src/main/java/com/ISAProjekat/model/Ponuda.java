@@ -25,7 +25,7 @@ public class Ponuda {
 	private boolean odRegistrovanog;		
 	
 	@Column(nullable = false)
-	private String status;			
+	private String status;			//ODOBRENA ,ODBIJENA i NISTA
 	
 	@ManyToOne(optional = false)
 	private Oglas oglas = new Oglas();

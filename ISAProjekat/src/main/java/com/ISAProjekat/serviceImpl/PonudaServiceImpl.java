@@ -37,7 +37,7 @@ public class PonudaServiceImpl implements PonudaService {
 
 	@Override
 	public Ponuda save(Ponuda ponuda) {
-		//dodeljivanje ponude fan zoni i korisniku bice u kontroleru
+		//dodeljivanje oglasu i korisniku bice u kontroleru
 		return ponudaRepository.save(ponuda);
 	}
 

@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CascadeType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -95,14 +97,13 @@ public class Korisnik implements Serializable {
     
     @Column(name =  "status", nullable= false) //zlatni srebrni i bronzani
     private String status;
-    //get i set metode
+    
+    
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy="korisnik")
     @JsonIgnore
     private Set<Ocena> ocene = new HashSet<Ocena>();
-    
-    
-    
+      
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
 	@JsonIgnore
@@ -118,6 +119,11 @@ public class Korisnik implements Serializable {
    	@JsonIgnore
    	private Set<Ponuda> ponude = new HashSet<Ponuda>();
   
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
+   	@JsonIgnore
+   	private Set<Poruka> poruka = new HashSet<Poruka>();
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -410,6 +416,24 @@ public class Korisnik implements Serializable {
 
 	public void setPonude(Set<Ponuda> ponude) {
 		this.ponude = ponude;
+	}
+
+
+
+
+
+
+	public Set<Poruka> getPoruka() {
+		return poruka;
+	}
+
+
+
+
+
+
+	public void setPoruka(Set<Poruka> poruka) {
+		this.poruka = poruka;
 	}
 
     

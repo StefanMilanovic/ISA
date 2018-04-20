@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Oglas;
 import com.ISAProjekat.model.Ponuda;
-import com.ISAProjekat.model.Rekvizit;
+import com.ISAProjekat.model.Poruka;
 import com.ISAProjekat.service.KorisnikService;
 import com.ISAProjekat.service.OglasService;
 import com.ISAProjekat.service.PonudaService;
+import com.ISAProjekat.service.PorukaService;
 
 @RestController
 @RequestMapping(value = "/ponudaController")
@@ -40,6 +41,9 @@ public class PonudaController {
 	@Autowired
 	private OglasService oglasService;
 
+
+	@Autowired
+	private PorukaService porukaService;
 	
 	@RequestMapping(value="/getPonude", method = RequestMethod.GET)
 	public ResponseEntity<List<Ponuda>> getPonude() {
@@ -185,8 +189,6 @@ public class PonudaController {
 		Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
 		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
 
-		
-	
 		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
 		Ponuda iz_baze = ponudaService.findById(requestPonuda.getId());
 		
@@ -201,16 +203,94 @@ public class PonudaController {
 			}
 			
 		}
-		
 		oglasBaza.setProdat(true);
 		context.setAttribute("oglasPonuda", oglasBaza);
 		oglasService.save(oglasService.findById(oglasBaza.getId()));
 		context.setAttribute("ponudaAktivna", ponudaService.findById(requestPonuda.getId()));
 		ponudaService.save(ponudaService.findById(requestPonuda.getId()));
 		
+		System.out.println("\nasdadsa ***"+oglasBaza.getPonude().size());
 		
+		
+		//slanje poruke nakon odobravanja ponude
+		List<Korisnik> korisnici = korisnikService.findAll();
+		
+		List<Korisnik> odbijeniKorisnici = new ArrayList<Korisnik>();
+		List<Korisnik> odobreniKorisnici = new ArrayList<Korisnik>();
+		
+
+		for(Korisnik kkk : korisnici){
+			if(kkk.getTipKorisnika().equals("REGISTROVAN")){
+				System.out.println("\n 1p");
+				//ako korisnik ima ponudu na prodatom oglasu				
+				for(Ponuda ponudeProdatog : oglasBaza.getPonude()){// ponude sa prodatog oglasa
+					
+					for(Ponuda ponudeKor : kkk.getPonude() ){
+						
+						if(ponudeProdatog.getId() == ponudeKor.getId()){//ako se nadju takve ponude  proveri status sa prodate i posalji poruku
+							
+							
+							Poruka poruka1 = new Poruka();
+							Poruka poruka2 = new Poruka();
+							if(ponudeProdatog.getStatus().equals("ODBIJENA")){
+							
+								poruka1.setSadrzaj("Vasa ponuda("+ponudeProdatog.getCena()+") je ODBIJNA! Za oglas:"+ oglasBaza.getNaziv());							
+								poruka1.setKorisnik(korisnikService.findKorisnikByEmail(kkk.getEmail()));
+								
+								porukaService.save(poruka1);
+								kkk.getPoruka().add(poruka1);
+								
+								odbijeniKorisnici.add(kkk);
+								//korisnikService.save(korisnikService.findKorisnikByEmail(kkk.getEmail()));
+								
+								
+							}
+							if(ponudeProdatog.getStatus().equals("ODOBRENA")){
+								
+								poruka2.setSadrzaj("Vasa ponuda("+ponudeProdatog.getCena()+") je ODOBRENA! Za oglas:"+ oglasBaza.getNaziv());							
+								poruka2.setKorisnik(korisnikService.findKorisnikByEmail(kkk.getEmail()));							
+								porukaService.save(poruka2);
+								kkk.getPoruka().add(poruka2);								
+								odobreniKorisnici.add(kkk);
+							//	korisnikService.save(korisnikService.findKorisnikByEmail(kkk.getEmail()));
+								
+							}					
+						}
+					}
+				}
+				
+			}
+		}
+		// treba da nadjes korisnika kome se poklama email i onda ga izmenis jer se u novom korisniku nalaze poruke 
+		for(Korisnik izBazeKor : korisnici){
+			if(izBazeKor.getTipKorisnika().equals("REGISTROVAN")){
+				for( Korisnik ko : odobreniKorisnici ){
+					if(ko.getEmail().equals(izBazeKor.getEmail())){
+						korisnikService.save(korisnikService.findKorisnikByEmail(ko.getEmail()));
+					}
+				}
+			}
+		}
+		for(Korisnik izBazeKor : korisnici){
+			if(izBazeKor.getTipKorisnika().equals("REGISTROVAN")){
+				for( Korisnik ko : odbijeniKorisnici ){
+					if(ko.getEmail().equals(izBazeKor.getEmail())){
+						korisnikService.save(korisnikService.findKorisnikByEmail(ko.getEmail()));
+					}
+				}
+			}
+		}
+		
+		for(Korisnik izBazeKor : korisnici){
+			if(izBazeKor.getTipKorisnika().equals("REGISTROVAN")){
+				for(Poruka pppp : izBazeKor.getPoruka()){
+					System.out.println("\n PORUKE"+pppp.getSadrzaj());
+				}
+			}
+		}
 		
 		return ponudaService.findById(requestPonuda.getId());
 	
-	}//
+	}
+	
 }
