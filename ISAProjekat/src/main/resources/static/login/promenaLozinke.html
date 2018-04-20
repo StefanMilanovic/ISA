@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Promenite Lozinku</title>
+<link rel="stylesheet" href="../bioskopi/dodaj_projekciju.css">
+<script src='../jquery-3.2.1.min.js'></script>
+<script src="promenaLozinke.js"></script>
+</head>
+<body>
+	
+	<form class="cd-form floating-labels" id="promenaLozinke_froma">
+		<fieldset>
+			<legend>Nova Lozinka</legend>					
+			
+			<div class="icon">
+				<label class="cd-label" for="cd-name">Lozinka</label>
+				<input class="user" type="password" name="sifra" id="pass1">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Ponovite lozinku</label>
+				<input class="company" type="password" name="pass2" id="pass2">
+		    </div> 
+		    
+		    <div>
+		      	<input id="PROKLETODUGME" onclick="izmeniLozinku()" type="submit" value="Izmeni">
+		    </div>
+		    
+		</fieldset>
+	</form>
+	
+	
+</body>
+</html>

@@ -205,6 +205,18 @@ public class KorisnikContreller {
 		return korAzuriraj;
 	}//kraj admin fan zona promena lozinke
 	
+	@RequestMapping(value="/promenaLozinke", method = RequestMethod.PUT)
+	public Korisnik promenaLozinke(@RequestBody Korisnik requestKorisnik, HttpServletRequest request){
+		Korisnik k = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		k.setSifra(requestKorisnik.getSifra());
+		if(!k.isBioUlogovan()){
+			k.setBioUlogovan(true);
+		}
+		request.getSession().setAttribute("aktivanKorisnik", k);
+		korisnikService.save(k);
+		return k;
+	}
+	
 	
 	
 	

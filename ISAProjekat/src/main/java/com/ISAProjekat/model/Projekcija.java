@@ -1,11 +1,18 @@
 package com.ISAProjekat.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Projekcija {
@@ -79,6 +86,10 @@ public class Projekcija {
 	
 	@Column(name="termin_do")
 	private String termin_do;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="projekcija")
+	@JsonIgnore
+	private Set<Ocena>ocene = new HashSet<Ocena>();
 	
 	
 	
@@ -181,6 +192,20 @@ public class Projekcija {
 
 	public void setTermin_do(String termin_do) {
 		this.termin_do = termin_do;
+	}
+
+
+
+
+	public Set<Ocena> getOcene() {
+		return ocene;
+	}
+
+
+
+
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 	
 	

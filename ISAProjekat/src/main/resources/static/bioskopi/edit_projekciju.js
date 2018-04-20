@@ -140,14 +140,16 @@ function editProjekciju2(){
 		dataType:'json',
 		success: function(data){
 			if(data){
-				console.log("USPESNO DODATO");
+				console.log("USPESNO EDITOVANO");
 				top.location.href="../bioskopi/profil_bioskopa.html";
 			}
 			else{
+				console.log("NULL");
 				top.location.href="../bioskopi/profil_bioskopa.html";
 			}
 		},
 		error: function (textStatus, errorThrown) {
+			console.log("ERROR");
 			top.location.href="../bioskopi/profil_bioskopa.html";			
 		}
 	});

@@ -81,3 +81,9 @@ p,h4,h5,h1,h2,h3 {margin: 0;}
 	height:660px;
 	background-color:brown;
 }
+
+.top_zaglavlje_div{
+	height:30px;
+	width:100%;
+	background-color:black;
+}

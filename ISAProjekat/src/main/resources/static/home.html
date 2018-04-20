@@ -2,13 +2,17 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" href="home.css">
 <script src="jquery-3.2.1.min.js"></script>
 
 <title>Home</title>
 </head>
 <body>
-	
-	<a href = "fanZona.html">FANZONA</a>
+	<div class = "zaglavlje_div">
+		<a href = "fanZona.html">FANZONA</a>
+		<a href = "/bioskopi/spisak_bioskopa.html">BIOSKOPI</a>
+		<a href = "/pozorista/spisak_pozorista.html">POZORISTA</a>
+	</div>
 	<table id="podaci" >
 	</table>
 	
@@ -20,6 +24,11 @@
 	<form id ="proveraOglasa" action="proveraOglasa.html" >
 		<input type="submit" id="togglee" value="Provera Oglasa" />
 	</form>
+	
+	<div class="bottom_div">
+		<div class="content_container"></div>
+	</div>
+	
 	<script type="text/javascript">
 			$(document).ready(function(){
 				$.ajax({

@@ -91,7 +91,15 @@
 								}else if(data.tipKorisnika=="ADMIN_SIST"){
 									location.href = "http://localhost:8099/adminSistemaHome.html"
 									
-								}else{
+								}else if(data.tipKorisnika=="ADMIN_OBJ"){
+									if(data.bioUlogovan == true){
+										location.href = "/home.html";
+									}
+									else{
+										location.href="promenaLozinke.html";
+										}
+								}
+								else{
 									alert("Korisnik nije registrovan!");
 									//location.href = "http://localhost:8099/index.html" 
 								}

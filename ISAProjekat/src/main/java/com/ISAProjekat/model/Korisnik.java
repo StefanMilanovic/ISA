@@ -2,12 +2,18 @@ package com.ISAProjekat.model;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -90,6 +96,13 @@ public class Korisnik implements Serializable {
     @Column(name =  "status", nullable= false) //zlatni srebrni i bronzani
     private String status;
     //get i set metode
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="korisnik")
+    @JsonIgnore
+    private Set<Ocena> ocene = new HashSet<Ocena>();
+    
+    
+    
 
 	public Long getId() {
 		return id;
@@ -321,6 +334,24 @@ public class Korisnik implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+
+
+
+
+	public Set<Ocena> getOcene() {
+		return ocene;
+	}
+
+
+
+
+
+
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 
     

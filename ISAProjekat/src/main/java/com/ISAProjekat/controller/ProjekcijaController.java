@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ISAProjekat.model.Bioskop;
 import com.ISAProjekat.model.Korisnik;
+import com.ISAProjekat.model.Ocena;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
+import com.ISAProjekat.service.OcenaService;
 import com.ISAProjekat.service.ProjekcijaService;
 
 @RestController
@@ -27,6 +29,9 @@ public class ProjekcijaController {
 	
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	OcenaService ocenaService;
 	
 	@RequestMapping(value="/getProjekcije", method = RequestMethod.GET)
 	public ResponseEntity<List<Projekcija>>getProjekcije(){
@@ -88,5 +93,4 @@ public class ProjekcijaController {
 		projekcijaService.save(projekcijaService.findProjekcijaById(requestProjekcija.getId()));
 		return null;
 	}
-	
 }

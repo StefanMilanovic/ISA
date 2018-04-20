@@ -3,7 +3,6 @@ package com.ISAProjekat;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.ISAProjekat.model.BodovnaSkala;
 import com.ISAProjekat.model.Korisnik;
 
 @SpringBootApplication

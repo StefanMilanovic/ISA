@@ -1,6 +1,7 @@
 package com.ISAProjekat.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -65,6 +66,13 @@ public class Bioskop implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bioskop")
 	@JsonIgnore
 	private Set<Sala> sale;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bioskop")
+	@JsonIgnore
+	private Set<Ocena> ocene = new HashSet<Ocena>();
+	
+	
+	
 
 	public Long getId() {
 		return id;
@@ -130,6 +138,14 @@ public class Bioskop implements Serializable{
 
 	public void setSale(Set<Sala> sale) {
 		this.sale = sale;
+	}
+
+	public Set<Ocena> getOcene() {
+		return ocene;
+	}
+
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
 	}
 	
 	
