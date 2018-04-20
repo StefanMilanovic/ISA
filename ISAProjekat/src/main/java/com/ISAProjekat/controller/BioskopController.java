@@ -1,5 +1,7 @@
 package com.ISAProjekat.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -159,9 +161,34 @@ public class BioskopController{
 		
 		Bioskop b = null;
 		b = (Bioskop) request.getSession().getAttribute("bioskopProfil");
-		//System.out.println("SALJE NA PROFIL: "+b.getAdresa());
+		Korisnik k = (Korisnik) request.getSession().getAttribute("aktivanKorisnik");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+		LocalDateTime now = LocalDateTime.now();
+		String s = dtf.format(now);
 		
-		return new ResponseEntity<>(b, HttpStatus.OK);
+		String[] split = s.split("/");
+		String mesec = split[1];
+		String dan = split[2];
+		
+		int dann=Integer.parseInt(dan);
+		int mesecc = Integer.parseInt(mesec);
+		if(k!=null){
+			for(Mesec m: bioskopService.findBioskopById(b.getId()).getMeseci()){
+				if(m.getBroj_meseca()==mesecc){
+					for(Dan d : m.getDani()){
+						if(d.getBroj_dana()==dann){
+							d.setBroj_poseta_bio(d.getBroj_poseta_bio()+1);
+							danService.save(danService.findDanById(d.getId()));								
+						}
+					}
+				}
+				mesecService.save(mesecService.findMesecById(m.getId()));
+			
+			}				
+			bioskopService.save(bioskopService.findBioskopById(b.getId()));
+			request.getSession().setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
+		}
+		return new ResponseEntity<>(bioskopService.findBioskopById(b.getId()), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/getSelectedBioskopSale", method = RequestMethod.GET)

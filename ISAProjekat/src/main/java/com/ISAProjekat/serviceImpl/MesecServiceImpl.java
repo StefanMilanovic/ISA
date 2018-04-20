@@ -27,7 +27,7 @@ public class MesecServiceImpl implements MesecService{
 
 	@Override
 	public Mesec save(Mesec m) {
-		return this.save(m);
+		return this.mesecRepository.save(m);
 	}
 
 }
