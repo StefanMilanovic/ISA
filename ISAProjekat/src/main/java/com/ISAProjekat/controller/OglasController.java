@@ -126,7 +126,8 @@ public class OglasController {
 		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
 		
 		oglas.setKorisnik(k);
-		Oglas r =oglasService.save(oglas );
+		oglas.setProdat(false);
+		Oglas r =oglasService.save(oglas);
 		Oglas iz_baze = oglasService.findById(oglas.getId());
 			
 

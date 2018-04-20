@@ -37,9 +37,13 @@
 					console.log(data);
 					console.log(data.naziv);
 					
-					
+					document.getElementById('naziv1').value=data.naziv;
+					if(data.prodat){
+						document.getElementById("dodajPonudu").disabled = true;
+					}else{//ako nije prodat dugme dozvoli
+						document.getElementById("dodajPonudu").disabled = false;
+					}
 				}
-				document.getElementById('naziv1').value=data.naziv;
 				
 			},
 			error:function(textStatus, errorThrown){
@@ -89,7 +93,8 @@ $(document).ready(function(){
 			//console.log(data);
 			$.each(data, function(index, value){
 				console.log(value);
-				console.log(value.korisnik);
+				console.log(value.korisnik.email);
+					
 				var text=
 					"<div class=\"bioskop_div\">" +
 						"<div class=\"thumbnail_div\">" +
@@ -106,11 +111,15 @@ $(document).ready(function(){
 											
 						
 							"<div class=\"opis_div\">"+
-							//"<p>"+value.korisnik_+"</p>"+
+							"<label>Korisnik : </label>"+
+							"<p>"+value.korisnik.email+"</p>"+
+							"</div>"+	
+							"<label>Status : </label>"+
+							"<p>"+value.status+"</p>"+
 							"</div>"+	
 							"<div class=\"opis_div\">"+
 							//PROMENI PUTANJU!!!!!!!!!!
-							"<a href=\"index.html\"> index</a>"+
+							"<a id =\"link\" href=\"izmeniPonudu.html\"> Izmeni</a>"+
 							"<label class=\"labela\" id=\"key\" hidden>"+value.id+"</label>"+
 							"</div>"+
 							"</div><br><hr>"+
@@ -118,6 +127,7 @@ $(document).ready(function(){
 					"</div>"+
 				"<div class=\"razmak_div\"></div>";
 				$("#ponude").append(text);
+				
 			});
 		},
 		error:function(textStatus,errorThrown){
@@ -134,7 +144,7 @@ function getSelectedRekvizit(id){
 	var id_data = JSON.stringify(id);
 	
 	$.ajax({
-		url:"http://localhost:8099/oglasController/findClickedPonuda",
+		url:"http://localhost:8099/ponudaController/findClickedPonuda",
 		type:"POST",
 		data:{id: id_data},
 		dataType:"json",
@@ -144,8 +154,8 @@ function getSelectedRekvizit(id){
 			}
 			else{
 				console.log(data);
-				alert("Uspesno oznacena ponuda!");
-				top.location.href="index.html";
+			//	alert("Uspesno oznacena ponuda!");
+				top.location.href="izmeniPonudu.html";
 			}
 		},
 		error:function(textStatus, errorThrown){

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Oglas;
 import com.ISAProjekat.model.Ponuda;
+import com.ISAProjekat.model.Rekvizit;
 import com.ISAProjekat.service.KorisnikService;
 import com.ISAProjekat.service.OglasService;
 import com.ISAProjekat.service.PonudaService;
@@ -49,8 +50,12 @@ public class PonudaController {
 	
 	//uzimanje ponuda sa odredjenog oglasa
 	@RequestMapping(value="/getPonudeOglasa", method = RequestMethod.GET)
-	public ResponseEntity<List<Ponuda>> getPonudeOglasa() {
+	public ResponseEntity<List<Ponuda>> getPonudeOglasa( HttpServletRequest request) {
 
+		Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
+		
+		
 		List<Ponuda> ponude = ponudaService.findAll();
 		
 		Oglas oglasRoditelj = null;
@@ -62,9 +67,17 @@ public class PonudaController {
 		List<Ponuda> ponudeOglasa  = new ArrayList<Ponuda>();
 		if(!(ponude == null)){
 			for(Ponuda p : ponude){
+				p.setOdRegistrovanog(false);
 				System.out.println("\n5  Korisnik koji je dao ponudu -> "+ p.getKorisnik().getEmail());
 				if(p.getOglas().getId() ==oglasBaza.getId()){
 					
+					
+					if(k.getEmail().equals(p.getKorisnik().getEmail())){
+						p.setOdRegistrovanog(true);
+						
+						System.out.println("\n Ova je od registrovanog korisnika!!!" + p.getKorisnik().getEmail());
+					}
+					ponudaService.save(ponudaService.findById(p.getId()));
 					ponudeOglasa.add(p);
 					
 				}			
@@ -141,5 +154,63 @@ public class PonudaController {
 		
 		return new ResponseEntity<>(b, HttpStatus.OK);
 	}
+
 	
+	@RequestMapping(value = "/izmeni", method = RequestMethod.PUT)
+	public Ponuda izmeni(@RequestBody Ponuda requestPonuda){
+		
+		
+	
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Ponuda iz_baze = ponudaService.findById(requestPonuda.getId());
+		
+		
+		System.out.println("\nMENJAM ponudu: "+iz_baze.getId());
+		ponudaService.findById(requestPonuda.getId()).setCena(requestPonuda.getCena());
+		
+		
+		context.setAttribute("ponudaAktivna", ponudaService.findById(requestPonuda.getId()));
+		ponudaService.save(ponudaService.findById(requestPonuda.getId()));
+		return ponudaService.findById(requestPonuda.getId());
+	
+	}//
+	
+	@RequestMapping(value = "/prihvatiPonudu", method = RequestMethod.PUT)
+	public Ponuda prihvatiPonudu(@RequestBody Ponuda requestPonuda,HttpServletRequest request){
+		Oglas oglasRoditelj = null;
+		oglasRoditelj = (Oglas) context.getAttribute("oglasPonuda");
+		
+		Oglas oglasBaza = oglasService.findById(oglasRoditelj.getId());
+		
+		Korisnik kor = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		Korisnik k = korisnikService.findKorisnikByEmail(kor.getEmail());
+
+		
+	
+		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
+		Ponuda iz_baze = ponudaService.findById(requestPonuda.getId());
+		
+		
+		System.out.println("\nPrihvatam ponudu: "+iz_baze.getId());
+		ponudaService.findById(requestPonuda.getId()).setCena(requestPonuda.getCena());
+		ponudaService.findById(requestPonuda.getId()).setStatus("ODOBRENA");
+		
+		for(Ponuda p : oglasBaza.getPonude()){
+			if((p.getId()!= ponudaService.findById(requestPonuda.getId()).getId())){
+				p.setStatus("ODBIJENA");
+			}
+			
+		}
+		
+		oglasBaza.setProdat(true);
+		context.setAttribute("oglasPonuda", oglasBaza);
+		oglasService.save(oglasService.findById(oglasBaza.getId()));
+		context.setAttribute("ponudaAktivna", ponudaService.findById(requestPonuda.getId()));
+		ponudaService.save(ponudaService.findById(requestPonuda.getId()));
+		
+		
+		
+		return ponudaService.findById(requestPonuda.getId());
+	
+	}//
 }

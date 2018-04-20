@@ -28,12 +28,10 @@ public class Ponuda {
 	private String status;			
 	
 	@ManyToOne(optional = false)
-	@JsonIgnore
-	private Oglas oglas;
+	private Oglas oglas = new Oglas();
 	
 	@ManyToOne(optional = false)
-	@JsonIgnore
-	private Korisnik korisnik;
+	private Korisnik korisnik = new Korisnik();
 	
 	
 	

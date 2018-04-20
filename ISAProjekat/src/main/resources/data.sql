@@ -17,18 +17,25 @@ INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ul
 VALUES ('p@p','p' ,'p','p','p','022','ADMIN_SIST',0,1,0,'BRONZANI');
 
 
+INSERT INTO korisnik (email,sifra,ime, prezime,grad,telefon,tip_korisnika,bio_ulogovan,predefinisan,broj_poseta,status)
+VALUES ('w@w','w' ,'w','w','w','021','REGISTROVAN',0,0,0,'BRONZANI');
+
+
 INSERT INTO fan_zona (naziv)
 VALUES ('FANZONA');
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
-VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1,'3');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
+VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1,'3',0);
 
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
-VALUES ('123','2011-11-11' ,'Oglas naziv2',0,'opis2','nekijpg..','1',0,'3');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
+VALUES ('123','2011-11-11' ,'Oglas naziv2',1,'opis2','nekijpg..','1',1,'3',0);
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
-VALUES ('13','2011-11-11' ,'Oglas naziv3',0,'opis3','nekijpg..','1',0,'3');
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
+VALUES ('13','2011-11-11' ,'Oglas naziv3',1,'opis3','nekijpg..','1',1,'7',0);
+
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
+VALUES ('143','2011-11-11' ,'Oglas naziv4',0,'opis4','nekijpg..','1',0,'3',0);
 
 INSERT INTO blagajna (naziv,fan_zona_id)
 VALUES ('BlagajnaNaziv1','1');
@@ -72,6 +79,6 @@ INSERT INTO bodovna_skala (bronzani_bod,srebrni_bod,zlatni_bod)
 VALUES (2,3,4);
 
 
-INSERT INTO ponuda (cena,status,oglas_id,korisnik_id)
-VALUES ('132' ,'NISTA','1','3');
+INSERT INTO ponuda (cena,status,oglas_id,korisnik_id,od_registrovanog)
+VALUES ('132' ,'NISTA','1','3',0);
 

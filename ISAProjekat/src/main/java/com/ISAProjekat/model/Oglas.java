@@ -48,6 +48,9 @@ public class Oglas {
 	@Column(name = "proveren",nullable = true, updatable = true)
 	private boolean proveren; //da li ga je admin fan zone proverio
 	
+	@Column(name = "prodat",nullable = true, updatable = true)
+	private boolean prodat; //da li ga je admin fan zone proverio
+	
 	@ManyToOne(optional = false)
 	private Korisnik korisnik = new Korisnik();
 	
@@ -67,7 +70,7 @@ public class Oglas {
 
 
 	public Oglas(Long id, String naziv, String opis, String cena, String slika, Date datum, FanZona fanZona,
-			boolean odobren,boolean proveren) {
+			boolean odobren,boolean proveren,boolean prodat) {
 		super();
 		this.id = id;
 		this.naziv = naziv;
@@ -78,6 +81,27 @@ public class Oglas {
 		this.fanZona = fanZona;
 		this.odobren = odobren;
 		this.proveren = proveren;
+		this.prodat = prodat;
+	}
+
+
+
+
+
+
+
+	public boolean isProdat() {
+		return prodat;
+	}
+
+
+
+
+
+
+
+	public void setProdat(boolean prodat) {
+		this.prodat = prodat;
 	}
 
 
