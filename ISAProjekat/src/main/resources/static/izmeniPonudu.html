@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+		<script src="jquery-3.2.1.min.js"></script>
+<title>Ponuda</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("Usao na Izmenu ponude.");
+
+		$.ajax({
+			url:"http://localhost:8099/ponudaController/getSelectedPonuda",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+					
+					
+					var aktivni_korisnik;
+					
+					document.getElementById("cena").value = data.cena;
+					document.getElementById("id").value = data.id;
+					document.getElementById("odRegistrovanog").value = data.odRegistrovanog;
+					
+					
+					$.ajax({
+						  url:"http://localhost:8099/korisnikController/getAktivan",
+						  type:"GET",
+						  dataType:"json",
+						  success(data){
+						   if(data==null){
+						    console.log("Sesija ne postoji");
+						   }
+						   else{
+							  aktivni_korisnik = data;
+						    console.log("aaaaaaaaa");
+
+						    console.log(aktivni_korisnik);
+						   }
+						  }
+						 });
+					
+					if(data.odRegistrovanog){
+						document.getElementById("izmeni").disabled = false;
+					}else{
+	
+						document.getElementById("izmeni").disabled = true;
+					}
+					
+					console.log("iddddd");
+					//console.log(data.oglas.korisnik.id);
+					console.log(aktivni_korisnik);
+				
+					if(data.oglas.korisnik.id == data.korisnik.id){
+						document.getElementById("prihvati").disabled = false;
+						
+					}else{
+						document.getElementById("prihvati").disabled = true;
+					}
+				}
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	$(document).ready(function(){
+
+		//OVDE UZIMAMO ID OGLASA SA KOG SMO DOSLI DA VIDIMO PONUDE
+		console.log("Usao na odabran oglas.");
+
+		$.ajax({
+			url:"http://localhost:8099/oglasController/getSelectedOglasPonuda",
+			type:"GET",
+			dataType:"json",
+			success:function(data){
+				
+				
+				if(data == null){
+					console.log("Data je null");
+				}
+				else{
+					console.log("PISE DATA");
+					console.log(data);
+					console.log(data.naziv);
+					
+					
+				}
+				document.getElementById('oglasId').value=data.id;
+				
+			},
+			error:function(textStatus, errorThrown){
+				console.log("Ne valja nesto.")
+				console.log(textStatus);
+			}
+		});		
+	});
+
+	</script>
+
+
+</head>
+<body>
+<h1> Izmena Ponude </h1>
+
+
+		<form id = "registrationForm" name = "registrationForm" method="POST">
+
+			<label  for="cd-name">ID Ponude</label>
+			<input  type="text" name="id" id="id" disabled><br/>
+			
+			<label>ID Oglasa</label>
+			<input id = "oglasId" name = "oglasId" type="text" class="form-control" placeholder= "oglasId" disabled><br/> 
+			
+			<label>Registrovanog</label><br/>
+			<input id = "odRegistrovanog" name = "odRegistrovanog" type="text" class="form-control" placeholder= "Cena" disabled><br/> 
+			
+			<label>Cena</label><br/>
+			<input id = "cena" name = "cena" type="text" class="form-control" placeholder= "Cena"><br/> 
+			
+			
+
+			<hr><br>
+			<input id="prihvati" type="button" class="btn btn-info"  value="Prihvati">
+			<input id="izmeni" type="button" class="btn btn-info"  value="Izmeni"><br><br> 	 
+				
+		</form>
+		<br><br>
+		
+		
+		<form id ="nazadForma" action="pregledPonuda.html" class="form-horizontal">
+					        
+			<input type="submit" value="Odustani">				        
+		</form> 
+
+
+		<script type="text/javascript">
+		
+			$("#izmeni").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+			
+				var cena = forma.find('[name=cena]').val();
+				var id = forma.find('[name=id]').val();
+				
+			
+				
+				
+				if(!cena) {
+					alert("Unesite cenu!");
+					provera = false;
+				}
+				
+				
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						id:$("#registrationForm [name='id']").val(),
+						
+						cena:$("#registrationForm [name='cena']").val(),
+						
+					   });
+					
+					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
+						url: "http://localhost:8099/ponudaController/izmeni",
+						type: "PUT",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Azuriranje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/pregledPonuda.html" 			
+							}else{
+								alert("Azuriranje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});	
+			
+$("#prihvati").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+			
+				var cena = forma.find('[name=cena]').val();
+				var id = forma.find('[name=id]').val();
+				
+			
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						id:$("#registrationForm [name='id']").val(),
+						
+						cena:$("#registrationForm [name='cena']").val(),
+						
+					   });
+					
+					$.ajax({// OVde si stao napravi kontroler za izmenu i posalji na dobru stranicu
+						url: "http://localhost:8099/ponudaController/prihvatiPonudu",
+						type: "PUT",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Azuriranje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/pregledPonuda.html" 			
+							}else{
+								alert("Azuriranje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});	
+			
+
+
+function getAktivnogKorisnika(){
+	$.ajax({
+		url : "http://localhost:8099/korisnikController/getAktivan"
+	}).then(function(data){
+		var korisnik = data;
+		//alert(data.id);
+		return data.id;
+	});
+}
+</script>
+</body>
+</html>
