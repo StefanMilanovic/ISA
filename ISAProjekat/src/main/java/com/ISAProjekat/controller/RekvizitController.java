@@ -43,18 +43,11 @@ public class RekvizitController {
 		Rekvizit r =rekvizitService.save(rekvizit );
 		Rekvizit iz_baze = rekvizitService.findById(rekvizit.getId());
 			
-		
-			
-		
-			//rekvizitService.save(requestRekvizit);
+
 		korisnikService.findKorisnikByEmail(k.getEmail()).getRekviziti().add(iz_baze);
 			
-			
-			
 		korisnikService.save(korisnikService.findKorisnikByEmail(k.getEmail()));
-			
-		
-	
+
 		return new ResponseEntity<>(r, HttpStatus.OK);
 	}	
 	
@@ -67,7 +60,7 @@ public class RekvizitController {
 	
 	
 	@RequestMapping(value="/findClickedRekvizit", method = RequestMethod.POST)
-	public ResponseEntity<Rekvizit>findSelectedBioskop(@RequestBody String data, HttpServletRequest request){
+	public ResponseEntity<Rekvizit>findSelectedRekvizit(@RequestBody String data, HttpServletRequest request){
 		
 		System.out.println(data);
 		data = data.replaceAll("%22", "");

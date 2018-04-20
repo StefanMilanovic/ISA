@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ISAProjekat.model.BodovnaSkala;
 import com.ISAProjekat.model.Korisnik;
+import com.ISAProjekat.model.Ponuda;
 import com.ISAProjekat.model.Rekvizit;
 import com.ISAProjekat.service.BodovnaSkalaService;
 import com.ISAProjekat.service.KorisnikService;
@@ -104,6 +105,7 @@ public class KorisnikContreller {
 				System.out.println("\nProsao 1");
 				preuzetKorisnik.setTipKorisnika("REGISTROVAN");
 				preuzetKorisnik.setRekviziti(new HashSet<Rekvizit>());
+				preuzetKorisnik.setPonude(new HashSet<Ponuda>());
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
@@ -133,6 +135,8 @@ public class KorisnikContreller {
 				System.out.println("\nProsao2");
 				preuzetKorisnik.setTipKorisnika("REGISTROVAN");
 				preuzetKorisnik.setRekviziti(new HashSet<Rekvizit>());
+
+				preuzetKorisnik.setPonude(new HashSet<Ponuda>());
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);

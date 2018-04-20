@@ -4,61 +4,130 @@
 <meta charset="ISO-8859-1">
 <script src="jquery-3.2.1.min.js"></script>
 <title>Fan Zona</title>
-
+<script  type="text/javascript">
+	$(document).on('click','a',function(e) { 
+		//alert("Usao u oznacavanje kliknutog!")
+		e.preventDefault();
+		var id = e.target.closest("div").childNodes[1].textContent;
+		//console.log(id);
+		getSelectedRekvizit(id);
+	});
+</script>
 
 </head>
 <body>
-	<h2>Oglasi :</h2>
-	<table id="oglasi">
-   					<tr >
-    					<th>Nazivv</th>
-    					<th>Opis</th>
-    					<th>Datum</th>
-    					<th>Slika</th>
-    					<th>Cena</th>
-    				</tr>
-				</table>
+	 <form id ="nazadForma" action="home.html" >
+					        
+					  <input type="submit" value="Nazad">				        
+	 </form> 
 
 	
-<script type="text/javascript">
-		$(document).ready(function() {
-			$.ajax({
-				url: "http://localhost:8099/oglasController/getOdobreniOglasi"
-			}).then(function(data) {
-				for(i=0; i<data.length; i++) {
-					popuni = "<tr>"
-						+ "<td >" + data[i].naziv + "</td>"
-						+ "<td >" + data[i].opis + "</td>"
-						+ "<td >" + data[i].datum + "</td>"
-						+ "<td >" + data[i].slika + "</td>"
-						+ "<td >" + data[i].cena + "</td>"
-						+ "</tr>"
-					$("#oglasi").append(popuni)
-				}
-			});
-		});	
-	
-	</script>
-	
-	
-	<hr><br>
-	<form action="dodajOglas.html">
-				        
-		<input  type="submit" value="Napravi oglas">
-				        
-	 </form>
-	 <hr><br>
+	 <hr>
 	 
 	 <form action="blagajna.html">
 				        
 		<input  type="submit" value="Rekviziti">
 				        
 	 </form>
-	 
-	 <br><br>
-	 <form id ="nazadForma" action="home.html" >
-					        
-					  <input type="submit" value="Nazad">				        
-	 </form> 
+
+	
+	 <br><hr>
+	
+	<form action="dodajOglas.html">
+				        
+		<input  type="submit" value="Napravi oglas">
+				        
+	 </form>
+	 <br><hr>
+	 <h2>Oglasi :</h2>
+<div id="oglasi" > </div>
+
+	
+<script type="text/javascript">
+$(document).ready(function(){
+	console.log("Dokument spreman.");
+	
+	$.ajax({
+		url:"http://localhost:8099/oglasController/getOdobreniOglasi",
+		type:"GET",
+		dataType:"json",
+		success: function(data){
+			//console.log(data);
+			$.each(data, function(index, value){
+				console.log(value);
+				var text=
+					"<div class=\"bioskop_div\">" +
+						"<div class=\"thumbnail_div\">" +
+						
+						"</div>" +
+						"<div class=\"podaci_div\">"+
+							"<div class=\"naziv_div\">"+
+								"<div class=\"ime_div\">"+
+									"<p>"+value.naziv+"</p>"+
+									
+								"</div>"+
+								"<div class=\"adresa_div\">"+
+									"<h5>"+value.cena+"</h5>"+
+								"</div>"+
+							"</div>"+
+							"<div class=\"opis_div\">"+
+								"<p>"+value.opis+"</p>"+
+							"</div>"+					
+							"<div class=\"ocena_div\">"+
+								"<h5>Slika :"+value.slika+"</h5>"+
+							"</div>"+
+							"<div class=\"opis_div\">"+
+							"<p>"+value.datum+"</p>"+
+							"</div>"+	
+							"<div class=\"opis_div\">"+
+							"<a href=\"pregledPonuda.html\"> Ponude</a>"+
+							"<label class=\"labela\" id=\"key\" hidden>"+value.id+"</label>"+
+							"</div>"+
+							"</div><br><hr>"+
+						
+					"</div>"+
+				"<div class=\"razmak_div\"></div>";
+				$("#oglasi").append(text);
+			});
+		},
+		error:function(textStatus,errorThrown){
+			console.log("Ne valja nesto");
+			console.log(textStatus);
+		}
+	});
+});
+
+
+
+function getSelectedRekvizit(id){
+	
+	var id_data = JSON.stringify(id);
+	
+	$.ajax({
+		url:"http://localhost:8099/oglasController/findClickedOglasPonuda",
+		type:"POST",
+		data:{id: id_data},
+		dataType:"json",
+		success:function(data){
+			if(data==null){
+				console.log("Data je null.");
+			}
+			else{
+				console.log(data);
+				alert("Uspesno oznacen oglas!");
+				top.location.href="pregledPonuda.html";
+			}
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
+	
+}
+	</script>
+	
+	
+	<hr><br>
+	
 </body>
 </html>

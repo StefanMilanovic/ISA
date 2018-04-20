@@ -1,13 +1,19 @@
 package com.ISAProjekat.model;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -42,6 +48,14 @@ public class Oglas {
 	@Column(name = "proveren",nullable = true, updatable = true)
 	private boolean proveren; //da li ga je admin fan zone proverio
 	
+	@ManyToOne(optional = false)
+	private Korisnik korisnik = new Korisnik();
+	
+
+	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "oglas")
+	 @JsonIgnore
+	 private Set<Ponuda> ponude = new HashSet<Ponuda>();//oglasi koje je korisnik objavio 
+	  
 	public Oglas(){
 		
 	}
@@ -166,6 +180,22 @@ public class Oglas {
 
 	public void setFanZona(FanZona fanZona) {
 		this.fanZona = fanZona;
+	}
+
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
+	}
+
+	public Set<Ponuda> getPonude() {
+		return ponude;
+	}
+
+	public void setPonude(Set<Ponuda> ponude) {
+		this.ponude = ponude;
 	}
 
 	

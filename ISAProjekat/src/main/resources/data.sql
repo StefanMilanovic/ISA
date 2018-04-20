@@ -18,30 +18,28 @@ VALUES ('p@p','p' ,'p','p','p','022','ADMIN_SIST',0,1,0,'BRONZANI');
 
 
 INSERT INTO fan_zona (naziv)
-VALUES ('fanZona1');
-INSERT INTO fan_zona (naziv)
-VALUES ('fanZona2');
+VALUES ('FANZONA');
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
-VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1);
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
+VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1,'3');
 
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
-VALUES ('123','2011-11-11' ,'Oglas naziv2',0,'opis2','nekijpg..','1',0);
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
+VALUES ('123','2011-11-11' ,'Oglas naziv2',0,'opis2','nekijpg..','1',0,'3');
 
-INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren)
-VALUES ('13','2011-11-11' ,'Oglas naziv3',0,'opis3','nekijpg..','2',0);
+INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id)
+VALUES ('13','2011-11-11' ,'Oglas naziv3',0,'opis3','nekijpg..','1',0,'3');
 
-INSERT INTO blagajna (naziv)
-VALUES ('BlagajnaNaziv1');
-
-
-INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan)
-VALUES ('132' ,'rekvizitNaziv1','opis1','nekijpg..','1',0);
+INSERT INTO blagajna (naziv,fan_zona_id)
+VALUES ('BlagajnaNaziv1','1');
 
 
-INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan)
-VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1',0);
+INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan,korisnik_id)
+VALUES ('132' ,'rekvizitNaziv1','opis1','nekijpg..','1',0,'2');
+
+
+INSERT INTO rekvizit (cena,naziv, opis,slika,blagajna_id,rezervisan,korisnik_id)
+VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1',0,'2');
 
 insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova)
 values ('Bioskop1','Stefana Milanovica 66, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0);
@@ -72,3 +70,8 @@ values ('Ziveti','Drama','Akira Kurosava','2:33',0 , 0, 'Birokrata pokusava da n
 
 INSERT INTO bodovna_skala (bronzani_bod,srebrni_bod,zlatni_bod)
 VALUES (2,3,4);
+
+
+INSERT INTO ponuda (cena,status,oglas_id,korisnik_id)
+VALUES ('132' ,'NISTA','1','3');
+
