@@ -48,7 +48,7 @@ public class ProjekcijaController {
 		Sala s = (Sala) context.getAttribute("setovana_sala");
 		
 		Projekcija nova_p = new Projekcija(requestProjekcija.getNaziv(),requestProjekcija.getZarn(),requestProjekcija.getIme_reditelja(),
-				requestProjekcija.getTrajanje(),requestProjekcija.getTermin_od(), requestProjekcija.getTermin_do(), 0,0,requestProjekcija.getOpis(),requestProjekcija.getCena(),requestProjekcija.getSpisak_glumaca(),s);
+				requestProjekcija.getTrajanje(),requestProjekcija.getTermin_od(), requestProjekcija.getTermin_do(), 0,0,requestProjekcija.getOpis(),requestProjekcija.getCena(),requestProjekcija.getSpisak_glumaca(),s, null);
 		
 		projekcijaService.save(nova_p);
 		

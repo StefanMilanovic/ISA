@@ -1,6 +1,24 @@
 $(document).ready(function(){
 	console.log("Usao na profil pozorista.");
-
+	
+	var aktivni_korisnik = null;
+	
+console.log("Usao na profil bioskopa.");
+	
+	$.ajax({
+		url:"../bioskopController/getLoggedUser",
+		type:"GET",
+		dataType:"json",
+		success(data){
+			if(data==null){
+				console.log("Sesija ne postoji");
+			}
+			else{
+				aktivni_korisnik = data;
+			}
+		}
+	});
+	
 	$.ajax({
 		url:"../pozoristeController/getSelectedPozoriste",
 		type:"GET",
@@ -13,7 +31,7 @@ $(document).ready(function(){
 				console.log("PISE DATA");
 				console.log(data);
 				
-				getSale(data);
+				getSale(aktivni_korisnik, data);
 				
 			}
 		},
@@ -24,9 +42,9 @@ $(document).ready(function(){
 	});		
 });
 
-function getSale(data){
+function getSale(aktivni_korisnik, data){
 	
-	var selectedBioskop = data;
+	var selectedPozoriste = data;
 	
 	$.ajax({
 		
@@ -36,19 +54,19 @@ function getSale(data){
 		success:function(salaList){
 			if(salaList==null){
 				console.log("Pozoriste nema sala.");				
-				getProjekcije(selectedBioskop, salaList);
+				getProjekcije(aktivni_korisnik, selectedPozoriste, salaList);
 			}
 			
 			else{
 				console.log("Pozoriste ima sale.");
-				getProjekcije(selectedBioskop, salaList);
+				getProjekcije(aktivni_korisnik, selectedPozoriste, salaList);
 			}
 		}
 		
 	});
 }
 
-function getProjekcije(selectedBioskop, salaList){
+function getProjekcije(aktivni_korisnik, selectedBioskop, salaList){
 	
 	$.ajax({
 		
@@ -58,19 +76,24 @@ function getProjekcije(selectedBioskop, salaList){
 		success:function(projekcijaList){
 			if(projekcijaList==null){
 				console.log("Pozoriste nema projekcijaList.");				
-				ispisiProfil(selectedBioskop, salaList, projekcijaList);
+				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, projekcijaList);
 			}
 			
 			else{
 				console.log("Pozoriste ima projekcijaList.");
-				ispisiProfil(selectedBioskop, salaList, projekcijaList);
+				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, projekcijaList);
 			}
 		}
 		
 	});
 }
 
-function ispisiProfil(data, salaList, projekcijaList){
+function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
+	var korisnik = aktivni_korisnik;
+	console.log("KORISNIK JE: ");
+	console.log(korisnik);
+	
+	
 	var options="";
 	var projekcije="";
 	var iterator_dugmad = 0;
@@ -84,7 +107,63 @@ function ispisiProfil(data, salaList, projekcijaList){
 			
 	}
 	
+	var adminove_opcije=false;
+	var top_dugmad="";
+	var desno_dugme=""
+	var ocena_opcije="";
+	var vidljiv="style=\"visibility: hidden;\" ";
+	
+	if(korisnik==null){
+		desno_dugme="<button style=\"float:right;\" id=\"login_dugme\">LogIn</button>";
+	}
+	
+else if(korisnik.tipKorisnika=="ADMIN_OBJ"){
+		
+		adminove_opcije= true;
+		
+		top_dugmad=
+			"<button onclick=\"location.href='editBioskop.html'\" id=\"edit_button\">Edit</button>"+
+			"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>";
+	
+		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>";
+		
+		 ocena_opcije=
+			"<select id=\"oceni_select\">" +
+				"<option>5</option>" +
+				"<option>4</option>"+
+				"<option>3</option>"+
+				"<option>2</option>"+
+				"<option>1</option>"+
+			"</select>"+
+			"<button id=\"oceni_dugme\">Oceni</button>";
+	}
+	
+	else{
+		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>";
+		ocena_opcije=
+			"<select id=\"oceni_select\">" +
+				"<option>5</option>" +
+				"<option>4</option>"+
+				"<option>3</option>"+
+				"<option>2</option>"+
+				"<option>1</option>"+
+			"</select>"+
+			"<button id=\"oceni_dugme\">Oceni</button>";
+		
+		
+	}
+	//PROJEKCIJE
+	
 	$.each(projekcijaList, function(index,value){
+		
+		var adzxc="";
+		if(adminove_opcije){
+				adzxc = 
+				"<button id=\"izmeni"+iterator_dugmad+" \""+">Izmeni</button>"+
+				"<button id=\"obrisi"+iterator_dugmad+" \""+">Obrisi</button>";
+		}
+		
+		
 		var text= 
 			
 		"<div class=\"jedna_projekcija_div\">"+
@@ -92,8 +171,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 			"</div>" +
 			
 			"<div class=\"projekcija_dugmad_div\">"+
-				"<button id=\"izmeni"+iterator_dugmad+" \""+">Izmeni</button>"+
-				"<button id=\"obrisi"+iterator_dugmad+" \""+"  >Obrisi</button>"+
+				adzxc+
 			"</div>"+					
 			
 			"<div id=\"jedna_projekcija_content"+iterator_dugmad+" \""+" class = \"jedna_projekcija_content\">"+
@@ -105,7 +183,7 @@ function ispisiProfil(data, salaList, projekcijaList){
 					"<p>"+ value.opis +"</p>"+
 				"</div>"+
 				"<div class=\"ocena_projekcije\">"+
-					"<h4>Ocena:"+value.prosecna_ocena+" Cena:"+value.cena+" Sala:"+value.ime_sale+"</h4>"+
+					"<h4>Ocena:"+value.prosecna_ocena.toPrecision(3)+" Broj glasova: "+value.broj_glasova+" Cena:"+value.cena+" Sala:"+value.sala.naziv+" Od: "+value.termin_od+" Do: "+value.termin_do+"</h4>"+
 				"</div>"+
 			"</div>"+			
 		"</div>" +
@@ -117,10 +195,12 @@ function ispisiProfil(data, salaList, projekcijaList){
 	});
 		
 
-		
+	//ZAGLAVLJE	
 		
 	var top_text="<div class=\"top_div\">"+
-	"<button onclick=\"location.href='editPozoriste.html'\" id=\"edit_button\">Edit</button>"+
+	top_dugmad+
+	ocena_opcije+
+	desno_dugme+
 	"</div>";
 	
 	var text=
@@ -203,8 +283,67 @@ $(document).on('click','button',function(e) {
 		var id_labele = "id_label"+button_id;		
 		var x=document.getElementById(id_labele).textContent;
 		console.log("ID LABELE JE: " + x);
+		
+		editujProjekciju(x);
+	}
+	else if(button_id.includes("oceni_dugme")){
+		console.log("oceni");
+		var x = $('#oceni_select :selected').text();
+		oceniPozoriste(x);
+	}
+	else if(button_id.includes("logout_dugme")){
+		logOut();
+		top.location.href="../index.html";
+	}
+	else if(button_id.includes("login_dugme")){
+		top.location.href="../login/login.html";
 	}
 });
+
+function logOut(){
+	
+	$.ajax({
+		url:"../korisnikController/odjava",
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			if(data){
+				top.href="index.html"
+			}
+			else{
+				console.log("Neuspesno unistena sesija.");
+			}
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}
+	});
+}
+
+function oceniPozoriste(ocena){
+	var vr_ocene = JSON.stringify(ocena);
+	
+	$.ajax({
+		
+		url:"../pozoristeController/oceniPozoriste",
+		type: "PUT",
+		data: {id: vr_ocene},
+		dataType:"json",
+		contentType:"application/json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno obrisano");
+			}
+			else{
+				console.log("Uspesno ocenjeno");
+				top.location.href="/pozorista/profil_pozorista.html";
+			}
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
+}
 
 function obrisiProjekciju(id){
 	var id_projekcije = JSON.stringify(id);
@@ -226,5 +365,50 @@ function obrisiProjekciju(id){
 			console.log(textStatus);
 		}		
 	});
-	
+}
+
+function editujProjekciju(id){
+	var id_projekcije = JSON.stringify(id);
+	$.ajax({
+		url:"../pozoristeController/setSelektovanuProjekciju",
+		type:"POST",
+		data:{id: id_projekcije},
+		dataType: "json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno postavljeno.");
+			}
+			else{
+				top.location.href="/pozorista/edit_projekcija.html";
+			}
+		}
+	});
+}
+
+$(document).on('click','a',function(e) { 
+	e.preventDefault();
+	var id = e.target.closest("div").childNodes[1].textContent;
+	console.log(id);
+	findSelectedProjekcija(id);
+});
+
+function findSelectedProjekcija(id){
+	var id_projekcije = JSON.stringify(id);
+	$.ajax({
+		url:"../pozoristeController/findProjekciju",
+		type: "POST",
+		data:{id: id_projekcije},
+		dataType:"json",
+		success:function(data){
+			if(data==null){
+				console.log("Neuspesno obrisano.");
+			}
+			else{
+				top.location.href="/pozorista/ProjekcijaPredstave.html";
+			}			
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}		
+	});
 }

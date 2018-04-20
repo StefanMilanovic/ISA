@@ -8,4 +8,5 @@ public interface OcenaService {
 	Ocena findOcenaById(Long id);
 	List<Ocena>findAll();
 	void save(Ocena k);
+	void delete(Long id);
 }

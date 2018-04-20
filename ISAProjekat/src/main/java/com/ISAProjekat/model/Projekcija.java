@@ -23,7 +23,7 @@ public class Projekcija {
 	
 	
 	public Projekcija(String naziv, String zarn, String ime_reditelja, String trajanje,String termin_od, String termin_do, double prosecna_ocena,
-			int broj_glasova, String opis, double cena, String spisak_glumaca, Sala sala) {
+			int broj_glasova, String opis, double cena, String spisak_glumaca, Sala sala, PozorisnaSala poz_sala) {
 		super();
 		this.naziv = naziv;
 		this.zarn = zarn;
@@ -37,6 +37,7 @@ public class Projekcija {
 		this.sala = sala;
 		this.termin_do = termin_do;
 		this.termin_od = termin_do;
+		this.poz_sala = poz_sala;
 	}
 
 
@@ -74,9 +75,11 @@ public class Projekcija {
 	@Column(name="glumci",nullable=false)
 	private String spisak_glumaca;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true)
 	private Sala sala;
 	
+	@ManyToOne(optional=true)
+	private PozorisnaSala poz_sala;
 	
 	@Column(name="broj_glasova")
 	private int broj_glasova;
@@ -206,6 +209,20 @@ public class Projekcija {
 
 	public void setOcene(Set<Ocena> ocene) {
 		this.ocene = ocene;
+	}
+
+
+
+
+	public PozorisnaSala getPoz_sala() {
+		return poz_sala;
+	}
+
+
+
+
+	public void setPoz_sala(PozorisnaSala poz_sala) {
+		this.poz_sala = poz_sala;
 	}
 	
 	
