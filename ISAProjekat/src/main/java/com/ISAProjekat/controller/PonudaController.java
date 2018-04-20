@@ -234,7 +234,7 @@ public class PonudaController {
 							Poruka poruka2 = new Poruka();
 							if(ponudeProdatog.getStatus().equals("ODBIJENA")){
 							
-								poruka1.setSadrzaj("Vasa ponuda("+ponudeProdatog.getCena()+") je ODBIJNA! Za oglas:"+ oglasBaza.getNaziv());							
+								poruka1.setSadrzaj("Vasa ponuda("+ponudeProdatog.getCena()+") je ODBIJENA! Za oglas:"+ oglasBaza.getNaziv());							
 								poruka1.setKorisnik(korisnikService.findKorisnikByEmail(kkk.getEmail()));
 								
 								porukaService.save(poruka1);
