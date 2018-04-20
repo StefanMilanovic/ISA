@@ -17,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PozorisnaSala {
 
 	@Id
-	@Column(name="b_sala_id")
+	@Column(name="p_sala_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(name = "naziv", nullable = false)
 	private String naziv;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="sala")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="poz_sala")
 	@JsonIgnore
 	private Set<Projekcija> projekcije;
 

@@ -1,7 +1,7 @@
 package com.ISAProjekat.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -22,12 +22,14 @@ public class Pozoriste implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
-	public Pozoriste(String naziv, String adresa, String opis, double prosecna_ocena) {
+	public Pozoriste(String naziv, String adresa, String opis, double prosecna_ocena, int broj_glasova, Set<PozorisnaSala> sale) {
 		super();
 		this.naziv = naziv;
 		this.adresa = adresa;
 		this.opis = opis;
 		this.prosecna_ocena=prosecna_ocena;
+		this.broj_glasova = broj_glasova;
+		this.pozorisneSale = sale;
 	}
 	public Pozoriste(String naziv, String adresa, String opis) {
 		super();
@@ -52,11 +54,20 @@ public class Pozoriste implements Serializable{
 	
 	@Column(name = "pros_ocena", nullable = true, updatable = true)
 	private double prosecna_ocena;
-
+	
+	@Column(name="broj_glasova")
+	private int broj_glasova;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pozoriste")
 	@JsonIgnore
 	private Set<PozorisnaSala> pozorisneSale;
-
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="pozoriste")
+	@JsonIgnore
+	private Set<Ocena>ocene = new HashSet<Ocena>();
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +112,21 @@ public class Pozoriste implements Serializable{
 	}
 	public void setPozorisneSale(Set<PozorisnaSala> pozorisneSale) {
 		this.pozorisneSale = pozorisneSale;
+	}
+	public Set<Ocena> getOcene() {
+		return ocene;
+	}
+	public void setOcene(Set<Ocena> ocene) {
+		this.ocene = ocene;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public int getBroj_glasova() {
+		return broj_glasova;
+	}
+	public void setBroj_glasova(int broj_glasova) {
+		this.broj_glasova = broj_glasova;
 	}
 	
 	

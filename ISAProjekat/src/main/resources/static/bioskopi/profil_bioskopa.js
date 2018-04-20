@@ -79,7 +79,7 @@ function getProjekcije(aktivni_korisnik, selectedBioskop, salaList){
 		success:function(projekcijaList){
 			if(projekcijaList==null){
 				console.log("Bioskop nema projekcijaList.");				
-				ispisiProfil(selectedBioskop, salaList, projekcijaList);
+				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, projekcijaList);
 			}
 			
 			else{
@@ -290,7 +290,7 @@ $(document).on('click','button',function(e) {
 	else if(button_id.includes("oceni_dugme")){
 		console.log("oceni");
 		var x = $('#oceni_select :selected').text();
-		oceniProjekciju(x);
+		oceniBioskop(x);
 	}
 	else if(button_id.includes("logout_dugme")){
 		logOut();
@@ -321,7 +321,7 @@ function logOut(){
 	});
 }
 
-function oceniProjekciju(ocena){
+function oceniBioskop(ocena){
 	var vr_ocene = JSON.stringify(ocena);
 	
 	$.ajax({

@@ -30,4 +30,9 @@ public class OcenaServiceImpl implements OcenaService{
 		ocenaRepository.save(k);
 	}
 
+	@Override
+	public void delete(Long id) {
+		ocenaRepository.delete(id);
+	}
+
 }

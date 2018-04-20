@@ -71,6 +71,9 @@ public class Bioskop implements Serializable{
 	@JsonIgnore
 	private Set<Ocena> ocene = new HashSet<Ocena>();
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy ="bioskop")
+	@JsonIgnore
+	private Set<Mesec> meseci = new HashSet<Mesec>();
 	
 	
 
@@ -146,6 +149,14 @@ public class Bioskop implements Serializable{
 
 	public void setOcene(Set<Ocena> ocene) {
 		this.ocene = ocene;
+	}
+
+	public Set<Mesec> getMeseci() {
+		return meseci;
+	}
+
+	public void setMeseci(Set<Mesec> meseci) {
+		this.meseci = meseci;
 	}
 	
 	

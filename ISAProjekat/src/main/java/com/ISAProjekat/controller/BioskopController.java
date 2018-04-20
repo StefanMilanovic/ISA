@@ -3,6 +3,7 @@ package com.ISAProjekat.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ISAProjekat.model.Bioskop;
+import com.ISAProjekat.model.Dan;
 import com.ISAProjekat.model.Korisnik;
+import com.ISAProjekat.model.Mesec;
 import com.ISAProjekat.model.Ocena;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
 import com.ISAProjekat.service.BioskopService;
+import com.ISAProjekat.service.DanService;
+import com.ISAProjekat.service.MesecService;
 import com.ISAProjekat.service.OcenaService;
 import com.ISAProjekat.service.ProjekcijaService;
 import com.ISAProjekat.service.SalaService;
@@ -44,44 +49,70 @@ public class BioskopController{
 	@Autowired
 	private OcenaService ocenaService;
 	
+	@Autowired
+	private MesecService mesecService;
+	
+	@Autowired
+	private DanService danService;
+	
 	@RequestMapping(value="/getBioskopi", method = RequestMethod.GET)
 	public ResponseEntity<List<Bioskop>> getBioskopi(){
 		List<Bioskop> bioskopi = bioskopService.findAll();
-		List<Sala> sale = salaService.findAll();
-		List<Projekcija> projekcije = projekcijaService.findAll();
+		List<Mesec> meseci = mesecService.findAll();
 		
-		if(bioskopi.isEmpty()){					
-			bioskopi = bioskopService.findAll();
-					
-			System.out.println("DODATI BIOSKOPI U BAZU.");
-			
-			
-			if(sale.isEmpty()){
-			//	Set sala_projekcije = new Set(null, null);
-			//	Sala s1 = new Sala("Sala 1",bioskopi.get(0), new Set<Projekcija>());
-			//	Sala s2 = new Sala("Sala 2", bioskopi.get(0).getId());
-				
-				//salaService.save(s1);
-			//	salaService.save(s2);
-				
-				sale = salaService.findAll();
-				
-				System.out.println("DODATE SALE U BAZU.");
-			
-			
-				if(projekcije.isEmpty()){
-					
-				//	Projekcija p1 = new Projekcija("Dr.Strangelove", "Komedija", "Stenli Kubrik", "1:30", 0, 0, "Nakon sto jedan americki general samovoljno posalje nuklearni bombarder na SSSR, predsednik SAD i ambasador SSSR-a pokusavaju da zaustave taj avion.", 
-				//			300.00, "Piter Stelers, Dzordz C. Scott", sale.get(0).getId(), sale.get(0).getNaziv());
-				//	
-				//	Projekcija p2 = new Projekcija("Ziveti", "Drama", "Akira Kurosava", "2:23", 0, 0, "Birokrata pokusava da nadje smisao u svom zivotu nakon sto otkrije da ima neizleciv rak", 
-				//			350.00, "Takashi Shimura", sale.get(1).getId(),sale.get(1).getNaziv());
-					
-				//	projekcijaService.save(p1);
-				//	projekcijaService.save(p2);
+		for(Mesec m: meseci){
+			if(m.getDani().isEmpty()){
+				if(m.getBroj_meseca()== 2){
+					for(int i=1; i<29; i++){
+						Random r = new Random();
+						int Low = 1;
+						int High = 10;
+						int posete_bio = r.nextInt(High-Low) + Low;
+						int posete_poz = r.nextInt(High-Low) + Low;
+						
+						Dan d = new Dan(i, m, posete_poz,posete_bio);
+						danService.save(d);
+					}
 				}
+				else if(m.getBroj_meseca() == 1 || m.getBroj_meseca() == 3 || m.getBroj_meseca() == 5 || m.getBroj_meseca() == 7 || m.getBroj_meseca() == 8 
+						|| m.getBroj_meseca() == 10 || m.getBroj_meseca() == 12) 
+				{
+					for(int i=1; i<32; i++){
+						Random r = new Random();
+						int Low = 1;
+						int High = 10;
+						int posete_bio = r.nextInt(High-Low) + Low;
+						int posete_poz = r.nextInt(High-Low) + Low;
+						
+						Dan d = new Dan(i, m, posete_poz,posete_bio);
+						danService.save(d);
+					}
+				}
+				else{
+					for(int i=1; i<31; i++){
+						Random r = new Random();
+						int Low = 1;
+						int High = 10;
+						int posete_bio = r.nextInt(High-Low) + Low;
+						int posete_poz = r.nextInt(High-Low) + Low;
+						
+						Dan d = new Dan(i, m, posete_poz,posete_bio);
+						danService.save(d);
+					}
+				}		
 			}
 		}
+		
+		
+		for(Bioskop b: bioskopi){
+			if(b.getMeseci().isEmpty()){
+				b.getMeseci().add(meseci.get(0));
+				b.getMeseci().add(meseci.get(1));
+				b.getMeseci().add(meseci.get(2));
+				bioskopService.save(b);
+			}
+		}
+		
 		return new ResponseEntity<>(bioskopi, HttpStatus.OK);
 	}
 	
@@ -104,7 +135,7 @@ public class BioskopController{
 			if(b.getId().compareTo(id)==0){
 				ret = b;
 				request.getSession().setAttribute("bioskopProfil", ret);
-				context.setAttribute("bioskopProfil", ret);
+				//context.setAttribute("bioskopProfil", ret);
 			}
 		}
 		return new ResponseEntity<>(ret, HttpStatus.OK);
@@ -122,7 +153,7 @@ public class BioskopController{
 		
 		Bioskop b = null;
 		b = (Bioskop) request.getSession().getAttribute("bioskopProfil");
-		System.out.println("SALJE NA PROFIL: "+b.getAdresa());
+		//System.out.println("SALJE NA PROFIL: "+b.getAdresa());
 		
 		return new ResponseEntity<>(b, HttpStatus.OK);
 	}
@@ -133,6 +164,7 @@ public class BioskopController{
 		Bioskop b = (Bioskop) request.getSession().getAttribute("bioskopProfil");		
 		List<Sala>sve_sale = salaService.findAll();
 		bioskopService.findBioskopById(b.getId()).setSale(new HashSet<Sala>());
+		
 	
 		for(Sala s: sve_sale){
 			if(s.getBioskop().getId().compareTo(bioskopService.findBioskopById(b.getId()).getId())==0){
@@ -143,7 +175,7 @@ public class BioskopController{
 		
 		System.out.println("IZLAZI IZ GET SALE");
 		
-		context.setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
+		//context.setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
 		request.getSession().setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
 		
 		return new ResponseEntity<>(bioskopService.findBioskopById(b.getId()).getSale(), HttpStatus.OK);
@@ -212,6 +244,13 @@ public class BioskopController{
 		Long id = Long.parseLong(data,10);
 		
 		List<Projekcija> projekcije = projekcijaService.findAll();
+		List<Ocena> ocene = ocenaService.findAll();
+		for(Ocena o: ocene){
+			if(o.getProjekcija()!=null && o.getProjekcija().getId().compareTo(id)==0){
+				ocenaService.delete(o.getId());
+			}
+		}
+		
 		projekcijaService.delete(id);
 		
 		return new ResponseEntity <>(projekcije.get(0), HttpStatus.OK);
