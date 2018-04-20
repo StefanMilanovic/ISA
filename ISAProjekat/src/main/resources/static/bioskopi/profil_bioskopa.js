@@ -1,4 +1,6 @@
-var iterator =0;
+var CHART =null;
+var posecenje_data=null;
+var global_chart=null;
 
 $(document).ready(function(){
 	
@@ -41,7 +43,8 @@ $(document).ready(function(){
 			console.log("Ne valja nesto.")
 			console.log(textStatus);
 		}
-	});		
+	});
+	
 });
 
 function getSale(aktivni_korisnik, data){
@@ -252,15 +255,31 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 				"" +
 			"</div>"+
 		"</div>"+
-		"<div class=\"stats_div\">"+
-				
+		"<div  id =\"stats_div\" class=\"stats_div\">"+
+			"<div class =\"graff_div\">" +
+				"<canvas id=\"myChart\"></canvas>"+
+			"</div>"+
+			"<div class =\"graf_opcije_div\">" +
+				"<p>Prosecna ocena: " +data.prosecna_ocena+"</br>Ukupan prihod: "+data.ukupan_prihod+"</br></br></p>"+	
+				"<select id=\"graf_opcija\" onChange=\"podesiGraf()\">" +
+					"<option>Po danima</option>" +
+					"<option>Po nedeljama</option>" +
+					"<option>Po mesecima</option>" +
+				"</select>"+
+			"</div>"+
 		"</div>";
-		
+		var ctx = $("#myChart");
+		console.log("GRAAAAAAAAAAAAAAAAAAAAAAAF");
+		console.log(ctx);
+		CHART=ctx;
 		
 		$("#body").append(top_text);
 		$("#body").append(text);
 		$("#sale_select").append(options);
 		$("#repertoar_content_div").append(projekcije);
+		
+		pronadjiMesece(data);
+		
 }
 
 $(document).on('click','button',function(e) { 
@@ -412,5 +431,217 @@ function findSelectedProjekcija(id){
 		error:function(textStatus, errorThrown){
 			console.log(textStatus);
 		}		
+	});
+}
+
+function pronadjiMesece(selectedBioskop){	
+	$.ajax({
+		url:"../bioskopController/getMesece",
+		type:"get",
+		dataType:"json",
+		success:function(data){
+			if(data!=null){
+				posecenje_data = data;
+				napraviGraf(posecenje_data,"Po danima");
+			}
+			else{
+				console.log("Data je null.");
+			}
+		},
+		error:function(textStatus, errorThrown){
+			console.log(textStatus);
+		}
+	});
+}
+
+function podesiGraf(){
+	var x = $('#graf_opcija :selected').text();
+	console.log(x);
+	global_chart.destroy();
+	napraviGraf(posecenje_data ,x);
+}
+
+function napraviGraf(data,nacin){
+	console.log(data);
+	
+	var labels=["Februar", "Mart", "April"];
+	var daniF=[]
+	var daniM=[]
+	var daniA=[]
+	
+	var brojPosetaF=0;
+	var brojPosetaM=0;
+	var brojPosetaA=0;
+	
+	var dnevenePoseteFebruar = [];
+	var dnevnePoseteMart = [];
+	var dnevnePoseteApril=[];
+	
+	var nedeljnePosete=[];
+	var nedeljniBrojac=0;
+	
+	$.each(data, function(key,value){
+		
+	if(key.localeCompare("April")==0){
+		$.each(value, function(index, vrednost){
+			daniA.push(vrednost.broj_dana);
+			dnevnePoseteApril.push(vrednost.broj_poseta_bio);
+			brojPosetaA = brojPosetaA +1;
+			
+			nedeljniBrojac = nedeljniBrojac +vrednost.broj_poseta_bio;
+			if(index==6 || index ==13 || index ==20 || index ==27 || index == 29) {
+				nedeljnePosete.push(nedeljniBrojac);
+				nedeljniBrojac = 0;
+			}
+		});
+	}
+	else if (key.localeCompare("Mart")==0){
+		$.each(value, function(index, vrednost){
+			daniM.push(vrednost.broj_dana);
+			dnevnePoseteMart.push(vrednost.broj_poseta_bio);
+			brojPosetaM = brojPosetaM +1;
+		});
+	}
+	else{
+		$.each(value, function(index, vrednost){
+			daniF.push(vrednost.broj_dana);
+			dnevenePoseteFebruar.push(vrednost.broj_poseta_bio);
+			brojPosetaF = brojPosetaF +1;
+		});
+	}
+	});	
+
+	var final_lables=[];
+	var final_data=[];
+	
+	if(nacin.localeCompare("Po danima")==0){
+		final_lables = daniA;
+		final_data = dnevnePoseteApril;
+	}else if(nacin.localeCompare("Po mesecima")==0){
+		final_lables.push("Februar");
+		final_lables.push("Mart");
+		final_lables.push("April");
+		final_data = [brojPosetaF, brojPosetaM, brojPosetaA];
+	}
+	else{
+		final_lables.push("1-7");
+		final_lables.push("8-14");
+		final_lables.push("16-7");
+		final_lables.push("15-21");
+		final_lables.push("22-28");
+		final_lables.push("28-30");
+		final_data = nedeljnePosete;
+	}
+	var ctx = document.getElementById("myChart");
+	global_chart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: final_lables,
+	        datasets: [{
+	            label: 'Broj posetilaca',
+	            data: final_data,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)',
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)',
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)',
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)',
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)',
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(128, 186, 103, 0.2)'
+	                
+	                
+	                
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(128, 186, 103, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
 	});
 }

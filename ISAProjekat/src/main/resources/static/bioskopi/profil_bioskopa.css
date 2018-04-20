@@ -165,7 +165,21 @@ a{
 .stats_div{
 	height:800px;
 	width:100%;
-	background-color:yellow;
+}
+
+.graff_div{
+	float:right;
+	border:1px solid black;
+	width:80%;
+	height:100%;
+	margin-top:2px;
+}
+
+.graf_opcije_div{
+	float:left;
+	width:19%;
+	height:100%;
+	margin-top:2px;
 }
 
 #edit_button{

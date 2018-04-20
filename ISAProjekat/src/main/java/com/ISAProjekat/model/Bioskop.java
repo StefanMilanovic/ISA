@@ -24,24 +24,15 @@ public class Bioskop implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	public Bioskop(String naziv, String adresa, String opis,
-			 double prosecna_ocena, int broj_glasova, Set<Sala>sale) {
+			 double prosecna_ocena, int broj_glasova, int ukupan_prihod) {
 		super();
 		this.naziv = naziv;
 		this.adresa = adresa;
 		this.opis = opis;
 		this.prosecna_ocena=prosecna_ocena;
 		this.broj_glasova = broj_glasova;
-		this.sale=sale;
+		this.ukupan_prihod=ukupan_prihod;
 	}
-	
-	public Bioskop(String naziv, String adresa, String opis	) {
-		super();
-		this.naziv = naziv;
-		this.adresa = adresa;
-		this.opis = opis;
-	
-	}
-
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,8 +66,11 @@ public class Bioskop implements Serializable{
 	@JsonIgnore
 	private Set<Mesec> meseci = new HashSet<Mesec>();
 	
+	@Column(name="ukupan_prihod")
+	private int ukupan_prihod;
 	
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -157,6 +151,14 @@ public class Bioskop implements Serializable{
 
 	public void setMeseci(Set<Mesec> meseci) {
 		this.meseci = meseci;
+	}
+
+	public int getUkupan_prihod() {
+		return ukupan_prihod;
+	}
+
+	public void setUkupan_prihod(int ukupan_prihod) {
+		this.ukupan_prihod = ukupan_prihod;
 	}
 	
 	

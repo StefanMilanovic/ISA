@@ -22,22 +22,16 @@ public class Pozoriste implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
-	public Pozoriste(String naziv, String adresa, String opis, double prosecna_ocena, int broj_glasova, Set<PozorisnaSala> sale) {
+	public Pozoriste(String naziv, String adresa, String opis, double prosecna_ocena, int broj_glasova, int ukupan_prihod) {
 		super();
 		this.naziv = naziv;
 		this.adresa = adresa;
 		this.opis = opis;
 		this.prosecna_ocena=prosecna_ocena;
 		this.broj_glasova = broj_glasova;
-		this.pozorisneSale = sale;
+		this.ukupan_prihod = ukupan_prihod;
 	}
-	public Pozoriste(String naziv, String adresa, String opis) {
-		super();
-		this.naziv = naziv;
-		this.adresa = adresa;
-		this.opis = opis;
-
-	}
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pozoriste_id", nullable = false, updatable = false)
@@ -65,6 +59,9 @@ public class Pozoriste implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="pozoriste")
 	@JsonIgnore
 	private Set<Ocena>ocene = new HashSet<Ocena>();
+	
+	@Column(name="ukupan_prihod")
+	private int ukupan_prihod;
 	
 	
 	
@@ -127,6 +124,14 @@ public class Pozoriste implements Serializable{
 	}
 	public void setBroj_glasova(int broj_glasova) {
 		this.broj_glasova = broj_glasova;
+	}
+
+	public int getUkupan_prihod() {
+		return ukupan_prihod;
+	}
+
+	public void setUkupan_prihod(int ukupan_prihod) {
+		this.ukupan_prihod = ukupan_prihod;
 	}
 	
 	

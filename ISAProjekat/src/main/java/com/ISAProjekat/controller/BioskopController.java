@@ -1,6 +1,9 @@
 package com.ISAProjekat.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -93,9 +96,12 @@ public class BioskopController{
 						Random r = new Random();
 						int Low = 1;
 						int High = 10;
-						int posete_bio = r.nextInt(High-Low) + Low;
-						int posete_poz = r.nextInt(High-Low) + Low;
-						
+						int posete_bio = 0;
+						int posete_poz =0;
+						if(i<22){
+							posete_bio = r.nextInt(High-Low) + Low;
+							posete_poz = r.nextInt(High-Low) + Low;
+						}												
 						Dan d = new Dan(i, m, posete_poz,posete_bio);
 						danService.save(d);
 					}
@@ -299,7 +305,7 @@ public class BioskopController{
 	public ResponseEntity<Bioskop> registracijaBioskopa(@RequestBody Bioskop requestBioskop){
 		
 		//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-		Bioskop preuzetBioskop = new Bioskop(requestBioskop.getNaziv(),requestBioskop.getAdresa(),requestBioskop.getOpis());
+		Bioskop preuzetBioskop = new Bioskop(requestBioskop.getNaziv(),requestBioskop.getAdresa(),requestBioskop.getOpis(), 0, 0, 0);
 		
 		List<Bioskop> lk = bioskopService.findAll() ;		
 		//ako je baza prazna samo ga dodaj bez provere 
@@ -570,6 +576,52 @@ public class BioskopController{
 			}
 		}
 		return ret;
+	}
+	
+	@RequestMapping(value="/getMesece", method = RequestMethod.GET)
+	public HashMap<String,ArrayList<Dan>> getMesece(HttpServletRequest request){
+		Bioskop b = (Bioskop) request.getSession().getAttribute("bioskopProfil");
+		System.out.println("BROJ MESECI: "+b.getMeseci().size());
+		ArrayList<Dan> dani = new ArrayList<Dan>();
+		ArrayList<Mesec> meseci = new ArrayList<Mesec>();
+		
+		for(Mesec m: b.getMeseci()){
+			meseci.add(m);
+		}
+		
+		Collections.sort(meseci, new Comparator<Mesec>(){
+
+			@Override
+			public int compare(Mesec arg0, Mesec arg1) {				
+				return Integer.compare(arg0.getBroj_meseca(), arg1.getBroj_meseca());
+			}
+			
+		});
+		
+		HashMap<String,ArrayList<Dan>> podaci = new HashMap<String,ArrayList<Dan>>();
+		
+		
+		
+		for(Mesec m: meseci){
+			dani = new ArrayList<Dan>();
+			for(Dan d: m.getDani()){
+				dani.add(d);
+			}
+			
+			Collections.sort(dani, new Comparator<Dan>(){
+
+				@Override
+				public int compare(Dan arg0, Dan arg1) {				
+					return Integer.compare(arg0.getBroj_dana(), arg1.getBroj_dana());
+				}
+				
+			});
+		
+			podaci.put(m.getNaziv(), dani);
+			
+		}
+		
+		return podaci;
 	}
 	
 }

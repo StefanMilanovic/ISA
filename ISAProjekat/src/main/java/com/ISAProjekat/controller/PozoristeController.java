@@ -240,7 +240,7 @@ public class PozoristeController {
 		public ResponseEntity<Pozoriste> registracijaPozorista(@RequestBody Pozoriste requestPozoriste){
 			
 			//System.out.println("\n Poslati podaci :"+ requestKorisnik.getEmail()+"->" +requestKorisnik.getSifra());
-			Pozoriste preuzetBioskop = new Pozoriste(requestPozoriste.getNaziv(),requestPozoriste.getAdresa(),requestPozoriste.getOpis());
+			Pozoriste preuzetBioskop = new Pozoriste(requestPozoriste.getNaziv(),requestPozoriste.getAdresa(),requestPozoriste.getOpis(),0 ,0 ,0);
 			
 			List<Pozoriste> lk = pozoristeService.findAll() ;		
 			//ako je baza prazna samo ga dodaj bez provere 
