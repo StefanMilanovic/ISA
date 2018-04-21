@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 
 <script src="jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
@@ -44,34 +46,50 @@
 <title>Admin Sistema Home</title>
 </head>
 <body>
-<h1>Admin sistema Home </h1>
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Admin sistema početna</h1>
 
 
 	
 	<form id ="odjavaForma" method="GET" >
-		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
+		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" class= "btn btn-danger btn-lg" />
 	</form>
-	<hr/><br/>
+<br>
+<div class="btn-group">
+	<form action = "registrujAdmina.html"id ="registrujAdminaForma" method="GET"  class= "btn btn-primary btn-lg">
+		<input type="submit" id="registrujAdmina" value="Registruj admina" class= "btn btn-primary btn-lg" />
+	</form>
 
-	<form action = "registrujAdmina.html"id ="registrujAdminaForma" method="GET" >
-		<input type="submit" id="registrujAdmina" value="Registruj admina" />
+	<form action = "registrujObjekat.html"id ="registrujObjekatForma" method="GET" class= "btn btn-primary btn-lg" >
+		<input type="submit" id="registrujObjekat" value="Registruj objekat" class= "btn btn-primary btn-lg" />
 	</form>
-	<hr/><br/>
-	<form action = "registrujObjekat.html"id ="registrujObjekatForma" method="GET" >
-		<input type="submit" id="registrujObjekat" value="Registruj objekat" />
-	</form>
+</div>
 	<hr/><br/>
 	
 	<form id ="bodovnaSkalaForma" method="GET" >
 		<label> Bronzani bodovi : </label>
-		<input type="text" id="bronzaniBodStaro" name= "bronzaniBodStaro" />
+		<input type="text" id="bronzaniBodStaro" name= "bronzaniBodStaro" class="form-control"  />
 		<label> Srebrni bodovi : </label>
-		<input type="text" id="srebrniBodStaro" name= "srebrniBodStaro" />
-		<label> Zlatni bodovi : </label>
-		<input type="text" id="zlatniBodStaro" name= "zlatniBodStaro" />
-		<input type="button" id="izmeni" value="Izmeni" />
+		<input type="text" id="srebrniBodStaro" name= "srebrniBodStaro"  class="form-control" />
+		<label > Zlatni bodovi : </label>
+		<input type="text" id="zlatniBodStaro" name= "zlatniBodStaro" class="form-control"  />
+		<br>
+		<input type="button" id="izmeni" value="Prihvati"   class= "btn btn-success btn-lg" />
 	</form>
-
+<br><br><br>
 <script type="text/javascript">
 $("#odjavaDugme").click(function(){
 
@@ -109,6 +127,9 @@ $("#izmeni").click(function(){
 	var srebrniBodStaro = forma.find('[name=srebrniBodStaro]').val();
 	var zlatniBodStaro = forma.find('[name=zlatniBodStaro]').val();
 
+	console.log(zlatniBodStaro);
+	console.log(srebrniBodStaro);
+	console.log(bronzaniBodStaro);
 	
 	if(!bronzaniBodStaro) {
 		
@@ -121,15 +142,27 @@ $("#izmeni").click(function(){
 	else if(!zlatniBodStaro) {
 		alert("Unesite zlatni!");
 		provera = false;
-	}	
+	}	else if(isNaN(zlatniBodStaro)){
+		//ako nije broj 
+		alert("zlatni mora biti broj!");
+		provera = false;
+	}else if(isNaN(srebrniBodStaro)){
+		//ako nije broj 
+		alert("srebrni mora biti broj!");
+		provera = false;
+	}else if(isNaN(bronzaniBodStaro)){
+		//ako nije broj 
+		alert("bronzani mora biti broj!");
+		provera = false;
+	}
 	
-	else if(zlatniBodStaro<srebrniBodStaro ) {
+	else if(parseInt(zlatniBodStaro,10)<parseInt(srebrniBodStaro,10) ) {
 		alert("Zlatni mora biti vec od srebrnog");
 		provera = false;
-	}else if(zlatniBodStaro<bronzaniBodStaro ) {
+	}else if(parseInt(zlatniBodStaro,10)<parseInt(bronzaniBodStaro,10) ) {
 		alert("Zlatni mora biti vec od bronzanog");
 		provera = false;
-	}else if(srebrniBodStaro<bronzaniBodStaro ) {
+	}else if(parseInt(srebrniBodStaro,10)<parseInt(bronzaniBodStaro,10) ) {
 		alert("Srebrni mora biti vec od bronzanog");
 		provera = false;
 	}
@@ -170,5 +203,6 @@ $("#izmeni").click(function(){
 });	
 
 </script>
+</div>
 </body>
 </html>

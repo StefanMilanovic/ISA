@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="../jquery-3.2.1.min.js"></script>
 
 
@@ -20,15 +23,30 @@
 </head>
 <body>
 
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Provera oglasa</h1>
+
 
 		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
 					        
-			<input type="submit" value="Nazad">				        
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
 		</form> 
 <h1>Prikaz neproverenih oglasa </h1>
 <div id="oglasi" > </div>
 
-
+</div>
 
 <script type="text/javascript">
 $(document).ready(function(){

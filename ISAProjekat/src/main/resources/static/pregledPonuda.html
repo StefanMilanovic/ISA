@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="../jquery-3.2.1.min.js"></script>
 
 <script  type="text/javascript">
@@ -37,13 +40,36 @@
 					console.log(data);
 					console.log(data.naziv);
 					
+					
+					var q = new Date();
+					var m = q.getMonth();
+					var d = q.getDay();
+					var y = q.getFullYear();
+
+					var date = new Date(y,m,d);
+
+					mydate=new Date(data.datum);
+					console.log(date);
+					console.log(mydate)
+					//ako	je trenutni datum veci od datuma oglasa  zabrani dodavanje ponuda
+					if(date>mydate)
+					{
+						document.getElementById("dodajPonudu").disabled = true;
+					}
+					else
+					{
+						document.getElementById("dodajPonudu").disabled = false;
+					}
+					
 					document.getElementById('naziv1').value=data.naziv;
 					if(data.prodat){
 						document.getElementById("dodajPonudu").disabled = true;
 					}else{//ako nije prodat dugme dozvoli
-						document.getElementById("dodajPonudu").disabled = false;
+						//document.getElementById("dodajPonudu").disabled = false;
 					}
-				}
+				
+					
+					}
 				
 			},
 			error:function(textStatus, errorThrown){
@@ -60,15 +86,31 @@
 </head>
 <body>
 
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Pregled ponuda</h1>
+
 		<form id ="nazadForma" action="fanZona.html" class="form-horizontal">
 					        
-			<input type="submit" value="Nazad">				        
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
 		</form> 
-		<br><hr>
+		<br>
 		
 		<form name = "dodajPonuduForm" id ="dodajPonuduForm" method="POST">
-			<input  type="text" id = "vrednostPonude" name = "vrednostPonude" placeholder ="Unesi vrednost ponude">		        
-			<input  type="button"  id ="dodajPonudu" name = "dodajPonudu"value="Dodaj ponudu">
+			<input  type="text" id = "vrednostPonude" name = "vrednostPonude" placeholder ="Unesi vrednost ponude" class = "btn btn-lg">		        
+			<input  type="button"  id ="dodajPonudu" name = "dodajPonudu"value="Dodaj ponudu" class = "btn btn-success btn-lg">
 				        
 		 </form>
 		 
@@ -78,6 +120,7 @@
 <div id="ponude" > </div>
 
 
+</div>
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -119,7 +162,7 @@ $(document).ready(function(){
 							"</div>"+	
 							"<div class=\"opis_div\">"+
 							//PROMENI PUTANJU!!!!!!!!!!
-							"<a id =\"link\" href=\"izmeniPonudu.html\"> Izmeni</a>"+
+							"<a id =\"link\" href=\"izmeniPonudu.html\"> IZMENA I PRIHVATANJE</a>"+
 							"<label class=\"labela\" id=\"key\" hidden>"+value.id+"</label>"+
 							"</div>"+
 							"</div><br><hr>"+
@@ -154,7 +197,6 @@ function getSelectedRekvizit(id){
 			}
 			else{
 				console.log(data);
-			//	alert("Uspesno oznacena ponuda!");
 				top.location.href="izmeniPonudu.html";
 			}
 		},
@@ -175,6 +217,10 @@ $("#dodajPonudu").click(function(){
 		
 		if(!vrednostPonude) {
 			alert("Unesite vrednost ponude!");
+			provera = false;
+		}else if(isNaN(vrednostPonude)){
+			//ako nije broj 
+			alert("Vrednost mora biti broj!");
 			provera = false;
 		}
 		

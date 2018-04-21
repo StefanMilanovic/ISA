@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="jquery-3.2.1.min.js"></script>
 
 <title>AdminFan Info</title>
@@ -37,7 +38,20 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h1>AdminFan podaci </h1>
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+<h1>AdminFan Info </h1>
 <hr><br>
 
 
@@ -54,7 +68,7 @@ $(document).ready(function(){
 			<label>Prezime</label><br/>
 			<input id = "prezimeID" type="text" class="form-control" name = "prezime" placeholder= "Prezime"><br/> 
 			
-			<label > Trenutni :</label><br/>
+			<label > Email </label><br/>
 			<input id = "emailID" type="email" class="form-control" name ="email" placeholder="Email"><br/> 
 			
 			<label>Sifra</label><br/>
@@ -71,15 +85,16 @@ $(document).ready(function(){
 			<input id = "gradID"type="text" class="form-control" name="grad" placeholder="Grad" ><br/><br/>
 			
 			<hr><br>
-			
-			<input id="zavrseno" type="button" class="btn btn-info"  value="Azuriraj"> 	 	
+		
+		<input id="zavrseno" type="button"  value="Azuriraj"  class= "btn btn-success btn-lg"> 	 	
 			
 				
 		</form>
 		<br><br>
-		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
+		
+		<form id ="nazadForma"action="adminFanHome.html"   class= "btn btn-danger btn-lg">
 					        
-					  <input type="submit" value="Odustani">				        
+					  <input   class="btn btn-danger btn-lg" type="submit" value="Odustani">				        
 		</form> 
 	
 		
@@ -101,7 +116,7 @@ $(document).ready(function(){
 				var telefon = forma.find('[name=telefon]').val();
 				var grad = forma.find('[name=grad]').val();
 				
-				
+				console.log(telefon);
 				if(!email) {
 					
 					alert("Unesite email!");
@@ -135,6 +150,16 @@ $(document).ready(function(){
 					
 					
 					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
+					provera = false;
+				}
+				
+				
+				else if(isNaN(telefon)){
+					//ako nije broj 
+					alert("Telefon mora biti broj!");
+					provera = false;
+				}else if(telefon.length <3){
+					alert("Telefon nevazeci!");
 					provera = false;
 				}
 				if(provera) {
@@ -175,6 +200,6 @@ $(document).ready(function(){
 			});		
 		</script>		
 
-
+</div>
 </body>
 </html>

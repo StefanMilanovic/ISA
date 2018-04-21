@@ -25,17 +25,17 @@ INSERT INTO fan_zona (naziv)
 VALUES ('FANZONA');
 
 INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
-VALUES ('123','2011-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1,'3',0);
+VALUES ('123','2020-11-11' ,'Oglas naziv1',1,'opis','nekijpg..','1',1,'3',0);
 
 
 INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
-VALUES ('123','2011-11-11' ,'Oglas naziv2',1,'opis2','nekijpg..','1',1,'3',0);
+VALUES ('123','2020-11-11' ,'Oglas naziv2',1,'opis2','nekijpg..','1',1,'3',0);
 
 INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
-VALUES ('13','2011-11-11' ,'Oglas naziv3',1,'opis3','nekijpg..','1',1,'7',0);
+VALUES ('13','2020-11-11' ,'Oglas naziv3',1,'opis3','nekijpg..','1',1,'7',0);
 
 INSERT INTO oglas (cena,datum,naziv,odobren, opis,slika,fan_zona_id,proveren,korisnik_id,prodat)
-VALUES ('143','2011-11-11' ,'Oglas naziv4',0,'opis4','nekijpg..','1',0,'3',0);
+VALUES ('143','2020-11-11' ,'Oglas naziv4',0,'opis4','nekijpg..','1',0,'3',0);
 
 INSERT INTO blagajna (naziv,fan_zona_id)
 VALUES ('BlagajnaNaziv1','1');

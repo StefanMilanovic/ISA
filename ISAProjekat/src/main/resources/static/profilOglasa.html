@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="jquery-3.2.1.min.js"></script>
 <title>Odabran oglas</title>
 
@@ -47,7 +50,21 @@
 
 </head>
 <body>
-<h1> Profil oglasa</h1>
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Oglas</h1>
 
 
 <form id = "registrationForm" name = "registrationForm" method="POST">
@@ -73,20 +90,20 @@
 			
 			<hr><br/>
 		
-				<input id="odobri" type="button" class="btn btn-info"  value="Odobri">
-				<input id="odbi" type="button" class="btn btn-info"  value="Odbi">
+				<input id="odobri" type="button" class="btn btn-success  btn-lg"  value="Odobri">
+				<input id="odbi" type="button" class="btn btn-warning btn-lg"  value="Odbi">
 			
 		</form>
-		<br/><br/>
+		
 		
 		
 		
 		<form id ="nazadForma" action="proveraOglasa.html" class="form-horizontal">
 					        
-			<input type="submit" value="Odustani">				        
-		</form> 
-
-
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
+		</form>  
+<br><br> <br><br>
+</div>
 		<script type="text/javascript">
 		
 			$("#odobri").click(function(){

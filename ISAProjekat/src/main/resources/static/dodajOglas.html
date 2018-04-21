@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="jquery-3.2.1.min.js"></script>
 
 <title>Napravi oglas</title>
 </head>
 <body>
 
+<div class = "container">
 
-	<h1>Napravi oglas:</h1>
+<div class ="jumbotron" >
+
+	<div class = "row">
 		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Napravi oglas</h1>
 		
 		<form id = "dodajOglasForma" name = "dodajOglasForma" method="POST">
 			
@@ -28,18 +42,19 @@
 			 
 			<label>Cena</label><br/>
 			<input id="cena" type="text" name="cena" class="form-control"  placeholder="Cena"><br/>
-			<hr><br>
+			<br>
 			
-			<input id="zavrseno" type="button"  value="Zavrsi"> 	 	
+			<input id="zavrseno" type="button"  value="Zavrsi" class = "btn btn-success btn-lg"> 	 	
 			
-			<br><br>
-			</form>
+			
+			</form><br>
 			<form id ="nazadForma" action="fanZona.html" >
 					        
-					  <input type="submit" value="Odustani">				        
+					  <input type="submit" value="Odustani" class = "btn btn-danger btn-lg">				        
 			</form> 
+			<br> <br>
 			
-			
+</div>	
 			<script type="text/javascript">
 		
 			$("#zavrseno").click(function(){
@@ -68,11 +83,16 @@
 				}	
 				
 				else if(!slika) {
-					alert("Unesite slika!");
+					alert("Unesite sliku!");
 					provera = false;
 				}
 				else if(!cena) {
 					alert("Unesite cenu!");
+					provera = false;
+				}	
+				else if(isNaN(cena)){
+					//ako nije broj 
+					alert("Cena mora biti broj!");
 					provera = false;
 				}
 				

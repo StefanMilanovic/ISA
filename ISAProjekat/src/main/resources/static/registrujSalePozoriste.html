@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="jquery-3.2.1.min.js"></script>
 <title>Registruj salu</title>
 
@@ -42,8 +45,21 @@
 
 </head>
 <body>
-<h1>Registruj salu pozorista </h1>
-<br/>
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Registruj salu pozorista</h1>
+
 <label>Naziv objekta</label><br/>
 <input id ="nazivPozorista" name = "nazivPozorista" type="text" class="form-control"   placeholder= "Naziv pozorista" disabled><br/>
 			
@@ -56,18 +72,17 @@
 			
 
 			<br/>
-			<br/>
+
 				
-			<input id="regSalu" type="button" class="btn btn-info"  value="Registruj Salu"> 	
+			<input id="regSalu" type="button" class="btn btn-primary btn-lg"  value="Registruj Salu"> 	
 		
 		</form>
 		
-		<hr><br/>
 	<form id ="nazadForma" action="adminSistemaHome.html" class="form-horizontal">
 					        
-		  <input class="btn btn-link" type="submit" value="Odustani">				        
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
 	</form> 
-
+</div>
 
 <script type="text/javascript">
 function provera1(){

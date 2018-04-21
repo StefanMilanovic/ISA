@@ -245,7 +245,7 @@ public class KorisnikContreller {
 				System.out.println("\nProsao 1");
 				preuzetKorisnik.setTipKorisnika("ADMIN_FAN");
 				preuzetKorisnik.setRekviziti(new HashSet<Rekvizit>());
-				
+				preuzetKorisnik.setStatus("BRONZANI");
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
 			}else{
@@ -274,6 +274,7 @@ public class KorisnikContreller {
 				System.out.println("\nProsao2");
 				preuzetKorisnik.setTipKorisnika("ADMIN_FAN");
 				preuzetKorisnik.setRekviziti(new HashSet<Rekvizit>());
+				preuzetKorisnik.setStatus("BRONZANI");
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
@@ -307,7 +308,7 @@ public class KorisnikContreller {
 			{
 				System.out.println("\nProsao 1");
 				preuzetKorisnik.setTipKorisnika("ADMIN_OBJ");
-				
+				preuzetKorisnik.setStatus("BRONZANI");
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
@@ -336,7 +337,7 @@ public class KorisnikContreller {
 			{
 				System.out.println("\nProsao2");
 				preuzetKorisnik.setTipKorisnika("ADMIN_OBJ");
-				
+				preuzetKorisnik.setStatus("BRONZANI");
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
@@ -369,7 +370,7 @@ public class KorisnikContreller {
 			{
 				System.out.println("\nProsao 1");
 				preuzetKorisnik.setTipKorisnika("ADMIN_SIST");
-				
+				preuzetKorisnik.setStatus("BRONZANI");
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);
@@ -398,7 +399,7 @@ public class KorisnikContreller {
 			{
 				System.out.println("\nProsao2");
 				preuzetKorisnik.setTipKorisnika("ADMIN_SIST");
-				
+				preuzetKorisnik.setStatus("BRONZANI");
 				
 				korisnikService.save(preuzetKorisnik);
 				return new ResponseEntity<Korisnik>(preuzetKorisnik, HttpStatus.OK);

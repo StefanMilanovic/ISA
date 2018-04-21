@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="jquery-3.2.1.min.js"></script>
 
 <title>Napravi Rekvizit</title>
 </head>
 <body>
 
+<div class = "container">
 
-	<h1>Dodaj rekvizit:</h1>
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Napravi rekvizit</h1>
 		
 		
 		<form id = "dodajOglasForma" name = "dodajOglasForma" method="POST">
@@ -25,17 +40,19 @@
 			 
 			<label>Cena</label><br/>
 			<input id="cena" type="text" name="cena" class="form-control"  placeholder="Cena"><br/>
-			<hr><br>
 			
-			<input id="zavrseno" type="button"  value="Zavrsi"> 	 	
 			
-			<br><br>
+			<input class = "btn btn-success btn-lg" id="zavrseno" type="button"  value="Zavrsi"> 	 	
+			
+			<br>
 			</form>
+			<br>
 			<form id ="nazadForma" action="adminFanHome.html" >
 					        
-					  <input type="submit" value="Odustani">				        
+					  <input type="submit" value="Odustani" class = " btn btn-danger btn-lg">				        
 			</form> 
-			
+			<br><br>
+			</div>
 			
 			<script type="text/javascript">
 		
@@ -48,7 +65,7 @@
 				var opis = forma.find('[name=opis]').val();
 				var slika = forma.find('[name=slika]').val();
 				var cena = forma.find('[name=cena]').val();
-				
+				 
 				
 				if(!naziv) {
 					
@@ -65,7 +82,13 @@
 				else if(!cena) {
 					alert("Unesite cenu!");
 					provera = false;
+				}else if(isNaN(cena)){
+					//ako nije brosw
+					alert("Cena mora biti broj!");
+					provera = false;
 				}
+				
+				
 				
 				if(provera) {
 					

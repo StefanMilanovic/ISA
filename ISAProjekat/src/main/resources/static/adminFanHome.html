@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 
 <script src="jquery-3.2.1.min.js"></script>
 
@@ -19,27 +21,46 @@
 <body>
 
 
+<div class = "container">
 
-	<form id ="proveraOglasa" action="proveraOglasa.html" >
-		<input type="submit" id="togglee" value="Provera Oglasa" />
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">AdminFan Početna</h1>
+
+<form id ="odjavaForma" method="GET" >
+		<input type="button" class= "btn-lg btn-danger"id="odjavaDugme" value="Odjavi se" style="float:right" />
+</form>
+<br>
+<div class="btn-group">
+	<form id ="proveraOglasa" action="proveraOglasa.html"  class= "btn btn-primary btn-lg" >
+		<input class= "btn btn-primary btn-lg" type="submit" id="togglee" value="Provera Oglasa"  />
 	</form>
-	<hr><br>
-	<form action="adminFanAzuriraj.html">			      
-	   <input type="submit" value="Azuriraj podatke">				        
+
+	<form action="adminFanAzuriraj.html"  class= "btn btn-primary btn-lg">			      
+	   <input class= " btn btn-primary btn-lg" type="submit" value="Azuriraj podatke" style="float:center">				        
 	</form>
-	<hr><br>
-	<form action="dodajRekvizit.html">			      
-	   <input type="submit" id="dodajRekvizit" value="Dodaj rekvizit">				        
+
+	
+	<form action="dodajRekvizit.html"  class= "btn btn-primary btn-lg">			      
+	   <input class= "btn btn-primary btn-lg" type="submit" id="dodajRekvizit" value="Dodaj rekvizit" style="float:left">				        
 	</form>
-	<hr><br>
+</div>
 	
 	
-	<form id ="odjavaForma" method="GET" >
-		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
-	</form>
+	
 	<hr><br>
 	
 	<h3>Prikaz postojecih rekvizita:</h3>
+	<hr>
 	<div id="rekviziti" > </div>
 	
 	<script type="text/javascript">
@@ -80,7 +101,7 @@ $(document).ready(function(){
 							"</div>"+
 							"</div>"+
 						
-					"</div>"+
+					"</div><hr>"+
 				"<div class=\"razmak_div\"></div>";
 				$("#rekviziti").append(text);
 			});
@@ -144,5 +165,6 @@ $(document).ready(function(){
 
 	
 	</script>
+	</div>
 </body>
 </html>
