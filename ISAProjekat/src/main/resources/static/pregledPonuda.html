@@ -37,13 +37,36 @@
 					console.log(data);
 					console.log(data.naziv);
 					
+					
+					var q = new Date();
+					var m = q.getMonth();
+					var d = q.getDay();
+					var y = q.getFullYear();
+
+					var date = new Date(y,m,d);
+
+					mydate=new Date(data.datum);
+					console.log(date);
+					console.log(mydate)
+					//ako	je trenutni datum veci od datuma oglasa  zabrani dodavanje ponuda
+					if(date>mydate)
+					{
+						document.getElementById("dodajPonudu").disabled = false;
+					}
+					else
+					{
+						document.getElementById("dodajPonudu").disabled = true;
+					}
+					
 					document.getElementById('naziv1').value=data.naziv;
 					if(data.prodat){
 						document.getElementById("dodajPonudu").disabled = true;
 					}else{//ako nije prodat dugme dozvoli
-						document.getElementById("dodajPonudu").disabled = false;
+						//document.getElementById("dodajPonudu").disabled = false;
 					}
-				}
+				
+					
+					}
 				
 			},
 			error:function(textStatus, errorThrown){
@@ -154,7 +177,6 @@ function getSelectedRekvizit(id){
 			}
 			else{
 				console.log(data);
-			//	alert("Uspesno oznacena ponuda!");
 				top.location.href="izmeniPonudu.html";
 			}
 		},

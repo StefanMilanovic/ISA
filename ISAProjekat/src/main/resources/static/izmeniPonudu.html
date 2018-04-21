@@ -29,6 +29,7 @@
 					
 					var aktivni_korisnik;
 					var asd =data.oglas.korisnik.id;
+					var statusPonude =data.status;
 					document.getElementById("cena").value = data.cena;
 					document.getElementById("id").value = data.id;
 					document.getElementById("odRegistrovanog").value = data.odRegistrovanog;
@@ -53,6 +54,10 @@
 								}else{
 									document.getElementById("prihvati").disabled = true;
 								}
+								  if(statusPonude!="NISTA"){
+										document.getElementById("izmeni").disabled = true;
+										document.getElementById("prihvati").disabled = true;
+									}
 						   }
 						  }
 						 });
@@ -62,6 +67,10 @@
 					}else{
 	
 						document.getElementById("izmeni").disabled = true;
+					}
+					if(statusPonude!="NISTA"){
+						document.getElementById("izmeni").disabled = true;
+						document.getElementById("prihvati").disabled = true;
 					}
 					
 					console.log("iddddd");
