@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 		<script src="jquery-3.2.1.min.js"></script>
 <title>Ponuda</title>
 </head>
@@ -121,8 +124,21 @@
 
 </head>
 <body>
-<h1> Izmena Ponude </h1>
 
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Izmeni ponudu</h1>
 
 		<form id = "registrationForm" name = "registrationForm" method="POST">
 
@@ -141,19 +157,19 @@
 			
 
 			<hr><br>
-			<input id="prihvati" type="button" class="btn btn-info"  value="Prihvati PONUDU">
-			<input id="izmeni" type="button" class="btn btn-info"  value="Izmeni"><br><br> 	 
+			<input id="prihvati" type="button"   value="Prihvati PONUDU" class = "btn btn-success btn-lg">
+			<input id="izmeni" type="button" value="Izmeni" class = "btn btn-success btn-lg"><br><br> 	 
 				
 		</form>
-		<br><br>
+		<br>
 		
 		
-		<form id ="nazadForma" action="pregledPonuda.html" class="form-horizontal">
+		<form id ="nazadForma" action="pregledPonuda.html" class="form-horizontal" class = "btn btn-danger btn-lg">
 					        
-			<input type="submit" value="Odustani">				        
+			<input type="submit" value="Odustani" class = "btn btn-danger btn-lg">				        
 		</form> 
-
-
+<br><br>
+</div>
 		<script type="text/javascript">
 		
 			$("#izmeni").click(function(){

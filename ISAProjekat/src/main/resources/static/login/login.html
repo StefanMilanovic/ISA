@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../opsti.css">
+<meta charset="UTF-8">
+
 		<title>Uloguj se </title>
 		<script src="../jquery-3.2.1.min.js"></script>
 	</head>
 	
 	<body>
 		
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Prijava</h1>
 	       
-				    <a href= "../index.html"> Nazad na pocetnu </a>
-				    <hr>
 			      		
-                	<div class="panel-title text-center">Prijavaaa</div>
+                	<div class="panel-title text-center"></div>
 			
                 		<form id="formaPrijaviSe" class="form-horizontal" enctype="multipart/form-data" method="POST">
             		
@@ -23,16 +37,21 @@
                   		        
                     			<div id="divValidacija"></div>  
                 		
-                            		<input id="dugmePrijaviSe" type="button" class="btn btn-info" style="float:right" value="Prijavi se"> 	
+                            		<input id="dugmePrijaviSe" type="button"  class="btn btn-primary btn-lg" style="float:right" value="Prijavi se"> 	
                  		</form>
             		        
-            		    <br><hr> 
+            		    <br>
             		    
 			        <form action="registracija.html" class="form-horizontal">
 				        
-				            <input class="btn btn-link" type="submit" value="Registruj se">				        
-				  	</form>            
-        	
+				            <input  class="btn btn-primary btn-lg" type="submit" value="Registruj se">				        
+				  	</form>    
+				  	
+			   <form id ="nazadForma" action="../index.html" class="form-horizontal">
+					        
+					<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
+				</form>         
+        	</div>
 		<script type="text/javascript">
 		
 			$("#dugmePrijaviSe").click(function(){

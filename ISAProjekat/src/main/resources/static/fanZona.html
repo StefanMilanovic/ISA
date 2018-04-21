@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="jquery-3.2.1.min.js"></script>
 <title>Fan Zona</title>
 <script  type="text/javascript">
@@ -16,33 +19,51 @@
 
 </head>
 <body>
+
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Fan zona</h1>
+
 	 <form id ="nazadForma" action="home.html" >
 					        
-					  <input type="submit" value="Nazad">				        
+					  <input  class = "btn btn-danger btn-lg" style="float:right" type="submit" value="Nazad">				        
 	 </form> 
 
 	
-	 <hr>
+	 <div class = "btn-group">
 	 
-	 <form action="blagajna.html">
+	 <form action="blagajna.html"  class = "btn btn-primary btn-lg">
 				        
-		<input  type="submit" value="Rekviziti">
+		<input  type="submit" value="Rekviziti"  class = "btn btn-primary btn-lg">
 				        
 	 </form>
 
 	
-	 <br><hr>
 	
-	<form action="dodajOglas.html">
+	
+	<form action="dodajOglas.html"  class = "btn btn-primary btn-lg">
 				        
-		<input  type="submit" value="Napravi oglas">
+		<input  type="submit" value="Napravi oglas" class = "btn btn-primary btn-lg">
 				        
 	 </form>
+	 </div>
 	 <br><hr>
 	 <h2>Oglasi :</h2>
 <div id="oglasi" > </div>
 
-	
+	</div>
 <script type="text/javascript">
 $(document).ready(function(){
 	console.log("Dokument spreman.");

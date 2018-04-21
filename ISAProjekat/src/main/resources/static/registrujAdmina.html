@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="jquery-3.2.1.min.js"></script>
 <title>Registracija admina</title>
 
@@ -9,7 +13,22 @@
 </head>
 <body>
 
-	<h1>Registracija admina </h1>
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Registruj admina</h1>
+
+
 			<form id = "registrationForm" name = "registrationForm" method="POST">
 			
 			<label>Ime</label><br/>
@@ -52,9 +71,9 @@
 			<br/>
 			<br/>
 				
-			<input id="regAdminFan" type="button" class="btn btn-info"  value="Registruj Admina FanZone"> 	
-			<input id="regAdminObj" type="button" class="btn btn-info"  value="Registruj Admina Objekta"> 	
-			<input id="regAdminSist" type="button" class="btn btn-info"  value="Registruj Admina Sistema"  name = "regAdminSist"> 	
+			<input id="regAdminFan" type="button" class="btn btn-primary btn-lg"  value="Registruj Admina FanZone"> 	
+			<input id="regAdminObj" type="button" class="btn btn-primary btn-lg"  value="Registruj Admina Objekta"> 	
+			<input id="regAdminSist" type="button" class = "btn btn-primary btn-lg"  value="Registruj Admina Sistema"  name = "regAdminSist"> 	
 				
 				
 				
@@ -62,13 +81,13 @@
 
 
 
-	<hr><br/>
+	
 	<form id ="nazadForma" action="adminSistemaHome.html" class="form-horizontal">
 					        
-		  <input class="btn btn-link" type="submit" value="Odustani">				        
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
 	</form> 
-	
-	
+	<br/><br/><br/><br/>
+	</div>
 <script type="text/javascript">
 
 $(document).ready(function(){

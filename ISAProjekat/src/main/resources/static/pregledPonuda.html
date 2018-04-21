@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="../jquery-3.2.1.min.js"></script>
 
 <script  type="text/javascript">
@@ -83,15 +86,31 @@
 </head>
 <body>
 
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Pregled ponuda</h1>
+
 		<form id ="nazadForma" action="fanZona.html" class="form-horizontal">
 					        
-			<input type="submit" value="Nazad">				        
+			<input type="submit" value="Nazad" style="float:right" class = "btn btn-danger btn-lg" >				        
 		</form> 
-		<br><hr>
+		<br>
 		
 		<form name = "dodajPonuduForm" id ="dodajPonuduForm" method="POST">
-			<input  type="text" id = "vrednostPonude" name = "vrednostPonude" placeholder ="Unesi vrednost ponude">		        
-			<input  type="button"  id ="dodajPonudu" name = "dodajPonudu"value="Dodaj ponudu">
+			<input  type="text" id = "vrednostPonude" name = "vrednostPonude" placeholder ="Unesi vrednost ponude" class = "btn btn-lg">		        
+			<input  type="button"  id ="dodajPonudu" name = "dodajPonudu"value="Dodaj ponudu" class = "btn btn-success btn-lg">
 				        
 		 </form>
 		 
@@ -101,6 +120,7 @@
 <div id="ponude" > </div>
 
 
+</div>
 
 <script type="text/javascript">
 $(document).ready(function(){

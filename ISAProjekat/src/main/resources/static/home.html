@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
 <link rel="stylesheet" href="home.css">
 <script src="jquery-3.2.1.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 
 <title>Home</title>
 </head>
 <body>
+
+
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Početna strana</h1>
+
+	<form id ="odjavaForma" method="GET" >
+		<input  class = "btn btn-danger btn-lg" type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
+	</form>
 	<div class = "zaglavlje_div">
-		<a href = "fanZona.html">FANZONA</a>
-		<a href = "/bioskopi/spisak_bioskopa.html">BIOSKOPI</a>
-		<a href = "/pozorista/spisak_pozorista.html">POZORISTA</a>
-		<a href = "pregledPoruka.html">PORUKE</a>
+		<a class = "btn btn-lg btn-primary" href = "fanZona.html">FANZONA</a>
+		<a class = "btn btn-lg btn-primary" href = "/bioskopi/spisak_bioskopa.html">BIOSKOPI</a>
+		<a class = "btn btn-lg btn-primary" href = "/pozorista/spisak_pozorista.html">POZORISTA</a>
+		<a class = "btn btn-lg btn-primary" href = "pregledPoruka.html">PORUKE</a>
 		
 	</div>
+	<hr><br>
 	<table id="podaci" >
 	</table>
 	
 	
 	
-	<form id ="odjavaForma" method="GET" >
-		<input type="button" id="odjavaDugme" value="Odjavi se" style="float:right" />
-	</form>
+
 	
 	<hr><br>
 	<form id ="proveraOglasa" action="proveraOglasa.html" >
@@ -100,6 +123,7 @@
 			
 	</script>
 			
+</div>
 
 
 </body>

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
+
 <script src="jquery-3.2.1.min.js"></script>
 <title>Blagajna</title>
 
@@ -16,18 +19,32 @@
 </script>
 </head>
 <body>
-<h1>Prodavnica</h1>
 
 
-<h3>Prikaz i rezervacija rekvizita:</h3>
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Prikaz i rezervacija rekvizita:</h1>
+
 	<table id="rekviziti" > </table>
 
 <hr><br>
-	 <form id ="nazadForma" action="home.html" >
+	 <form id ="nazadForma" action="home.html" class = "btn btn-danger btn-large" >
 					        
-					  <input type="submit" value="Nazad">				        
+					  <input type="submit" value="Nazad"  class = "btn btn-danger btn-large">				        
 	 </form>
 	 
+ </div>
 <script type="text/javascript">
 	
 $(document).ready(function(){

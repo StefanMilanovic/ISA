@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+
+<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="opsti.css">
+<meta charset="UTF-8">
 <script src="jquery-3.2.1.min.js"></script>
 <title>Izmeni rekvizit</title>
 
@@ -47,8 +50,21 @@
 
 </head>
 <body>
-<h1> Izmena rekvizita </h1>
 
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+
+<h1 class="page-header">Izmeni rekvizit</h1>
 
 <form id = "registrationForm" name = "registrationForm" method="POST">
 
@@ -68,23 +84,25 @@
 			<input id = "slika" name ="slika" class="form-control" placeholder="slika"><br/>
 			 
 			
-			<hr><br>
+			<br>
 			
-			<input id="izmeni" type="button" class="btn btn-info"  value="Izmeni"><br><br> 	 
+			<input id="izmeni" type="button" class = "btn btn-success btn-lg"  value="Izmeni"><br><br> 	 
 				
 		</form>
-		<br><br>
-		
-		<form id ="obrisiForm" action="adminFanHome.html" >
+		<hr><br>
+		<div class="btn-group">
+		<form class="btn" id ="obrisiForm" action="adminFanHome.html" >
 					   <input  type="text" name="id1" id="id1" disabled><br/>    
-					  <input id="obrisi" type="button" class="btn btn-info"  value="Obrisi">			        
+					  <input id="obrisi" type="button" class = "btn btn-warning btn-lg" value="Obrisi">			        
 		</form> 
 		
-		<form id ="nazadForma" action="adminFanHome.html" class="form-horizontal">
+		<form  class="btn"id ="nazadForma"  action="adminFanHome.html">
 					        
-	<input type="submit" value="Odustani">				        
+			<input type="submit" value="Odustani" class = "btn btn-danger btn-lg">				        
 		</form> 
-
+		<br><br>
+	</div>	
+</div>
 
 			<script type="text/javascript">
 		
