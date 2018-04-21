@@ -109,6 +109,9 @@ $("#izmeni").click(function(){
 	var srebrniBodStaro = forma.find('[name=srebrniBodStaro]').val();
 	var zlatniBodStaro = forma.find('[name=zlatniBodStaro]').val();
 
+	console.log(zlatniBodStaro);
+	console.log(srebrniBodStaro);
+	console.log(bronzaniBodStaro);
 	
 	if(!bronzaniBodStaro) {
 		
@@ -121,15 +124,27 @@ $("#izmeni").click(function(){
 	else if(!zlatniBodStaro) {
 		alert("Unesite zlatni!");
 		provera = false;
-	}	
+	}	else if(isNaN(zlatniBodStaro)){
+		//ako nije broj 
+		alert("zlatni mora biti broj!");
+		provera = false;
+	}else if(isNaN(srebrniBodStaro)){
+		//ako nije broj 
+		alert("srebrni mora biti broj!");
+		provera = false;
+	}else if(isNaN(bronzaniBodStaro)){
+		//ako nije broj 
+		alert("bronzani mora biti broj!");
+		provera = false;
+	}
 	
-	else if(zlatniBodStaro<srebrniBodStaro ) {
+	else if(parseInt(zlatniBodStaro,10)<parseInt(srebrniBodStaro,10) ) {
 		alert("Zlatni mora biti vec od srebrnog");
 		provera = false;
-	}else if(zlatniBodStaro<bronzaniBodStaro ) {
+	}else if(parseInt(zlatniBodStaro,10)<parseInt(bronzaniBodStaro,10) ) {
 		alert("Zlatni mora biti vec od bronzanog");
 		provera = false;
-	}else if(srebrniBodStaro<bronzaniBodStaro ) {
+	}else if(parseInt(srebrniBodStaro,10)<parseInt(bronzaniBodStaro,10) ) {
 		alert("Srebrni mora biti vec od bronzanog");
 		provera = false;
 	}
