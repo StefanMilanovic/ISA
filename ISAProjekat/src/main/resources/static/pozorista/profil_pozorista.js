@@ -122,7 +122,7 @@ else if(korisnik.tipKorisnika=="ADMIN_OBJ"){
 		adminove_opcije= true;
 		
 		top_dugmad=
-			"<button onclick=\"location.href='editBioskop.html'\" id=\"edit_button\">Edit</button>"+
+			"<button onclick=\"location.href='editPozoriste.html'\" id=\"edit_button\">Edit</button>"+
 			"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>";
 	
 		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>";
@@ -183,7 +183,7 @@ else if(korisnik.tipKorisnika=="ADMIN_OBJ"){
 					"<p>"+ value.opis +"</p>"+
 				"</div>"+
 				"<div class=\"ocena_projekcije\">"+
-					"<h4>Ocena:"+value.prosecna_ocena.toPrecision(3)+" Broj glasova: "+value.broj_glasova+" Cena:"+value.cena+" Sala:"+value.sala.naziv+" Od: "+value.termin_od+" Do: "+value.termin_do+"</h4>"+
+					"<h4>Ocena:"+value.prosecna_ocena.toPrecision(3)+" Broj glasova: "+value.broj_glasova+" Cena:"+value.cena+" Sala:"+value.poz_sala.naziv+" Od: "+value.termin_od+" Do: "+value.termin_do+"</h4>"+
 				"</div>"+
 			"</div>"+			
 		"</div>" +

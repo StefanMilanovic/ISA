@@ -173,7 +173,7 @@ public class KorisnikContreller {
 		korAzuriraj.setPrezime(requestKorisnik.getPrezime());
 		korAzuriraj.setGrad(requestKorisnik.getGrad());
 		korAzuriraj.setTelefon(requestKorisnik.getTelefon());
-		korAzuriraj.setTipKorisnika("ADMIN_FAN");
+	//	korAzuriraj.setTipKorisnika("ADMIN_FAN");
 		
 		request.getSession().setAttribute("aktivanKorisnik", korAzuriraj);
 		korisnikService.save(korAzuriraj);

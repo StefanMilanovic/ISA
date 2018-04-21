@@ -1,6 +1,7 @@
 package com.ISAProjekat.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import com.ISAProjekat.model.PozorisnaSala;
 import com.ISAProjekat.model.Pozoriste;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
+import com.ISAProjekat.model.Sediste;
 import com.ISAProjekat.service.OcenaService;
 import com.ISAProjekat.service.PozorisnaSalaService;
 import com.ISAProjekat.service.PozoristeService;
@@ -127,11 +129,37 @@ public class PozoristeController {
 		}
 		pozoristeService.save(pozoristeService.findPozoristeById(b.getId()));
 		request.getSession().setAttribute("pozoristeProfil", pozoristeService.findPozoristeById(b.getId()));
-		
+		request.getSession().setAttribute("aktivneSalePoz", pozoristeService.findPozoristeById(b.getId()).getPozorisneSale());
 		
 		return new ResponseEntity<>(pozoristeService.findPozoristeById(b.getId()).getPozorisneSale(), HttpStatus.OK);
 		
 	}
+	
+	
+	@RequestMapping(value="/getSedista", method = RequestMethod.GET)
+	public HashMap<String, Set<Sediste>> getSedista(HttpServletRequest request){
+		
+		Pozoriste b = (Pozoriste) request.getSession().getAttribute("pozoristeProfil");	
+		Set<PozorisnaSala>aktivne_sale = (Set<PozorisnaSala>) request.getSession().getAttribute("aktivneSalePoz");
+		request.getSession().setAttribute("aktivneSalePoz", pozoristeService.findPozoristeById(b.getId()).getPozorisneSale());
+		
+		HashMap<String, Set<Sediste>> ret = new HashMap<String,Set<Sediste>>();
+		
+	
+		for(PozorisnaSala s: aktivne_sale){
+			ret.put(s.getNaziv(), s.getSedista());
+		}
+		pozoristeService.save(pozoristeService.findPozoristeById(b.getId()));
+		
+		System.out.println("IZLAZI IZ GET SALE");
+		
+		request.getSession().setAttribute("aktivnaSedista", ret);
+		
+		return ret;
+		
+	}
+	
+	
 	
 	@RequestMapping(value="/getSelectedPozoristeProjekcije", method = RequestMethod.GET)
 	public ResponseEntity<List<Projekcija>> getSelectedPozoristeProjekcije(HttpServletRequest request){
@@ -143,6 +171,8 @@ public class PozoristeController {
 		for(PozorisnaSala s: poz_sale){
 			pozorisnaSalaService.findSalaById(s.getId()).setProjekcije(new HashSet<Projekcija>());
 		}
+		
+		
 		
 		
 		ArrayList<Projekcija> ret = new ArrayList<Projekcija>();	
@@ -230,10 +260,22 @@ public class PozoristeController {
 		}
 		
 		//context.setAttribute("aktivnaProjekcija", ret);
-		request.getSession().setAttribute("aktivnaProjekcijaPoz", ret);
+		request.getSession().setAttribute("aktivnaProjekcija", ret);
 		
 		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(value="/getSelectedProjekcijaProfil", method = RequestMethod.GET)
+	public ResponseEntity<Projekcija>getSelectedProjekcija(HttpServletRequest request){
+		
+		Projekcija b = null;
+		//b = (Projekcija) context.getAttribute("aktivnaProjekcija");
+		b = (Projekcija) request.getSession().getAttribute("aktivnaProjekcija");
+		
+		return new ResponseEntity<>(b, HttpStatus.OK);
+	}
+	
 	
 	//Registracija pozorista s
 		@RequestMapping(value = "/registracijaPozorista", method = RequestMethod.POST)

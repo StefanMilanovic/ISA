@@ -1,5 +1,6 @@
 package com.ISAProjekat.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -27,7 +28,10 @@ public class PozorisnaSala {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="poz_sala")
 	@JsonIgnore
 	private Set<Projekcija> projekcije;
-
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="pozorisnaSala")
+	@JsonIgnore
+	private Set<Sediste> sedista = new HashSet<Sediste>();
 	
 	@ManyToOne(optional = false)
 	private Pozoriste pozoriste;
@@ -36,6 +40,8 @@ public class PozorisnaSala {
 		
 		
 	}
+	
+	
 	
 	public PozorisnaSala(Long id, String naziv, Set<Projekcija> projekcije,Pozoriste pozoriste) {
 		super();
@@ -78,6 +84,18 @@ public class PozorisnaSala {
 
 	public void setPozoriste(Pozoriste pozoriste) {
 		this.pozoriste = pozoriste;
+	}
+
+
+
+	public Set<Sediste> getSedista() {
+		return sedista;
+	}
+
+
+
+	public void setSedista(Set<Sediste> sedista) {
+		this.sedista = sedista;
 	}
 	
 	

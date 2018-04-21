@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="../text/css" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../opsti.css">
+<meta charset="UTF-8">
+<script src="../jquery-3.2.1.min.js"></script>
+
+<title>AdminFan Info</title>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	var sss;
+		$.ajax({
+			url : "http://localhost:8099/korisnikController/getAktivan"
+		}).then(function(data){
+			$("#emailTrenutni").append(data.email);
+			$("#sifTrenutni").append(data.sifra);
+			$("#ponSifTrenutni").append(data.sifra);
+			$("#imeTrenutni").append(data.ime);
+			$("#prezimeTrenutni").append(data.prezime);			
+			$("#gradTrenutni").append(data.grad);
+			$("#telefonTrenutni").append(data.telefon);
+			
+			document.getElementById("imeID").value = data.ime;
+			document.getElementById("prezimeID").value = data.prezime;
+			document.getElementById("emailID").value = data.email;
+			document.getElementById("sifraID").value = data.sifra;
+			document.getElementById("sifra2ID").value = data.sifra;
+			document.getElementById("gradID").value = data.grad;
+			document.getElementById("telefonID").value = data.telefon;
+			
+		});
+});	
+
+</script>
+</head>
+<body>
+
+<div class = "container">
+
+<div class ="jumbotron" >
+
+	<div class = "row">
+		
+			
+	
+		<span   style="font-size:60px">Pozorište i bioskop aplikacija </span>
+	</div>
+
+</div>
+<h1>Bioskop admin Info </h1>
+<hr><br>
+
+
+
+
+
+
+<form id = "registrationForm" name = "registrationForm" method="POST">
+
+			
+			<label  >Ime</label><br/>
+			<input id ="imeID" name = "ime" type="text" class="form-control"   ><br/>
+			
+			<label>Prezime</label><br/>
+			<input id = "prezimeID" type="text" class="form-control" name = "prezime" placeholder= "Prezime"><br/> 
+			
+			<label > Email </label><br/>
+			<input id = "emailID" type="email" class="form-control" name ="email" placeholder="Email"><br/> 
+			
+			<label>Sifra</label><br/>
+			<input id = "sifraID" type="password" class="form-control" name="lozinka" placeholder="Sifra"><br/>
+			 
+			<label>Ponovljena sifra</label><br/>
+			<input id="sifra2ID" type="password" name="ponovljenaLoz" class="form-control"  placeholder="Sifra"><br/>
+			
+			
+			<label>Telefon</label><br/>
+			<input id = "telefonID" type="text" class="form-control" name="telefon" placeholder="Broj telefona"><br/> 
+			
+			<label>Grad</label><br/>
+			<input id = "gradID"type="text" class="form-control" name="grad" placeholder="Grad" ><br/><br/>
+			
+			<hr><br>
+		
+		<input id="zavrseno" type="button"  value="Azuriraj"  class= "btn btn-success btn-lg"> 	 	
+			
+				
+		</form>
+		<br><br>
+		
+		<form id ="nazadForma"action="/bioskopi/spisak_bioskopa.html/"   class= "btn btn-danger btn-lg">
+					        
+					  <input   class="btn btn-danger btn-lg" type="submit" value="Odustani">				        
+		</form> 
+	
+		
+		
+		
+		
+			<script type="text/javascript">
+		
+			$("#zavrseno").click(function(){
+				
+				var provera = true;
+				var forma = $('form[id="registrationForm"]');
+				
+				var prezime = forma.find('[name=prezime]').val();
+				var ime = forma.find('[name=ime]').val();
+				var email = forma.find('[name=email]').val();
+				var lozinka = forma.find('[name=lozinka]').val();
+				var ponovljenaLoz = forma.find('[name=ponovljenaLoz]').val();
+				var telefon = forma.find('[name=telefon]').val();
+				var grad = forma.find('[name=grad]').val();
+				
+				console.log(telefon);
+				if(!email) {
+					
+					alert("Unesite email!");
+					provera = false;
+				}else if(!lozinka) {
+					alert("Unesite sifru!");
+					provera = false;
+				}
+				else if(!ime) {
+					alert("Unesite ime!");
+					provera = false;
+				}	
+				
+				else if(!ponovljenaLoz) {
+					alert("Unesite sifru!");
+					provera = false;
+				}
+				else if(!prezime) {
+					alert("Unesite prezime!");
+					provera = false;
+				}
+				else if(!telefon) {
+					alert("Unesite telefon!");
+					provera = false;
+				}else if(!grad) {
+					alert("Unesite grad!");
+					provera = false;
+				
+					
+				}else if(lozinka!=ponovljenaLoz) {
+					
+					
+					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
+					provera = false;
+				}
+				
+				
+				else if(isNaN(telefon)){
+					//ako nije broj 
+					alert("Telefon mora biti broj!");
+					provera = false;
+				}else if(telefon.length <3){
+					alert("Telefon nevazeci!");
+					provera = false;
+				}
+				if(provera) {
+					
+						
+					formData = JSON.stringify({
+						email:$("#registrationForm [name='email']").val(),
+						sifra:$("#registrationForm [name='lozinka']").val(),
+						ime:$("#registrationForm [name='ime']").val(),
+						prezime:$("#registrationForm [name='prezime']").val(),
+						grad:$("#registrationForm [name='grad']").val(),
+						telefon:$("#registrationForm [name='telefon']").val()
+					   });
+					
+					$.ajax({
+						url: "http://localhost:8099/korisnikController/azuriraj",
+						type: "PUT",
+						data: formData,
+						contentType: "application/json",
+						datatype: 'json',
+						success: function(data){
+							if(data){
+								alert("Azuriranje uspesno");
+								
+								
+								
+								location.href = "http://localhost:8099/bioskopi/spisak_bioskopa.html" 			
+							}else{
+								alert("Azuriranje neuspesno!");
+							}
+						},
+						error: function(data){
+							alert('Greska podaci azuriranje!')
+							
+						}
+					});
+				}
+			});		
+		</script>		
+</div>
+</body>
+</html>

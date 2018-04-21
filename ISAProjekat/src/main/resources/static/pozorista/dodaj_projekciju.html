@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="dodaj_projekciju.css">
+<script src='../jquery-3.2.1.min.js'></script>
+<script src="dodaj_projekciju.js"></script>
+
+<title>Dodaj Projekciju</title>
+</head>
+<body>
+	
+	<form class="cd-form floating-labels" id="dodajprojekciju_froma">
+		<fieldset>
+			<legend>Dodaj projekciju</legend>
+			<div class="icon">
+				<label class="cd-label" for="cd-name">Naziv</label>
+				<input class="user" type="text" name="naziv" id="naziv">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Zanr</label>
+				<input class="company" type="text" name="zarn" id="zarn">
+		    </div> 
+
+		    <div class="icon">
+		    	<label class="cd-label" for="cd-company">Reditelj</label>
+				<input class="company" type="text" name="ime_reditelja" id="ime_reditelja">
+		    </div> 
+			
+			<div class="icon">
+		    	<label class="cd-label" for="cd-company">Trajanje</label>
+				<input class="company" type="text" name="trajanje" id="trajanje">
+		    </div> 
+			
+			<div>
+				<h4>Sala</h4>
+				<p class="cd-select icon">
+					<select class="budget" id="sala_select">					
+					</select>
+				</p>
+			</div> 
+	  
+			<div class="icon">
+		    	<label class="cd-label" id="cd-stagod">Termin: od</label>
+				<input class="company" type="text" name="termin_od" id="termin_od">
+		    </div> 
+			
+			<div class="icon">
+		    	<label class="cd-label" id="cd-stagod">Termin: do</label>
+				<input class="company" type="text" name="termin_do" id="termin_do">
+		    </div>
+		    
+		    <div class="icon">
+		    	<label class="cd-label" id="cd-stagod">Cena</label>
+				<input class="company" type="text" name="cena" id="cena">
+		    </div>
+			
+			<div class="icon">
+				<label class="cd-label" id="cd-opis">Opis</label>
+      			<textarea class="message" name="opis" id="opis"></textarea>
+			</div>
+			
+			<div class="icon">
+				<label class="cd-label" id="cd-opis">Spisak glumaca</label>
+      			<textarea class="message" name="spisak_glumaca" id="spisak_glumaca"></textarea>
+			</div>
+
+			<div>
+		      	<input id="PROKLETODUGME" onclick="dodajProjekciju()" type="submit" value="Kreiraj">
+		    </div>
+		</fieldset>
+	</form>
+</body>
+</html>

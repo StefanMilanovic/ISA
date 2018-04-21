@@ -155,9 +155,11 @@ public class BioskopController{
 			for(Sala s: b.getSale()){
 				for(Projekcija p: s.getProjekcije()){
 					for(Sediste ss: s.getSedista()){
-						Karta k = new Karta(null,p,ss,10);
-						kartaService.save(k);
-						ss.getKarte().add(k);
+						if(ss.getKarte().isEmpty()){
+							Karta k = new Karta(null,p,ss,10);
+							kartaService.save(k);
+							ss.getKarte().add(k);
+						}						
 					}
 				}
 			}
@@ -746,5 +748,23 @@ public class BioskopController{
 		return kartaService.findAll();
 	}
 	
+	@RequestMapping(value="/rezervisiKartu", method= RequestMethod.PUT)
+	public Karta rezKartu(@RequestBody String data, HttpServletRequest request)
+	{				
+		System.out.println(data);
+		data = data.replaceAll("%22", "");
+		System.out.println("NOVI DATA : "+data);
+		data = data.replace("id=", "");
+		System.out.println("NOVI DATA : "+data);
+				
+		Long id = Long.parseLong(data,10);
+		Karta iz_baze = kartaService.findKartaById(id);
+		Korisnik k = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
+		if(iz_baze.getKorisnik()==null){
+			iz_baze.setKorisnik(k);
+			kartaService.save(kartaService.findKartaById(iz_baze.getId()));
+		}				
+		return iz_baze;
+	}
 	
 }

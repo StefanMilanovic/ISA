@@ -4,7 +4,7 @@ $(document).ready(function(){
 	console.log("Usao na profil bioskopa.");
 
 	$.ajax({
-		url:"../bioskopController/getSelectedBioskop",
+		url:"../pozoristeController/getSelectedPozoriste",
 		type:"GET",
 		dataType:"json",
 		success:function(data){
@@ -70,7 +70,7 @@ function dodajProjekciju(){
 		var p = JSON.stringify(z);
 		
 		$.ajax({
-			url:"../projekcija/setujSala",
+			url:"../projekcija/setujPozSala",
 			type:"POST",
 			data:p,
 			contentType:"application/json",
@@ -101,7 +101,7 @@ function dodajProjekciju2() {
 		console.log(data);
 		
 		$.ajax({
-			url:"../projekcija/dodajProjekciju",
+			url:"../projekcija/dodajPozProjekciju",
 			type:"POST",
 			data:p,
 			contentType:"application/json",
@@ -109,10 +109,10 @@ function dodajProjekciju2() {
 			success: function(data){
 				if(data){
 					console.log("USPESNO DODATO");
-					top.location.href="../bioskopi/profil_bioskopa.html";
+					top.location.href="../pozorista/profil_pozorista.html";
 				}
 				else{
-					top.location.href="../bioskopi/profil_bioskopa.html";
+					top.location.href="../pozorista/profil_pozorista.html";
 				}
 			},
 			error: function (textStatus, errorThrown) {
@@ -129,7 +129,7 @@ function getSale(data){
 	
 	$.ajax({
 		
-		url:"../bioskopController/getSelectedBioskopSale",
+		url:"../pozoristeController/getSelectedPozoristeSale",
 		type:"GET",
 		dataType:"json",
 		success:function(salaList){

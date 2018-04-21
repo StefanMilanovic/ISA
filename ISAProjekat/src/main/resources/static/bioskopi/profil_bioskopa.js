@@ -153,7 +153,9 @@ function ispisiProfil(aktivni_korisnik, data, salaList, sedistaList, projekcijaL
 			"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>" +
 			"<button onclick=\"location.href='editujSalu.html'\" id=\"edit_button\">Edituj Salu</button>";
 	
-		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>";
+		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>"+
+					"<button style=\"float:right;\" id=\"promeni_dugme\">PromeniPod</button>";
+		
 		
 		 ocena_opcije=
 			"<select id=\"oceni_select\">" +
@@ -333,22 +335,26 @@ function ispisiKarte(karte){
 	var iterator_karte = 0;
 	
 	$.each(karte,function(index,value){	
-		var text =""
-		var naziv = value.projekcija.naziv;
-		console.log(naziv);
 		
-		//"<div id=\"jedna_projekcija_content"+iterator_dugmad+" \""+" class = \"jedna_projekcija_content\">"+
+		if(value.korisnik==null){
+			var text =""
+				var naziv = value.projekcija.naziv;
+				console.log(naziv);
+				
+				//"<div id=\"jedna_projekcija_content"+iterator_dugmad+" \""+" class = \"jedna_projekcija_content\">"+
+				
+				text=text+
+				"<div class=\"karta\">" +
+				
+				"<label id=\"sifra"+iterator_karte+" \""+" style=\"visibility:hidden;\">"+value.id+"</label>"  +
+				"<p>"+naziv+" od:"+value.projekcija.termin_od+" do: "+value.projekcija.termin_do+" "+value.projekcija.sala.naziv+" Sediste: "+value.sediste.id+"Cena: "+value.projekcija.cena+" Popust:10%</p>" +
+				"<button id=\"rezervisi"+iterator_karte+" \""+">Rezervisi</button"+
+				
+				"</div>";
+				$("#tickets_div_content").append(text);
+				iterator_karte = iterator_karte + 1;
+		}
 		
-		text=text+
-		"<div class=\"karta\">" +
-		
-		"<label id=\"sifra"+iterator_karte+" \""+" style=\"visibility:hidden;\">"+value.id+"</label>"  +
-		"<p>"+naziv+" od:"+value.projekcija.termin_od+" do: "+value.projekcija.termin_do+" "+value.projekcija.sala.naziv+" Sediste: "+value.sediste.id+"Cena: "+value.projekcija.cena+" Popust:10%</p>" +
-		"<button id=\"rezervisi"+iterator_karte+" \""+">Rezervisi</button"+
-		
-		"</div>";
-		$("#tickets_div_content").append(text);
-		iterator_karte = iterator_karte + 1;
 	});
 	
 }
@@ -465,11 +471,25 @@ $(document).on('click','button',function(e) {
 		console.log("ID LABELE JE: " + x);
 		rezervisiKartu(x);
 	}
+	else if(button_id.includes("promeni_dugme")){
+		top.location.href="../login/AdminAzuriraj.html";
+	}
 });
 
 function rezervisiKartu(x){
 	$.ajax({
-		//url:"../bioskopController"
+		url:"../bioskopController/rezervisiKartu",
+		type: "PUT",
+		data:{id : x},
+		contentType:"application/json",
+		dataType:'json',
+		success:function(data){
+			top.location.href="../bioskopi/profil_bioskopa.html";
+		},
+		error(){
+			top.location.href="../bioskopi/profil_bioskopa.html";
+		}
+		
 	});
 }
 
