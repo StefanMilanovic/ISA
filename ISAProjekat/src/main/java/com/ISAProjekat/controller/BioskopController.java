@@ -408,7 +408,103 @@ public class BioskopController{
 				System.out.println("\nProsao 1");	
 				preuzetBioskop.setSale(new HashSet<Sala>());
 				
+				//MARKOVO CUDO OD KODA- prilagodjavanje 111********************************
+				
 				bioskopService.save(preuzetBioskop);
+				Mesec februar = new Mesec( "Februar",  2018, 2,  preuzetBioskop, null);
+				Mesec mart = new Mesec( "Mart",  2018, 3,  preuzetBioskop, null);
+				Mesec april = new Mesec( "April",  2018, 4 ,  preuzetBioskop, null);
+				mesecService.save(februar);
+				mesecService.save(mart);
+				mesecService.save(april);
+				List<Dan> daniFebruar= new ArrayList<Dan>();
+				List<Dan> daniMart= new ArrayList<Dan>();
+				List<Dan> daniApril= new ArrayList<Dan>();
+				
+				
+				List<Mesec> meseci = new ArrayList<Mesec>();
+				meseci.add(februar);
+				meseci.add(mart);
+				meseci.add(april);
+				for(Mesec m: meseci){
+					if(m.getDani().isEmpty()){
+						if(m.getBroj_meseca()== 2){
+							System.out.println("\n*******punim februar");
+							for(int i=1; i<29; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = r.nextInt(High-Low) + Low;
+								int posete_poz = r.nextInt(High-Low) + Low;
+								
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniFebruar.add(d);
+								//danService.save(d);
+							}
+						}
+						else if(m.getBroj_meseca() == 1 || m.getBroj_meseca() == 3 || m.getBroj_meseca() == 5 || m.getBroj_meseca() == 7 || m.getBroj_meseca() == 8 
+								|| m.getBroj_meseca() == 10 || m.getBroj_meseca() == 12) 
+						{
+							System.out.println("\n*******punim mart");
+							for(int i=1; i<32; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = r.nextInt(High-Low) + Low;
+								int posete_poz = r.nextInt(High-Low) + Low;
+								
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniMart.add(d);
+								//danService.save(d);
+							}
+						}
+						else{
+							System.out.println("\n*******punim april");
+							for(int i=1; i<31; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = 0;
+								int posete_poz =0;
+								if(i<22){
+									posete_bio = r.nextInt(High-Low) + Low;
+									posete_poz = r.nextInt(High-Low) + Low;
+								}												
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniApril.add(d);
+								//danService.save(d);
+							}
+						}		
+					}
+				}
+				
+				//upisujemo u bazu dane koji su prethodno formirani
+				System.out.println("\nOvde sam");
+				System.out.println("\nOvde sam   " +daniFebruar.size());
+				for(Dan dd : daniFebruar){
+					System.out.println("\nOvde sam   " +dd.getBroj_dana());
+					danService.save(dd);
+				}
+				for(Dan dd : daniMart){
+					danService.save(dd);
+				}
+				for(Dan dd : daniApril){
+					danService.save(dd);
+				}
+				
+					if(preuzetBioskop.getMeseci().isEmpty()){
+						preuzetBioskop.getMeseci().add(meseci.get(0));
+						preuzetBioskop.getMeseci().add(meseci.get(1));
+						preuzetBioskop.getMeseci().add(meseci.get(2));
+						bioskopService.save(bioskopService.findBioskopById(preuzetBioskop.getId()));
+					}
+				
+				
+				
+				
+				
+		//KRAJ CEGA GOD  222***************************************
+				bioskopService.save(bioskopService.findBioskopById(preuzetBioskop.getId()));
 				context.setAttribute("regBioskop", preuzetBioskop);
 				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.OK);
 			}else{
@@ -434,8 +530,103 @@ public class BioskopController{
 				System.out.println("\nProsao2");
 				preuzetBioskop.setSale(new HashSet<Sala>());
 				
+				//MARKOVO CUDO OD KODA   222********************************
 				bioskopService.save(preuzetBioskop);
-
+				Mesec februar = new Mesec( "Februar",  2018, 2,  preuzetBioskop, null);
+				Mesec mart = new Mesec( "Mart",  2018, 3,  preuzetBioskop, null);
+				Mesec april = new Mesec( "April",  2018, 4 ,  preuzetBioskop, null);
+				mesecService.save(februar);
+				mesecService.save(mart);
+				mesecService.save(april);
+				List<Dan> daniFebruar= new ArrayList<Dan>();
+				List<Dan> daniMart= new ArrayList<Dan>();
+				List<Dan> daniApril= new ArrayList<Dan>();
+				
+				
+				List<Mesec> meseci = new ArrayList<Mesec>();
+				meseci.add(februar);
+				meseci.add(mart);
+				meseci.add(april);
+				for(Mesec m: meseci){
+					if(m.getDani().isEmpty()){
+						if(m.getBroj_meseca()== 2){
+							System.out.println("\n*******punim februar");
+							for(int i=1; i<29; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = r.nextInt(High-Low) + Low;
+								int posete_poz = r.nextInt(High-Low) + Low;
+								
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniFebruar.add(d);
+								//danService.save(d);
+							}
+						}
+						else if(m.getBroj_meseca() == 1 || m.getBroj_meseca() == 3 || m.getBroj_meseca() == 5 || m.getBroj_meseca() == 7 || m.getBroj_meseca() == 8 
+								|| m.getBroj_meseca() == 10 || m.getBroj_meseca() == 12) 
+						{
+							System.out.println("\n*******punim mart");
+							for(int i=1; i<32; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = r.nextInt(High-Low) + Low;
+								int posete_poz = r.nextInt(High-Low) + Low;
+								
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniMart.add(d);
+								//danService.save(d);
+							}
+						}
+						else{
+							System.out.println("\n*******punim april");
+							for(int i=1; i<31; i++){
+								Random r = new Random();
+								int Low = 1;
+								int High = 10;
+								int posete_bio = 0;
+								int posete_poz =0;
+								if(i<22){
+									posete_bio = r.nextInt(High-Low) + Low;
+									posete_poz = r.nextInt(High-Low) + Low;
+								}												
+								Dan d = new Dan(i, m, posete_poz,posete_bio);
+								daniApril.add(d);
+								//danService.save(d);
+							}
+						}		
+					}
+				}
+				
+				//upisujemo u bazu dane koji su prethodno formirani
+				System.out.println("\nOvde sam");
+				System.out.println("\nOvde sam   " +daniFebruar.size());
+				for(Dan dd : daniFebruar){
+					System.out.println("\nOvde sam   " +dd.getBroj_dana());
+					danService.save(dd);
+				}
+				for(Dan dd : daniMart){
+					danService.save(dd);
+				}
+				for(Dan dd : daniApril){
+					danService.save(dd);
+				}
+				
+					if(preuzetBioskop.getMeseci().isEmpty()){
+						preuzetBioskop.getMeseci().add(meseci.get(0));
+						preuzetBioskop.getMeseci().add(meseci.get(1));
+						preuzetBioskop.getMeseci().add(meseci.get(2));
+						bioskopService.save(bioskopService.findBioskopById(preuzetBioskop.getId()));
+					}
+				
+				
+				
+				
+				
+		//KRAJ CEGA GOD  222***************************************
+				bioskopService.save(bioskopService.findBioskopById(preuzetBioskop.getId()));
+//OVDE UBACI MENJANJE NOVOG BIOSKOPA
 				context.setAttribute("regBioskop", preuzetBioskop);
 				return new ResponseEntity<Bioskop>(preuzetBioskop, HttpStatus.OK);
 			}
@@ -477,13 +668,35 @@ public class BioskopController{
 				}
 				
 			}
+			preuzetSala.setVip_enabled(true);
 			preuzetSala.setBioskop(bRoditelj);
 			salaService.save(preuzetSala);
 			bioskopService.findBioskopById(b.getId()).getSale().add(preuzetSala);
-				
-				
-			
 			bioskopService.save(bioskopService.findBioskopById(b.getId()));
+			//markov kod 111
+			
+			List<Sala> saleZaCuvanje = new ArrayList<Sala>();
+			
+				if(preuzetSala.getSedista().isEmpty()){
+					for(int i=0; i<30; i++){
+						if(i<10){
+							Sediste sediste = new Sediste(true,false,preuzetSala,null);
+							sedisteService.save(sediste);
+							preuzetSala.getSedista().add(sediste);
+							//saleZaCuvanje.add(e)
+						}
+						else{
+							Sediste sediste = new Sediste(false,false,preuzetSala,null);
+							sedisteService.save(sediste);
+							preuzetSala.getSedista().add(sediste);							
+						}
+					}
+				}
+			
+			salaService.save(salaService.findSalaById(preuzetSala.getId()));	
+//markov kod popravka kraj 
+			
+			
 			
 		
 			

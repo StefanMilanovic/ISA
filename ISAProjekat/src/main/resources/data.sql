@@ -51,6 +51,8 @@ VALUES ('222' ,'rekvizitNaziv2','opis2','nekijpg..','1',0,'2');
 insert into bioskop (naziv, adresa, opis, pros_ocena, broj_glasova,ukupan_prihod)
 values ('Bioskop1','Jefimije Zivkovic 14, Novi Sad','Novi bioskop u gradu, 200 sala, besplatni prikazi prvih 300 godina.', 0,0,0);
 
+
+
 insert into pozoriste(naziv, adresa, opis, pros_ocena, broj_glasova,ukupan_prihod)
 values ('Pozoriste1','Stefana Milanovica BB, Novi Sad','Novo pozoriste u gradu, 200 sala, besplatni prikazi prvih 300 godina.',0, 0, 0);
 

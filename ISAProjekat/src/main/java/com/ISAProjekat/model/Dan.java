@@ -23,7 +23,7 @@ public class Dan {
 	@Column(name ="poseta_bio")
 	private int broj_poseta_bio;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=true)
 	private Mesec mesec;
 	
 	public Dan(){}
