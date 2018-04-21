@@ -157,8 +157,8 @@ public class Bioskop implements Serializable{
 		return ukupan_prihod;
 	}
 
-	public void setUkupan_prihod(int ukupan_prihod) {
-		this.ukupan_prihod = ukupan_prihod;
+	public void setUkupan_prihod(double d) {
+		this.ukupan_prihod = (int) d;
 	}
 	
 	

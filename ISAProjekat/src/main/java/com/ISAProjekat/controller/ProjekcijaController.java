@@ -1,8 +1,11 @@
 package com.ISAProjekat.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +22,11 @@ import com.ISAProjekat.model.Pozoriste;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
 import com.ISAProjekat.model.Sediste;
+import com.ISAProjekat.service.BioskopService;
 import com.ISAProjekat.service.KartaService;
 import com.ISAProjekat.service.OcenaService;
 import com.ISAProjekat.service.ProjekcijaService;
+import com.ISAProjekat.service.SalaService;
 
 @RestController
 @RequestMapping("/projekcija")
@@ -39,6 +44,12 @@ public class ProjekcijaController {
 	@Autowired
 	KartaService kartaService;
 	
+	@Autowired
+	SalaService salaService;
+	
+	@Autowired
+	BioskopService bioskopService;
+	
 	@RequestMapping(value="/getProjekcije", method = RequestMethod.GET)
 	public ResponseEntity<List<Projekcija>>getProjekcije(){
 		List<Projekcija> projekcije = projekcijaService.findAll();
@@ -46,17 +57,21 @@ public class ProjekcijaController {
 	}
 	
 	@RequestMapping(value="/dodajProjekciju", method= RequestMethod.POST)
-	public Projekcija dodajProjekciju(@RequestBody Projekcija requestProjekcija)
+	public Projekcija dodajProjekciju(@RequestBody Projekcija requestProjekcija, HttpServletRequest request)
 	{		
 		System.out.println("\n\nPoslati podaci: \n"+requestProjekcija.getNaziv()+"\n"+requestProjekcija.getIme_reditelja()+"\n");	
 		
-		Bioskop b = (Bioskop) context.getAttribute("bioskopProfil");
+		Bioskop b = (Bioskop) request.getSession().getAttribute("bioskopProfil");
 		Sala s = (Sala) context.getAttribute("setovana_sala");
+		
 		
 		Projekcija nova_p = new Projekcija(requestProjekcija.getNaziv(),requestProjekcija.getZarn(),requestProjekcija.getIme_reditelja(),
 				requestProjekcija.getTrajanje(),requestProjekcija.getTermin_od(), requestProjekcija.getTermin_do(), 0,0,requestProjekcija.getOpis(),requestProjekcija.getCena(),requestProjekcija.getSpisak_glumaca(),s, null);
 		
 		projekcijaService.save(nova_p);
+		s = salaService.findSalaById(s.getId());
+		s.getProjekcije().add(nova_p);
+		salaService.save(salaService.findSalaById(s.getId()));		
 		
 		for(Sediste sed : s.getSedista()){
 			System.out.println("DODAJEM KARTU");
@@ -64,6 +79,13 @@ public class ProjekcijaController {
 			kartaService.save(k);
 		}
 		
+		for(Sala x : b.getSale()){
+			if(x.getNaziv().equals(s.getNaziv())){
+				x=s;
+			}
+		}
+		
+		bioskopService.save(bioskopService.findBioskopById(b.getId()));
 		
 		
 		System.out.println("DODAO PROJEKCIJU");
@@ -82,6 +104,7 @@ public class ProjekcijaController {
 				requestProjekcija.getTrajanje(),requestProjekcija.getTermin_od(), requestProjekcija.getTermin_do(), 0,0,requestProjekcija.getOpis(),requestProjekcija.getCena(),requestProjekcija.getSpisak_glumaca(),null, s);
 		
 		projekcijaService.save(nova_p);
+		
 		
 		System.out.println("DODAO PROJEKCIJU");
 		return nova_p;

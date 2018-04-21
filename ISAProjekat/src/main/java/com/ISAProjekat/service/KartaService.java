@@ -8,4 +8,5 @@ public interface KartaService {
 	List<Karta>findAll();
 	Karta save(Karta s);
 	Karta findKartaById(Long id);
+	void delete(Long id);
 }

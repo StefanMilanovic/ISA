@@ -3,6 +3,7 @@ var posecenje_data=null;
 var global_chart=null;
 var global_sala_list = null;
 var global_sedista_list = null;
+var graph_visible = "hidden";
 
 
 $(document).ready(function(){
@@ -143,7 +144,7 @@ function ispisiProfil(aktivni_korisnik, data, salaList, sedistaList, projekcijaL
 		desno_dugme="<button style=\"float:right;\" id=\"login_dugme\">LogIn</button>";
 	}
 	else if(korisnik.tipKorisnika=="ADMIN_OBJ"){
-		
+		graph_visible = "visible";
 		adminove_opcije= true;
 				
 		iterator_dugmad2=iterator_dugmad2 + 1;
@@ -288,7 +289,7 @@ function ispisiProfil(aktivni_korisnik, data, salaList, sedistaList, projekcijaL
 				"</div>"+
 			"</div>"+
 		"</div>"+
-		"<div  id =\"stats_div\" class=\"stats_div\">"+
+		"<div  id =\"stats_div\" class=\"stats_div\" style=\"visibility:"+graph_visible+";\">"+
 			"<div class =\"graff_div\">" +
 				"<canvas id=\"myChart\"></canvas>"+
 			"</div>"+

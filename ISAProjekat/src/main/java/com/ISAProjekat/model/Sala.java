@@ -31,9 +31,9 @@ public class Sala {
 	@Column(name ="vip_enabled")
 	private boolean vip_enabled;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sala")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "sala")
 	@JsonIgnore
-	private Set<Projekcija> projekcije;
+	private Set<Projekcija> projekcije = new HashSet<Projekcija>();
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="sala")
 	@JsonIgnore

@@ -28,4 +28,9 @@ public class KartaServiceImpl implements KartaService{
 	public Karta findKartaById(Long id) {
 		return this.kartaRepository.findOne(id);
 	}
+
+	@Override
+	public void delete(Long id) {
+		kartaRepository.delete(id);
+	}
 }

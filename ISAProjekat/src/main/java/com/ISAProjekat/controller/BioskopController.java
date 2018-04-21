@@ -158,11 +158,15 @@ public class BioskopController{
 						if(ss.getKarte().isEmpty()){
 							Karta k = new Karta(null,p,ss,10);
 							kartaService.save(k);
-							ss.getKarte().add(k);
+							ss.getKarte().add(k);	
+							sedisteService.save(ss);
 						}						
 					}
+					
 				}
+				salaService.save(s);
 			}
+			
 		}
 		
 		return new ResponseEntity<>(bioskopi, HttpStatus.OK);
@@ -345,9 +349,15 @@ public class BioskopController{
 		
 		List<Projekcija> projekcije = projekcijaService.findAll();
 		List<Ocena> ocene = ocenaService.findAll();
+		List<Karta> karte = kartaService.findAll();
 		for(Ocena o: ocene){
 			if(o.getProjekcija()!=null && o.getProjekcija().getId().compareTo(id)==0){
 				ocenaService.delete(o.getId());
+			}
+		}
+		for(Karta k: karte){
+			if(k.getProjekcija().getId().compareTo(id)==0){
+				kartaService.delete(kartaService.findKartaById(k.getId()).getId());
 			}
 		}
 		
@@ -969,14 +979,24 @@ public class BioskopController{
 		System.out.println("NOVI DATA : "+data);
 		data = data.replace("id=", "");
 		System.out.println("NOVI DATA : "+data);
-				
+		
+		
+		
 		Long id = Long.parseLong(data,10);
 		Karta iz_baze = kartaService.findKartaById(id);
+		
+		Bioskop b = (Bioskop) request.getSession().getAttribute("bioskopProfil");
+		b.setUkupan_prihod(b.getUkupan_prihod()+iz_baze.getProjekcija().getCena());
+		
 		Korisnik k = (Korisnik)request.getSession().getAttribute("aktivanKorisnik");
 		if(iz_baze.getKorisnik()==null){
 			iz_baze.setKorisnik(k);
 			kartaService.save(kartaService.findKartaById(iz_baze.getId()));
-		}				
+		}
+		
+		bioskopService.save(bioskopService.findBioskopById(b.getId()));
+		
+		
 		return iz_baze;
 	}
 	
