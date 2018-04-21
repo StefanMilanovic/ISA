@@ -68,14 +68,19 @@
 				}	
 				
 				else if(!slika) {
-					alert("Unesite slika!");
+					alert("Unesite sliku!");
 					provera = false;
 				}
 				else if(!cena) {
 					alert("Unesite cenu!");
 					provera = false;
+				}	
+				else if(isNaN(cena)){
+					//ako nije broj 
+					alert("Cena mora biti broj!");
+					provera = false;
 				}
-			
+				
 				if(provera) {
 					
 						

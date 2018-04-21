@@ -101,7 +101,7 @@ $(document).ready(function(){
 				var telefon = forma.find('[name=telefon]').val();
 				var grad = forma.find('[name=grad]').val();
 				
-				
+				console.log(telefon);
 				if(!email) {
 					
 					alert("Unesite email!");
@@ -135,6 +135,16 @@ $(document).ready(function(){
 					
 					
 					alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
+					provera = false;
+				}
+				
+				
+				else if(isNaN(telefon)){
+					//ako nije broj 
+					alert("Telefon mora biti broj!");
+					provera = false;
+				}else if(telefon.length <3){
+					alert("Telefon nevazeci!");
 					provera = false;
 				}
 				if(provera) {

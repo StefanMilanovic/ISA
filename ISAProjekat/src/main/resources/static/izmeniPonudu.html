@@ -171,6 +171,10 @@
 				if(!cena) {
 					alert("Unesite cenu!");
 					provera = false;
+				}else if(isNaN(cena)){
+					//ako nije broj 
+					alert("Cena mora biti broj!");
+					provera = false;
 				}
 				
 				

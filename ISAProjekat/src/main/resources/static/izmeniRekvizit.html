@@ -115,6 +115,10 @@
 				else if(!slika) {
 					alert("Unesite slika!");
 					provera = false;
+				}else if(isNaN(cena)){
+					//ako nije brosw
+					alert("Cena mora biti broj!");
+					provera = false;
 				}
 				
 				if(provera) {

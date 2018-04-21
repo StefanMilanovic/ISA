@@ -148,6 +148,15 @@ function provera1(){
 		alert("Ponovljena lozinka mora da se poklapa sa originalom! ");
 		provera = false;
 	}
+	else if(isNaN(telefon)){
+		//ako nije broj 
+		alert("Telefon mora biti broj!");
+		provera = false;
+	}else if(telefon.length <3){
+		alert("Telefon nevazeci!");
+		provera = false;
+	}
+	
 	if (email.indexOf("@") >= 0) { 
 		//alert("email je u redu");
 		
@@ -156,6 +165,7 @@ function provera1(){
 		provera = false;
 	
 	}
+	
 	return provera;
 }
 		$("#regAdminFan").click(function(){

@@ -48,7 +48,7 @@
 				var opis = forma.find('[name=opis]').val();
 				var slika = forma.find('[name=slika]').val();
 				var cena = forma.find('[name=cena]').val();
-				
+				 
 				
 				if(!naziv) {
 					
@@ -65,7 +65,13 @@
 				else if(!cena) {
 					alert("Unesite cenu!");
 					provera = false;
+				}else if(isNaN(cena)){
+					//ako nije brosw
+					alert("Cena mora biti broj!");
+					provera = false;
 				}
+				
+				
 				
 				if(provera) {
 					

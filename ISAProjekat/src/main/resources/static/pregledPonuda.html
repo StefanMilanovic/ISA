@@ -51,11 +51,11 @@
 					//ako	je trenutni datum veci od datuma oglasa  zabrani dodavanje ponuda
 					if(date>mydate)
 					{
-						document.getElementById("dodajPonudu").disabled = false;
+						document.getElementById("dodajPonudu").disabled = true;
 					}
 					else
 					{
-						document.getElementById("dodajPonudu").disabled = true;
+						document.getElementById("dodajPonudu").disabled = false;
 					}
 					
 					document.getElementById('naziv1').value=data.naziv;
@@ -197,6 +197,10 @@ $("#dodajPonudu").click(function(){
 		
 		if(!vrednostPonude) {
 			alert("Unesite vrednost ponude!");
+			provera = false;
+		}else if(isNaN(vrednostPonude)){
+			//ako nije broj 
+			alert("Vrednost mora biti broj!");
 			provera = false;
 		}
 		
