@@ -94,6 +94,10 @@ public class Projekcija {
 	@JsonIgnore
 	private Set<Ocena>ocene = new HashSet<Ocena>();
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="projekcija")
+	@JsonIgnore
+	private Set<Karta> karte = new HashSet<Karta>();
+	
 	
 	
 	public Long getId() {
@@ -223,6 +227,20 @@ public class Projekcija {
 
 	public void setPoz_sala(PozorisnaSala poz_sala) {
 		this.poz_sala = poz_sala;
+	}
+
+
+
+
+	public Set<Karta> getKarte() {
+		return karte;
+	}
+
+
+
+
+	public void setKarte(Set<Karta> karte) {
+		this.karte = karte;
 	}
 	
 	

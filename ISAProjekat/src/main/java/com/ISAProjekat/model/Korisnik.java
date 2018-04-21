@@ -41,7 +41,6 @@ public class Korisnik implements Serializable {
 		
 		this.email = email;
 		this.sifra = sifra;
-
 		this.ime = ime;
 		this.prezime = prezime;
 		this.grad = grad;
@@ -101,9 +100,10 @@ public class Korisnik implements Serializable {
     @JsonIgnore
     private Set<Ocena> ocene = new HashSet<Ocena>();
     
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="korisnik")
+    @JsonIgnore
+    private Set<Karta> rezervisaneKarte = new HashSet<Karta>();
     
-    
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "korisnik")
 	@JsonIgnore
 	private Set<Rekvizit> rekviziti = new HashSet<Rekvizit>(); //rezervisani rekviziti

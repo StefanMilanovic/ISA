@@ -1,5 +1,6 @@
 package com.ISAProjekat.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -24,14 +25,19 @@ public class Sala {
 	@ManyToOne(optional = false)
 	private Bioskop bioskop;
 	
-	
-	
 	@Column(name = "naziv", nullable = false)
 	private String naziv;
+	
+	@Column(name ="vip_enabled")
+	private boolean vip_enabled;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sala")
 	@JsonIgnore
 	private Set<Projekcija> projekcije;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="sala")
+	@JsonIgnore
+	private Set<Sediste> sedista = new HashSet<Sediste>();
 
 	public Sala(String naziv, Bioskop bioskop, Set<Projekcija> projekcije) {
 		super();
@@ -43,8 +49,9 @@ public class Sala {
 		super();
 		this.naziv = naziv;
 	}
-	
 	public Sala(){}
+	
+		
 
 	public Long getId() {
 		return id;
@@ -77,6 +84,18 @@ public class Sala {
 
 	public void setBioskop(Bioskop bioskop) {
 		this.bioskop = bioskop;
+	}
+	public Set<Sediste> getSedista() {
+		return sedista;
+	}
+	public void setSedista(Set<Sediste> sedista) {
+		this.sedista = sedista;
+	}
+	public boolean isVip_enabled() {
+		return vip_enabled;
+	}
+	public void setVip_enabled(boolean vip_enabled) {
+		this.vip_enabled = vip_enabled;
 	}
 	
 	

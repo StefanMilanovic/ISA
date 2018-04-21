@@ -1,6 +1,9 @@
 var CHART =null;
 var posecenje_data=null;
 var global_chart=null;
+var global_sala_list = null;
+var global_sedista_list = null;
+
 
 $(document).ready(function(){
 	
@@ -18,11 +21,11 @@ $(document).ready(function(){
 			}
 			else{
 				aktivni_korisnik = data;
+
 			}
 		}
 	});
 	
-
 	$.ajax({
 		url:"../bioskopController/getSelectedBioskop",
 		type:"GET",
@@ -60,19 +63,35 @@ function getSale(aktivni_korisnik, data){
 		success:function(salaList){
 			if(salaList==null){
 				console.log("Bioskop nema sala.");				
-				getProjekcije(aktivni_korisnik, selectedBioskop, salaList);
+				global_sala_list = salaList;
+				getSedista(aktivni_korisnik, selectedBioskop, salaList);								
 			}
 			
 			else{
 				console.log("Bioskop ima sale.");
-				getProjekcije(aktivni_korisnik, selectedBioskop, salaList);
+				global_sala_list = salaList;
+				console.log(global_sala_list);
+				getSedista(aktivni_korisnik, selectedBioskop, salaList);
 			}
 		}
 		
 	});
 }
 
-function getProjekcije(aktivni_korisnik, selectedBioskop, salaList){
+function getSedista(aktivni_korisnik, selectedBioskop, salaList){
+	$.ajax({
+		url:"../bioskopController/getSedista",
+		type:"GET",
+		dataType:"json",
+		success:function(sedistaList){
+			console.log("SEDISTA LIST");
+			console.log(sedistaList);
+			getProjekcije(aktivni_korisnik, selectedBioskop, salaList, sedistaList);
+		}
+	});
+}
+
+function getProjekcije(aktivni_korisnik, selectedBioskop, salaList, sedistaList){
 	
 	$.ajax({
 		
@@ -82,19 +101,19 @@ function getProjekcije(aktivni_korisnik, selectedBioskop, salaList){
 		success:function(projekcijaList){
 			if(projekcijaList==null){
 				console.log("Bioskop nema projekcijaList.");				
-				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, projekcijaList);
+				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, sedistaList, projekcijaList);
 			}
 			
 			else{
 				console.log("Bioskop ima projekcijaList.");
-				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, projekcijaList);
+				ispisiProfil(aktivni_korisnik, selectedBioskop, salaList, sedistaList, projekcijaList);
 			}
 		}
 		
 	});
 }
 
-function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){	
+function ispisiProfil(aktivni_korisnik, data, salaList, sedistaList, projekcijaList){	
 	var korisnik = aktivni_korisnik;
 	console.log("KORISNIK JE: ");
 	console.log(korisnik);
@@ -103,6 +122,8 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 	var projekcije="";
 	var iterator_dugmad = 0;
 	var iterator_dugmad2 = 0;
+	global_sedista_list = sedistaList;
+	
 	
 	if(salaList!=null){
 			
@@ -129,7 +150,8 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 		
 		top_dugmad=
 			"<button onclick=\"location.href='editBioskop.html'\" id=\"edit_button\">Edit</button>"+
-			"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>";
+			"<button onclick=\"location.href='dodaj_projekciju.html'\" id=\"edit_button\">Dodaj projekciju</button>" +
+			"<button onclick=\"location.href='editujSalu.html'\" id=\"edit_button\">Edituj Salu</button>";
 	
 		desno_dugme="<button style=\"float:right;\" id=\"logout_dugme\">LogOut</button>";
 		
@@ -232,7 +254,7 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 				"<div class=\"tickets_div_text\">" +
 					"<h3>Brza rezervacija</h3>" +
 				"</div>" +
-				"<div class=\"tickets_div_content\">" +
+				"<div id=\"tickets_div_content\" class=\"tickets_div_content\">" +
 				"</div>"+
 			"</div>"+
 			"<div class=\"repertoar_div\">" +
@@ -248,11 +270,20 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 				"<h3>Prikaz sala</h3>" +
 			"</div>" +
 			"<div class=\"combo_box_div\">" +
-				"<select id=\"sale_select\">" +
+				"<select onChange=\"ispisiSedista()\" id=\"sale_select\">" +
 				"</select>" +
 			"</div>" +
 			"<div class=\"jedna_sala_div\">" +
-				"" +
+				"<div class=\"vip_zona\">" +
+					"<form id=\"vip_zona_form_id\">"+
+						
+					"</form>"+
+				"</div>" +
+				"<div class=\"normalna_zona\">" +
+					"<form id=\"normalna_zona_form_id\">"+
+				
+					"</form>"+
+				"</div>"+
 			"</div>"+
 		"</div>"+
 		"<div  id =\"stats_div\" class=\"stats_div\">"+
@@ -279,7 +310,113 @@ function ispisiProfil(aktivni_korisnik, data, salaList, projekcijaList){
 		$("#repertoar_content_div").append(projekcije);
 		
 		pronadjiMesece(data);
+		ispisiSedista();
+		findKarte();
 		
+}
+
+function findKarte(){
+	$.ajax({
+		url:"../bioskopController/nadjiKarte",
+		type:"GET",
+		dataType:"json",
+		success:function(data){
+			console.log(data);
+			ispisiKarte(data);
+		}
+		
+	});
+}
+
+function ispisiKarte(karte){
+	
+	var iterator_karte = 0;
+	
+	$.each(karte,function(index,value){	
+		var text =""
+		var naziv = value.projekcija.naziv;
+		console.log(naziv);
+		
+		//"<div id=\"jedna_projekcija_content"+iterator_dugmad+" \""+" class = \"jedna_projekcija_content\">"+
+		
+		text=text+
+		"<div class=\"karta\">" +
+		
+		"<label id=\"sifra"+iterator_karte+" \""+" style=\"visibility:hidden;\">"+value.id+"</label>"  +
+		"<p>"+naziv+" od:"+value.projekcija.termin_od+" do: "+value.projekcija.termin_do+" "+value.projekcija.sala.naziv+" Sediste: "+value.sediste.id+"Cena: "+value.projekcija.cena+" Popust:10%</p>" +
+		"<button id=\"rezervisi"+iterator_karte+" \""+">Rezervisi</button"+
+		
+		"</div>";
+		$("#tickets_div_content").append(text);
+		iterator_karte = iterator_karte + 1;
+	});
+	
+}
+
+function ispisiSedista(){
+	var x = $('#sale_select :selected').text();
+	var disabled="";
+	
+	 document.getElementById("vip_zona_form_id").innerHTML = "";
+	 document.getElementById("normalna_zona_form_id").innerHTML = "";
+	
+	console.log(x);
+	console.log(global_sala_list);
+	
+	$.each(global_sala_list, function(index,value){
+		if(x.localeCompare(value.naziv)==0){
+			if(value.vip_enabled){
+				disabled="enabled";
+			}
+			else{
+				disabled="disabled";
+			}
+		}
+	});
+	
+	var iterator_vip=0;
+	var iterator_normal = 0;
+	
+	var text_vip ="";
+	var text_normal="";
+	
+	
+	
+	$.each(global_sedista_list, function(key,value){
+		if(x.localeCompare(key)==0){
+			console.log(global_sedista_list)
+			$.each(value, function(index,vrednost){
+				iterator_vip = iterator_vip+1;
+				if(vrednost.vip){
+					if(iterator_vip == 10){
+						iterator_vip = 0;
+						text_vip = text_vip +
+						"<input type=\"radio\"><br>";
+					}
+					else{
+						text_vip = text_vip +
+						"<input type=\"radio\" "+disabled+" >";
+					}					
+				}
+				else{
+					iterator_normal = iterator_normal+1;
+					if(iterator_normal == 10){
+						iterator_normal = 0;
+						text_normal= text_normal+
+						"<input type=\"radio\"><br>";
+					}
+					else{
+						text_normal= text_normal+
+						"<input type=\"radio\">";
+					}
+				}
+			});
+		}
+	});
+	
+	$("#vip_zona_form_id").append(text_vip);
+	$("#normalna_zona_form_id").append(text_normal);
+	
 }
 
 $(document).on('click','button',function(e) { 
@@ -318,7 +455,23 @@ $(document).on('click','button',function(e) {
 	else if(button_id.includes("login_dugme")){
 		top.location.href="../login/login.html";
 	}
+	else if(button_id.includes("rezervisi")){
+		button_id = button_id.replace("rezervisi","");
+		console.log(button_id);	
+		
+		var id_labele = "sifra"+button_id;
+		console.log(id_labele);
+		var x=document.getElementById(id_labele).textContent;
+		console.log("ID LABELE JE: " + x);
+		rezervisiKartu(x);
+	}
 });
+
+function rezervisiKartu(x){
+	$.ajax({
+		//url:"../bioskopController"
+	});
+}
 
 function logOut(){
 	
@@ -486,7 +639,7 @@ function napraviGraf(data,nacin){
 		$.each(value, function(index, vrednost){
 			daniA.push(vrednost.broj_dana);
 			dnevnePoseteApril.push(vrednost.broj_poseta_bio);
-			brojPosetaA = brojPosetaA +1;
+			brojPosetaA = brojPosetaA + vrednost.broj_poseta_bio;
 			
 			nedeljniBrojac = nedeljniBrojac +vrednost.broj_poseta_bio;
 			if(index==6 || index ==13 || index ==20 || index ==27 || index == 29) {
@@ -499,14 +652,14 @@ function napraviGraf(data,nacin){
 		$.each(value, function(index, vrednost){
 			daniM.push(vrednost.broj_dana);
 			dnevnePoseteMart.push(vrednost.broj_poseta_bio);
-			brojPosetaM = brojPosetaM +1;
+			brojPosetaM = brojPosetaM + vrednost.broj_poseta_bio;
 		});
 	}
 	else{
 		$.each(value, function(index, vrednost){
 			daniF.push(vrednost.broj_dana);
 			dnevenePoseteFebruar.push(vrednost.broj_poseta_bio);
-			brojPosetaF = brojPosetaF +1;
+			brojPosetaF = brojPosetaF + vrednost.broj_poseta_bio;
 		});
 	}
 	});	

@@ -201,7 +201,6 @@ Form
 }
 .cd-form input[type="radio"] + label::after {
   /* custom image for radio button */
-  background-image: url("../img/cd-icon-radio.svg");
 }
 .cd-form input[type="checkbox"] + label::after {
   /* custom image for checkbox */

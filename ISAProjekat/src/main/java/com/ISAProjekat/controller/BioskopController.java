@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -23,17 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ISAProjekat.model.Bioskop;
 import com.ISAProjekat.model.Dan;
+import com.ISAProjekat.model.Karta;
 import com.ISAProjekat.model.Korisnik;
 import com.ISAProjekat.model.Mesec;
 import com.ISAProjekat.model.Ocena;
 import com.ISAProjekat.model.Projekcija;
 import com.ISAProjekat.model.Sala;
+import com.ISAProjekat.model.Sediste;
 import com.ISAProjekat.service.BioskopService;
 import com.ISAProjekat.service.DanService;
+import com.ISAProjekat.service.KartaService;
 import com.ISAProjekat.service.MesecService;
 import com.ISAProjekat.service.OcenaService;
 import com.ISAProjekat.service.ProjekcijaService;
 import com.ISAProjekat.service.SalaService;
+import com.ISAProjekat.service.SedisteService;
 
 @RestController
 @RequestMapping("/bioskopController")
@@ -59,6 +64,12 @@ public class BioskopController{
 	
 	@Autowired
 	private DanService danService;
+	
+	@Autowired
+	private SedisteService sedisteService;
+	
+	@Autowired
+	private KartaService kartaService;
 	
 	@RequestMapping(value="/getBioskopi", method = RequestMethod.GET)
 	public ResponseEntity<List<Bioskop>> getBioskopi(){
@@ -118,6 +129,37 @@ public class BioskopController{
 				b.getMeseci().add(meseci.get(1));
 				b.getMeseci().add(meseci.get(2));
 				bioskopService.save(b);
+			}
+		}
+		
+		for(Bioskop b: bioskopi){
+			for(Sala s: b.getSale()){
+				if(s.getSedista().isEmpty()){
+					for(int i=0; i<30; i++){
+						if(i<10){
+							Sediste sediste = new Sediste(true,false,s,null);
+							sedisteService.save(sediste);
+							s.getSedista().add(sediste);
+						}
+						else{
+							Sediste sediste = new Sediste(false,false,s,null);
+							sedisteService.save(sediste);
+							s.getSedista().add(sediste);							
+						}
+					}
+				}
+			}
+		}
+		
+		for(Bioskop b: bioskopi){
+			for(Sala s: b.getSale()){
+				for(Projekcija p: s.getProjekcije()){
+					for(Sediste ss: s.getSedista()){
+						Karta k = new Karta(null,p,ss,10);
+						kartaService.save(k);
+						ss.getKarte().add(k);
+					}
+				}
 			}
 		}
 		
@@ -210,8 +252,31 @@ public class BioskopController{
 		
 		//context.setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
 		request.getSession().setAttribute("bioskopProfil", bioskopService.findBioskopById(b.getId()));
+		request.getSession().setAttribute("aktivneSale", bioskopService.findBioskopById(b.getId()).getSale());
 		
 		return new ResponseEntity<>(bioskopService.findBioskopById(b.getId()).getSale(), HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(value="/getSedista", method = RequestMethod.GET)
+	public HashMap<String, Set<Sediste>> getSedista(HttpServletRequest request){
+		
+		Bioskop b = (Bioskop) request.getSession().getAttribute("bioskopProfil");	
+		Set<Sala>aktivne_sale = (Set<Sala>) request.getSession().getAttribute("aktivneSale");
+		
+		HashMap<String, Set<Sediste>> ret = new HashMap<String,Set<Sediste>>();
+		
+	
+		for(Sala s: aktivne_sale){
+			ret.put(s.getNaziv(), s.getSedista());
+		}
+		bioskopService.save(bioskopService.findBioskopById(b.getId()));
+		
+		System.out.println("IZLAZI IZ GET SALE");
+		
+		request.getSession().setAttribute("aktivnaSedista", ret);
+		
+		return ret;
 		
 	}
 	
@@ -650,5 +715,36 @@ public class BioskopController{
 		
 		return podaci;
 	}
+	
+	@RequestMapping(value="/editSala", method= RequestMethod.PUT)
+	public Sala editSala(@RequestBody Sala data, HttpServletRequest request)
+	{				
+		Set<Sala> aktivne = (Set<Sala>) request.getSession().getAttribute("aktivneSale");
+		for(Sala s : aktivne){
+			if(s.getNaziv().equals(data.getNaziv())){
+				if(s.isVip_enabled()){
+					salaService.findSalaById(s.getId()).setVip_enabled(false);
+					salaService.save(salaService.findSalaById(s.getId()));
+					s.setVip_enabled(false);
+				}
+				else{
+					salaService.findSalaById(s.getId()).setVip_enabled(true);
+					salaService.save(salaService.findSalaById(s.getId()));
+					s.setVip_enabled(true);
+				}				
+				
+			}
+		}
+		request.getSession().setAttribute("aktivneSale", aktivne);
+		
+		return data;
+	}
+	
+	@RequestMapping(value="/nadjiKarte", method= RequestMethod.GET)
+	public List<Karta> findKarte(HttpServletRequest request)
+	{				
+		return kartaService.findAll();
+	}
+	
 	
 }

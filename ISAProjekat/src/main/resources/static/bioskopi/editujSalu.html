@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Edituj salu</title>
+<link rel="stylesheet" href="dodaj_projekciju.css">
+<script src='../jquery-3.2.1.min.js'></script>
+<script src="editujSalu.js"></script>
+</head>
+<body>
+	<form class="cd-form floating-labels" id="dodajprojekciju_froma">
+		<fieldset>
+			<legend>Edit salu</legend>
+			
+			<div>
+				<h4>Sala</h4>
+				<p class="cd-select icon">
+					<select name="naziv" class="budget" id="sala_select">					
+					</select>
+				</p>
+			</div> 
+	
+			<div>
+		      	<input id="PROKLETODUGME" onclick="editSalu()" type="submit" value="Izmeni">
+		    </div>
+		</fieldset>
+	</form>
+</body>
+</html>

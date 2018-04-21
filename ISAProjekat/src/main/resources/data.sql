@@ -55,11 +55,11 @@ insert into pozoriste(naziv, adresa, opis, pros_ocena, broj_glasova,ukupan_priho
 values ('Pozoriste1','Stefana Milanovica BB, Novi Sad','Novo pozoriste u gradu, 200 sala, besplatni prikazi prvih 300 godina.',0, 0, 0);
 
 
-insert into sala(naziv, bioskop_bioskop_id)
-values ('Sala1','1');
+insert into sala(naziv, bioskop_bioskop_id, vip_enabled)
+values ('Sala1','1', true);
 
-insert into sala(naziv, bioskop_bioskop_id)
-values ('Sala2','1');
+insert into sala(naziv, bioskop_bioskop_id, vip_enabled)
+values ('Sala2','1', true);
 
 insert into pozorisna_sala(naziv, pozoriste_pozoriste_id)
 values ('Sala1p','1');
@@ -91,3 +91,4 @@ values (3, 2018, 'Mart', '1', '1');
 
 insert into mesec(broj_meseca, godina, naziv, bioskop_bioskop_id, pozoriste_pozoriste_id)
 values (2, 2018, 'Februar', '1', '1');
+
