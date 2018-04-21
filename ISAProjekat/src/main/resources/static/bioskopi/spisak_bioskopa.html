@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" href="Bioskopi.css">
 <meta charset="ISO-8859-1">
 <script src="../jquery-3.2.1.min.js"></script>
+<style>
+#map-canvas{
+	width: 600px;
+	height : 300px;
+}
+
+</style>
 <script src="spisak_bioskopa.js"></script>
 <title>Spisak bioskopa</title>
 </head>
@@ -13,5 +21,66 @@
 			
 		</div>
 	</div>
+	<br><br>
+	
+<input type= "text" id = "mapsearch" size="50" value="Novi sad">
+<div id = "map-canvas"> </div>
+
+<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCyB6K1CFUQ1RwVJ-nyXxd6W0rfiIBe12Q&libraries=places"
+type = "text/javascript"></script>
+	
+<script>
+var map = new google.maps.Map(document.getElementById("map-canvas"), {
+    center: {
+        lat:45.2655498,
+        lng: 19.8352663
+    },
+    zoom: 12
+});
+var marker = new google.maps.Marker({
+    position: {
+        lat:  45.2655498,
+        lng: 19.8352663
+    },
+    map: map,
+    draggable: true
+});
+
+var searchBox = new google.maps.places.SearchBox(document.getElementById('mapsearch'));
+
+google.maps.event.addDomListener(searchBox, 'places_changed', function() {
+    var places = searchBox.getPlaces();
+    var bounds = new google.maps.LatLngBounds();
+    var i, place;
+
+    for (i = 0; place = places[i]; i++) {
+        bounds.extend(place.geometry.location);
+        marker.setPosition(place.geometry.location);
+    }
+    map.fitBounds(bounds);
+    map.setZoom(15);
+    
+});
+
+
+$('.mapsearch').each(function() {
+	   var elem = $(this);
+
+	   // Save current value of element
+	   elem.data('oldVal', elem.val());
+
+	   // Look for changes in the value
+	   elem.bind("propertychange change click keyup input paste", function(event){
+	      // If value has changed...
+	      if (elem.data('oldVal') != elem.val()) {
+	       // Updated stored value
+	       elem.data('oldVal', elem.val());
+
+	       // Do action
+	       
+	     }
+	   });
+	 });
+</script>
 </body>
 </html>
