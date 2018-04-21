@@ -1,3 +1,4 @@
+
 package com.ISAProjekat.model;
 
 import java.io.Serializable;
@@ -160,8 +161,5 @@ public class Bioskop implements Serializable{
 	public void setUkupan_prihod(double d) {
 		this.ukupan_prihod = (int) d;
 	}
-	
-	
-	
 	
 }
